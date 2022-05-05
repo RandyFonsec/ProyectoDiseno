@@ -1,0 +1,27 @@
+{
+    "name": "proyectodiseno",
+    "version": "1.0.0",
+    "description": "Proyecto del curso diseño de software",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon index"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RandyFonsec/ProyectoDiseno.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/RandyFonsec/ProyectoDiseno/issues"
+    },
+    "homepage": "https://github.com/RandyFonsec/ProyectoDiseno#readme",
+    "dependencies": {
+        "ejs": "^3.1.7",
+        "express": "^4.18.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.16"
+    }
+}
