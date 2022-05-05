@@ -1,5 +1,25 @@
 <%- include ('partials/_headerAdmin')  %>
 
-    <h1>HOLA</h1>
+    <div class="card text-center m-5 ">
+        <div class="card-header">
+            Gestión de usuarios
+        </div>
+        <div class="card-body text-center">
+            <label for="combo">Elige un departamento para mostrar:</label>
+            <div class="dropdown my-2 mb-4" id="combo">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary mx-auto" type="button">Agregar Usuario</button>
+            </div>
+        </div>
+    </div>
 
     <%- include ('partials/_footerAdmin')  %>

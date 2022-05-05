@@ -35,7 +35,6 @@ app.use(express.static('public'));
 
 //Routes
 app.get('/', (req, res) => {
-    console.log("Hola");
     res.render('gestionUsuarios.ejs');
 });
 
