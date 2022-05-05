@@ -36,7 +36,7 @@ app.use(express.static('public'));
 //Routes
 app.get('/', (req, res) => {
     console.log("Hola");
-    res.render('inicioSesion.ejs');
+    res.render('gestionUsuarios.ejs');
 });
 
 app.get('*', (req, res) => {
