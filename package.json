@@ -4,6 +4,7 @@
     "description": "Proyecto del curso diseño de software",
     "main": "index.js",
     "scripts": {
+        "start": "node index",
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon index"
     },
