@@ -2,6 +2,8 @@ const express = require('express')
 const app = express();
 const bodyParser = require('body-parser');
 
+const routesAdmin = require('./routes/RoutesAdmin.js');
+
 
 
 /*
@@ -35,12 +37,12 @@ app.use(express.static('public'));
 
 
 
-
-
 //Routes
 app.get('/', (req, res) => {
-    res.render('registroUsuario.ejs');
+    res.render('inicioSesion.ejs');
 });
+
+app.use('/admin', routesAdmin);
 
 app.post('/test', (req, res) => {
     const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
@@ -52,7 +54,7 @@ app.post('/test', (req, res) => {
             console.log("no " + names[i]);
         }
     }
-
+    const a = ['No se pudo'];
     res.send('ok');
 
 
@@ -67,5 +69,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(app.get('port'), () => {
+
     console.log("Servidor TEC escuchando en " + app.get('port'));
 });
