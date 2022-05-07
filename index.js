@@ -2,6 +2,8 @@ const express = require('express')
 const app = express();
 const bodyParser = require('body-parser');
 
+
+
 /*
 Para compilar en desarrollo: npm run dev
 */
@@ -33,12 +35,34 @@ app.use(express.static('public'));
 
 
 
+
+
 //Routes
 app.get('/', (req, res) => {
-    res.render('gestionUsuarios.ejs');
+    res.render('registroUsuario.ejs');
 });
 
+app.post('/test', (req, res) => {
+    const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
+    console.log(req.body);
+    for (var i = 0; i < names.length; i++) {
+        if (req.body[names[i]]) {
+            console.log(names[i]);
+        } else {
+            console.log("no " + names[i]);
+        }
+    }
+
+    res.send('ok');
+
+
+});
+
+
+
 app.get('*', (req, res) => {
+
+
     res.send("404 ERROR");
 });
 
