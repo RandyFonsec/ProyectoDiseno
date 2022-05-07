@@ -4,8 +4,8 @@ var routerAdmin = express.Router();
 routerAdmin.get('/', (req, res) => {
     res.render('gestionUsuarios.ejs');
 })
-routerAdmin.get('/registroUsuario', (req, res) => {
-    res.render('registroUsuario.ejs');
+routerAdmin.get('/registroFuncionario', (req, res) => {
+    res.render('registroFuncionario.ejs');
 })
 routerAdmin.get('/gestionUsuarios', (req, res) => {
     res.render('gestionUsuarios.ejs');
