@@ -1,8 +1,10 @@
 <%- include ('partials/_headerAdmin')  %>
 
-    <div class="container m-5 ">
-        <label class="mb-4 fs-2 text" for="content">Registro de funcionario:</label>
+    <main div class="container my-4 d-flex justify-content-center">
         <form id="content" action="/test" method="post">
+            <div class="mb-3">
+                <label for="" class="fs-2 text">Registro funcionario:</label>
+            </div>
             <div class="mb-3">
                 <label for="identificacion" class="form-label">Identificación:</label>
                 <input type="number" name="identificacion" class="form-control" id="identificacion" required>
@@ -105,30 +107,32 @@
                         <div class="modal-body">
                             <div class="row my-2 border border-dark">
                                 <div class="col-6 col-md-4">Día</div>
-                                <div class="col-12 col-md-8 mx-auto">Franja Horaria</div>
+                                <div class="col-6 col-md-8 mx-auto">Franja Horaria</div>
                             </div>
                             <% const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; 
                             const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
                             for(var day = 0; day < days.length; day++) {%>
-                                <div class="row my-1">
-                                    <div class="col-6 col-md-4">
-                                        <div class="form-check form-check-inline">
-                                            <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1">
-                                            <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+                                <div class="container">
+                                    <div class="row my-1">
+                                        <div class="col-4 col-md-4">
+                                            <div class="form-check form-check-inline">
+                                                <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1">
+                                                <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-8">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" name="isMannana" type="checkbox" id="inlineCheckbox1">
-                                            <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" name="isTarde" type="checkbox" id="inlineCheckbox1">
-                                            <label class="form-check-label" for="inlineCheckbox1">Tarde</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" name="isNoche" type="checkbox" id="inlineCheckbox1">
-                                            <label class="form-check-label" for="inlineCheckbox1">Noche</label>
+                                        <div class="col-8 col-md-8">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="isMannana" type="checkbox" id="inlineCheckbox1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="isTarde" type="checkbox" id="inlineCheckbox1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Tarde</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="isNoche" type="checkbox" id="inlineCheckbox1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Noche</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -137,9 +141,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <button type="submit" class="btn btn-primary">Registrar funcionario</button>
         </form>
-    </div>
-    
-<%- include ('partials/_footerAdmin')  %>
+        </div>
+
+        <%- include ('partials/_footerAdmin')  %>
