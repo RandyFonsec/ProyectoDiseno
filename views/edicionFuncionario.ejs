@@ -1,0 +1,149 @@
+<%- include ('partials/_headerAdmin')  %>
+
+    <main div class="container my-4 d-flex justify-content-center">
+        <form id="content" action="/test" method="post">
+            <div class="mb-3">
+                <label for="" class="fs-2 text">Registro funcionario:</label>
+            </div>
+            <div class="mb-3">
+                <label for="identificacion" class="form-label">Identificación:</label>
+                <input type="number" name="identificacion" class="form-control" id="identificacion" required>
+            </div>
+
+            <label for="nombreCompleto">Nombre completo:</label>
+            <div id="nombreCompleto" class="mb-3 row">
+                <div class="col">
+                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+                </div>
+                <div class="col">
+                    <input type="text" name="apellido1" class="form-control" placeholder="Primer apellido" required>
+                </div>
+                <div class="col">
+                    <input type="text" name="apellido2" class="form-control" placeholder="Segundo apellido" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="tel" class="form-label">Número de teléfono:</label>
+                <input type="number" name="telefono" class="form-control" id="tel" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo institucional:</label>
+                <input type="email" name="correo" class="form-control" id="correo" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo alterno:</label>
+                <input type="email" name="correoAlterno" class="form-control" id="correoAlterno" required>
+            </div>
+
+            <label class="mb-3" for="depar">Departamento al que pertenece:</label>
+            <div id="depar" class="row mb-3">
+                <div class="col">
+                    <div class="dropdown my-2 mb-4" id="combo">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          Dropdown button
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-check align-text-bottom">
+                        <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esJefe">
+                        <label class="form-check-label" for="flexCheckDefault">
+                          Es jefe
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-check align-text-bottom">
+                        <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esDiscapacitado">
+                        <label class="form-check-label" for="flexCheckDefault">
+                          Tiene alguna discapacidad
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <label class="mb-3">Seleccione su rol:</label>
+            <div class="mb-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox1" value="0">
+                    <label class="form-check-label" for="inlineCheckbox1">Administrativo</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox2" value="1">
+                    <label class="form-check-label" for="inlineCheckbox2">Docente</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="plac" class="form-label">Digite la placa que desea autorizar: </label>
+                <input type="text" name="placa" class="form-control" id="plac">
+            </div>
+
+            <!-- Button trigger modal -->
+            <div class="mb-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Seleccionar horario
+                </button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Selección de horario</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row my-2 border border-dark">
+                                <div class="col-6 col-md-4">Día</div>
+                                <div class="col-6 col-md-8 mx-auto">Franja Horaria</div>
+                            </div>
+                            <% const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; 
+                            const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
+                            for(var day = 0; day < days.length; day++) {%>
+                                <div class="container">
+                                    <div class="row my-1">
+                                        <div class="col-4 col-md-4">
+                                            <div class="form-check form-check-inline">
+                                                <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1">
+                                                <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 col-md-8">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="isMannana" type="checkbox" id="inlineCheckbox1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="isTarde" type="checkbox" id="inlineCheckbox1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Tarde</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="isNoche" type="checkbox" id="inlineCheckbox1">
+                                                <label class="form-check-label" for="inlineCheckbox1">Noche</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Registrar funcionario</button>
+        </form>
+        </div>
+
+        <%- include ('partials/_footerAdmin')  %>

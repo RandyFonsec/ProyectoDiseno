@@ -23,13 +23,25 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/admin/gestionUsuarios">Gestión de funcionarios</a>
+                        <form class="row g-3" action="admin/gestionFuncionarios" method="get">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-dark mb-3">Funcionarios</button>
+                            </div>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/admin/gestionEstacionamientos">Gestión de estacionamientos</a>
+                        <form class="row g-3" action="gestionEstacionamientos" method="get">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-dark mb-3">Estacionamientos</button>
+                            </div>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/admin/gestionPlacas">Gestión de placas</a>
+                        <form class="row g-3" action="admin/gestionPlacas" method="get">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-dark mb-3">Placas</button>
+                            </div>
+                        </form>
                     </li>
             </div>
         </div>
