@@ -1,0 +1,65 @@
+<%- include ('partials/_headerAdmin')  %>
+    <div class="container my-4 d-flex justify-content-center">
+
+        <div class="row">
+            <div class="row">
+                <label for="" class="fs-2 text mb-4">Consulta espacios:</label>
+            </div>
+
+
+            <form action="edicionFuncionarios" method="get">
+                <div class="mb-3">
+                    <div class="row">
+                        <label for="id" class="form-label">Número espacio:</label>
+                        <div class="col">
+                            <input type="number" name="id" class="form-control" id="id" required>
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn btn-primary">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="row my-5">
+                <label for="lista" class="my-3 fs-3 text">Lista de espacios:</label>
+                <div id="lista" class="container">
+
+                    <%if(data){%>
+                        <%for(var i=0; i<data.length;i++){%>
+                            <div class="row my-3">
+                                <div class="col-4">
+                                    <label for="">Id: <%=data[i].identificacion%></label>
+                                </div>
+                                <div class="col-4">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <a href="/edicionFuncionario/<%=data[i].identificacion%>" class="btn btn-primary " role="button">Editar</a>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="/eliminadoFuncionario/<%=data[i].identificacion%>" class="btn btn-danger " role="button">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+                                <%}%>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+    <%- include ('partials/_footerAdmin')  %>

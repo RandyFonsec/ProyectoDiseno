@@ -1,0 +1,38 @@
+<%- include ('partials/_headerAdmin')  %>
+    <div class="container my-4 d-flex justify-content-center">
+
+        <form>
+
+            <div class="mb-3">
+                <label for="ub" class="form-label">Ubicación:</label>
+                <input type="text" class="form-control" id="ub">
+            </div>
+            <div class="mb-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <label for="aper" class="form-label">Horario apertura:</label>
+                            <input type="text" class="form-control" id="aper">
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <label for="cie" class="form-label">Horario cierre:</label>
+                            <input type="text" class="form-control" id="cie">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlFile1">Fotografía:</label>
+                <input type="file" class="form-control" id="exampleFormControlFile1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Señas:</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+    </div>
+
+    <%- include ('partials/_footerAdmin')  %>
