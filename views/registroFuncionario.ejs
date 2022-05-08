@@ -3,7 +3,7 @@
     <main div class="container my-4 d-flex justify-content-center">
         <form id="content" action="/test" method="post">
             <div class="mb-3">
-                <label for="" class="fs-2 text">Registro funcionario:</label>
+                <label for="" class="fs-2 text">Registro de un funcionario:</label>
             </div>
             <div class="mb-3">
                 <label for="identificacion" class="form-label">Identificación:</label>
@@ -81,64 +81,6 @@
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox2" value="1">
                     <label class="form-check-label" for="inlineCheckbox2">Docente</label>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="plac" class="form-label">Digite la placa que desea autorizar: </label>
-                <input type="text" name="placa" class="form-control" id="plac">
-            </div>
-
-            <!-- Button trigger modal -->
-            <div class="mb-3">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Seleccionar horario
-                </button>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Selección de horario</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row my-2 border border-dark">
-                                <div class="col-6 col-md-4">Día</div>
-                                <div class="col-6 col-md-8 mx-auto">Franja Horaria</div>
-                            </div>
-                            <% const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; 
-                            const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
-                            for(var day = 0; day < days.length; day++) {%>
-                                <div class="container">
-                                    <div class="row my-1">
-                                        <div class="col-4 col-md-4">
-                                            <div class="form-check form-check-inline">
-                                                <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1">
-                                                <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-8 col-md-8">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" name="isMannana" type="checkbox" id="inlineCheckbox1">
-                                                <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" name="isTarde" type="checkbox" id="inlineCheckbox1">
-                                                <label class="form-check-label" for="inlineCheckbox1">Tarde</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" name="isNoche" type="checkbox" id="inlineCheckbox1">
-                                                <label class="form-check-label" for="inlineCheckbox1">Noche</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <% } %>
-                        </div>
-                    </div>
                 </div>
             </div>
 
