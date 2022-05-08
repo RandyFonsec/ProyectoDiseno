@@ -80,6 +80,5 @@ routerAdmin.get('/gestionPlacas', (req, res) => {
     res.render('gestionPlacas.ejs');
 });
 
-
 //export this router to use in our index.js
 module.exports = routerAdmin;

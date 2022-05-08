@@ -1,20 +1,20 @@
 class Funcionario {
 
     constructor (identificacion, tipoFuncionario, nombreCompleto, correoInstitucional, correoAlterno, 
-                departamento, franjasHorarias, placasAutorizadas, jefe, discapacidad, numeroCelular, 
-                notificacionesAlternas) {
+                departamento, jefe, discapacidad, numeroCelular, notificacionesAlternas, franjasHorarias, 
+                placasAutorizadas) {
         this.identificacion = identificacion;
         this.tipoFuncionario = tipoFuncionario;
         this.nombreCompleto = nombreCompleto;
         this.correoInstitucional = correoInstitucional;
         this.correoAlterno = correoAlterno;
         this.departamento = departamento;
-        this.franjasHorarias = franjasHorarias;
-        this.placasAutorizadas = placasAutorizadas;
         this.jefe = jefe;
         this.dispacitado = discapacidad;
         this.numeroCelular = numeroCelular;
-        this.notificacionesAlternas = notificacionesAlternas;                
+        this.notificacionesAlternas = notificacionesAlternas;        
+        this.franjasHorarias = franjasHorarias || [];
+        this.placasAutorizadas = placasAutorizadas || [];        
     }
 
     getIdentificacion () {
