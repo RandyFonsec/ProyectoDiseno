@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const routesAdmin = require('./routes/RoutesAdmin.js');
 
@@ -36,6 +37,13 @@ app.use(express.json());
 //Investigar
 app.use(express.static('public'));
 
+//sesion
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
 
 
 
@@ -46,9 +54,20 @@ app.get('/', (req, res) => {
 
 app.use('/admin', routesAdmin);
 
+
+app.post('/inicio', (req, res) => {
+    var { nombreUsuario, contrasenna } = req.body;
+
+
+    req.session.loggedin = true;
+    req.session.username = nombreUsuario;
+
+    res.redirect('admin');
+});
 app.post('/test', (req, res) => {
     const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
     console.log(req.body);
+    res.send('departamento ' + req.body.departamento);
     for (var i = 0; i < names.length; i++) {
         if (req.body[names[i]]) {
             console.log(names[i]);
@@ -59,8 +78,6 @@ app.post('/test', (req, res) => {
     const a = ['No se pudo'];
     console.log(req.body.departamento);
     res.send('ok');
-
-
 
 });
 
