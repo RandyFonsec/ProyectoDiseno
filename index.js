@@ -57,12 +57,12 @@ app.post('/test', (req, res) => {
         }
     }
     const a = ['No se pudo'];
+    console.log(req.body.departamento);
     res.send('ok');
 
 
+
 });
-
-
 
 app.get('*', (req, res) => {
 

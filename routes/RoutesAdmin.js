@@ -1,5 +1,8 @@
 var express = require('express');
+
 var routerAdmin = express.Router();
+
+const db = require ('../controller/dao/dbconnection');
 
 //Home
 routerAdmin.get('/', (req, res) => {
@@ -9,13 +12,38 @@ routerAdmin.get('/', (req, res) => {
 //TODO: Ver nombres xdd
 //TODO: Bug navbar
 //--------------------Funcionarios ??? 
-
 routerAdmin.get('/gestionFuncionarios', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
-routerAdmin.get('/registroFuncionario', (req, res) => {
-    res.render('registroFuncionario.ejs');
-})
+
+routerAdmin.get('/registroFuncionario', async (req, res) => {
+    const departments_list = await db.query ('SELECT * FROM Departamento');
+    res.render('registroFuncionario.ejs', { departments_list });
+    console.log ()
+
+
+});
+
+routerAdmin.post ('/registroFuncionario', async (req, res) => {
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, esJefe, rol } = req.body;
+    const funcionario = {
+        identificacion, 
+        nombre, 
+        apellido1, 
+        apellido2, 
+        telefono, 
+        correo, 
+        correoAlterno, 
+        esJefe, 
+        rol
+    }
+    console.log (funcionario);
+    //console.log (req.body);
+    //console.log (req.body);
+    //console.log (req.body.esDiscapacitado);
+    res.send ('received');
+});
+
 routerAdmin.get('/edicionFuncionarios', (req, res) => {
     let { id } = req.query;
     let lista = [];
@@ -26,14 +54,12 @@ routerAdmin.get('/edicionFuncionarios', (req, res) => {
     }
 
 });
+
 routerAdmin.get('/eliminadoFuncionario/:id', (req, res) => {
     let { id } = req.params;
     let data = [{ nombre: 'Juan' }];
     res.render('edicionFuncionario.ejs', data);
 });
-
-
-
 
 //--------------------Estacionamientos
 routerAdmin.get('/gestionEstacionamientos', (req, res) => {
@@ -56,7 +82,6 @@ routerAdmin.get('/edicionFuncionarios/:id', (req, res) => {
     res.send(id);
 });
 
-
 //--------------------Espacios
 routerAdmin.get('/edicionEspacios/:id', (req, res) => {
     let lista = [{ identificacion: 12 }, { identificacion: 123 }, { identificacion: 22212 }]
@@ -71,7 +96,6 @@ routerAdmin.get('/edicionEspacios/:id', (req, res) => {
 routerAdmin.get('/registroEspacio', (req, res) => {
     res.render('registroEspacio.ejs');
 });
-
 
 //--------------------Placas
 
