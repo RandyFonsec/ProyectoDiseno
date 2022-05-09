@@ -49,6 +49,7 @@ app.use('/admin', routesAdmin);
 app.post('/test', (req, res) => {
     const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
     console.log(req.body);
+    res.send('departamento ' + req.body.departamento);
     for (var i = 0; i < names.length; i++) {
         if (req.body[names[i]]) {
             console.log(names[i]);
@@ -56,9 +57,6 @@ app.post('/test', (req, res) => {
             console.log("no " + names[i]);
         }
     }
-    const a = ['No se pudo'];
-    res.send('ok');
-
 
 });
 
