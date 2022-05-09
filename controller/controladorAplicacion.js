@@ -17,7 +17,9 @@ class ControladorAplicacion {
     }
 
     agregarFuncionario (funcionario) {
-        return this.gestorEstacionamientos.agregarFuncionario (funcionario);
+        return this.gestorFuncionarios.agregarFuncionario (funcionario);
     }
 
 }
+
+module.exports = ControladorAplicacion;

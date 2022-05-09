@@ -1,8 +1,13 @@
+const ControladorAplicacion = require ('../controller/controladorAplicacion');
+
+const controladorAplicacion = new ControladorAplicacion();
+
 var express = require('express');
 
 var routerAdmin = express.Router();
 
 const db = require ('../controller/dao/dbconnection');
+const GestorFuncionarios = require('../controller/gestorFuncionarios');
 
 //Home
 routerAdmin.get('/', (req, res) => {
@@ -25,7 +30,7 @@ routerAdmin.get('/registroFuncionario', async (req, res) => {
 });
 
 routerAdmin.post ('/registroFuncionario', async (req, res) => {
-    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, esJefe, rol } = req.body;
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, rol } = req.body;
     const funcionario = {
         identificacion, 
         nombre, 
@@ -34,13 +39,18 @@ routerAdmin.post ('/registroFuncionario', async (req, res) => {
         telefono, 
         correo, 
         correoAlterno, 
+        departamento,
         esJefe, 
+        esDiscapacitado,
         rol
     }
-    console.log (funcionario);
-    //console.log (req.body);
-    //console.log (req.body);
-    //console.log (req.body.esDiscapacitado);
+    if (!funcionario.esJefe) {
+        funcionario.esJefe = 0;
+    }
+    if (!funcionario.esDiscapacitado) {
+        funcionario.esDiscapacitado = 0;
+    }
+    await controladorAplicacion.agregarFuncionario (funcionario);
     res.send ('received');
 });
 
