@@ -57,10 +57,11 @@ app.post('/test', (req, res) => {
             console.log("no " + names[i]);
         }
     }
+    const a = ['No se pudo'];
+    console.log(req.body.departamento);
+    res.send('ok');
 
 });
-
-
 
 app.get('*', (req, res) => {
 
