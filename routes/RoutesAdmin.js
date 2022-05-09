@@ -2,8 +2,18 @@ var express = require('express');
 
 var routerAdmin = express.Router();
 
-const db = require ('../controller/dao/dbconnection');
+const db = require('../controller/dao/dbconnection');
 
+//Valida que haya iniciado la sesión
+routerAdmin.use(function(req, res, next) {
+    /*if (req.session.loggedin) {
+        next();
+    } else {
+        res.send("No haz iniciado");
+    }*/
+    next();
+
+});
 //Home
 routerAdmin.get('/', (req, res) => {
     res.render('gestionFuncionarios.ejs');
@@ -16,32 +26,32 @@ routerAdmin.get('/gestionFuncionarios', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
 
-routerAdmin.get('/registroFuncionario', async (req, res) => {
-    const departments_list = await db.query ('SELECT * FROM Departamento');
+routerAdmin.get('/registroFuncionario', async(req, res) => {
+    const departments_list = await db.query('SELECT * FROM Departamento');
     res.render('registroFuncionario.ejs', { departments_list });
-    console.log ()
+    console.log()
 
 
 });
 
-routerAdmin.post ('/registroFuncionario', async (req, res) => {
+routerAdmin.post('/registroFuncionario', async(req, res) => {
     const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, esJefe, rol } = req.body;
     const funcionario = {
-        identificacion, 
-        nombre, 
-        apellido1, 
-        apellido2, 
-        telefono, 
-        correo, 
-        correoAlterno, 
-        esJefe, 
+        identificacion,
+        nombre,
+        apellido1,
+        apellido2,
+        telefono,
+        correo,
+        correoAlterno,
+        esJefe,
         rol
     }
-    console.log (funcionario);
+    console.log(funcionario);
     //console.log (req.body);
     //console.log (req.body);
     //console.log (req.body.esDiscapacitado);
-    res.send ('received');
+    res.send('received');
 });
 
 routerAdmin.get('/edicionFuncionarios', (req, res) => {
