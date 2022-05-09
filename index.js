@@ -57,8 +57,6 @@ app.use('/admin', routesAdmin);
 
 app.post('/inicio', (req, res) => {
     var { nombreUsuario, contrasenna } = req.body;
-
-
     req.session.loggedin = true;
     req.session.username = nombreUsuario;
 
