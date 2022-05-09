@@ -46,11 +46,12 @@ routerAdmin.post ('/registroFuncionario', async (req, res) => {
 
 routerAdmin.get('/edicionFuncionarios', (req, res) => {
     let { id } = req.query;
-    let lista = [];
+    let lista = [{}];
+    let lista2 = [{}];
     if (id) {
         res.render('edicionFuncionarios.ejs', { data: lista });
     } else {
-        res.render('edicionFuncionarios.ejs', { data: lista });
+        res.render('edicionFuncionarios.ejs', { data: lista2 });
     }
 
 });
