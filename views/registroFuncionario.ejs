@@ -1,7 +1,7 @@
 <%- include ('partials/_headerAdmin')  %>
 
     <main div class="container my-4 d-flex justify-content-center">
-        <form id="content" action="/admin/registroFuncionario" method="post">
+        <form id="content" action="registroFuncionario" method="post">
             <div class="mb-3">
                 <label for="" class="fs-2 text">Registro de un funcionario:</label>
             </div>
@@ -42,6 +42,7 @@
             <div id="depar" class="row mb-3">
 
                 <div class="col-6"><select name="departamento" class="form-select" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
                     <% departments_list.forEach (function (department) { %>
                         <option value="<%=department.idDepartamento%>"><%= department.descripcion %></option>
                     <% }) %>
@@ -69,11 +70,11 @@
             <label class="mb-3">Seleccione su rol:</label>
             <div class="mb-3">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox1" value="0">
+                    <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox1" value="1">
                     <label class="form-check-label" for="inlineCheckbox1">Administrativo</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox2" value="1">
+                    <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox2" value="2">
                     <label class="form-check-label" for="inlineCheckbox2">Docente</label>
                 </div>
             </div>

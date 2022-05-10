@@ -1,15 +1,33 @@
-const FuncionarioDaoImplementation = require ('./dao/funcionarioDaoImplementation');
+const FuncionarioDaoImplementation = require('./dao/funcionarioDaoImplementation');
 const funcionarioDaoImplementation = new FuncionarioDaoImplementation();
 
 class GestorFuncionarios {
 
-    constructor () {}
+    constructor() {}
 
-    agregarFuncionario (funcionario) {
-        const resultado = funcionarioDaoImplementation.create (funcionario);
+    agregarFuncionario(funcionario) {
+        const resultado = funcionarioDaoImplementation.create(funcionario);
         return resultado != undefined ? true : false;
     }
+    obtenerFuncionarios() {
+        const resultado = funcionarioDaoImplementation.getAll();
+        return resultado;
+    }
 
+    obtenerFuncionario(key) {
+        const resultado = funcionarioDaoImplementation.get(key);
+        return resultado;
+    }
+
+    modificarFuncionario(funcionario) {
+        const resultado = funcionarioDaoImplementation.update(funcionario);
+        return resultado;
+    }
+
+    eliminarFuncionario(identificacion) {
+        const resultado = funcionarioDaoImplementation.delete(identificacion);
+        return resultado;
+    }
 }
 
 module.exports = GestorFuncionarios;

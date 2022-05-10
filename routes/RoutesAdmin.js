@@ -1,4 +1,4 @@
-const ControladorAplicacion = require ('../controller/controladorAplicacion');
+const ControladorAplicacion = require('../controller/controladorAplicacion');
 
 const controladorAplicacion = new ControladorAplicacion();
 
@@ -6,7 +6,7 @@ var express = require('express');
 
 var routerAdmin = express.Router();
 
-const db = require ('../controller/dao/dbconnection');
+const db = require('../controller/dao/dbconnection');
 const GestorFuncionarios = require('../controller/gestorFuncionarios');
 
 //Valida que haya iniciado la sesión
@@ -39,18 +39,18 @@ routerAdmin.get('/registroFuncionario', async(req, res) => {
 
 });
 
-routerAdmin.post ('/registroFuncionario', async (req, res) => {
+routerAdmin.post('/registroFuncionario', async(req, res) => {
     const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, rol } = req.body;
     const funcionario = {
-        identificacion, 
-        nombre, 
-        apellido1, 
-        apellido2, 
-        telefono, 
-        correo, 
-        correoAlterno, 
+        identificacion,
+        nombre,
+        apellido1,
+        apellido2,
+        telefono,
+        correo,
+        correoAlterno,
         departamento,
-        esJefe, 
+        esJefe,
         esDiscapacitado,
         rol
     }
@@ -60,26 +60,58 @@ routerAdmin.post ('/registroFuncionario', async (req, res) => {
     if (!funcionario.esDiscapacitado) {
         funcionario.esDiscapacitado = 0;
     }
-    await controladorAplicacion.agregarFuncionario (funcionario);
-    res.send ('received');
+    await controladorAplicacion.agregarFuncionario(funcionario);
+    res.send('received');
 });
 
-routerAdmin.get('/edicionFuncionarios', (req, res) => {
-    let { id } = req.query;
-    let lista = [{}];
-    let lista2 = [{}];
+
+routerAdmin.get('/edicionFuncionarios', async(req, res) => {
+    const { id } = req.query;
     if (id) {
+        let lista = await controladorAplicacion.obtenerFuncionario(id);
         res.render('edicionFuncionarios.ejs', { data: lista });
     } else {
-        res.render('edicionFuncionarios.ejs', { data: lista2 });
+        let lista = await controladorAplicacion.obtenerFuncionarios();
+        res.render('edicionFuncionarios.ejs', { data: lista });
     }
 
 });
-
-routerAdmin.get('/eliminadoFuncionario/:id', (req, res) => {
+routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
     let { id } = req.params;
-    let data = [{ nombre: 'Juan' }];
-    res.render('edicionFuncionario.ejs', data);
+    let lista = await controladorAplicacion.obtenerFuncionario(id);
+    const departments_list = await db.query('SELECT * FROM Departamento');
+    res.render('edicionFuncionario.ejs', { funcionario: lista[0], departments_list });
+});
+
+routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, rol } = req.body;
+    const funcionario = {
+        identificacion,
+        nombre,
+        apellido1,
+        apellido2,
+        telefono,
+        correo,
+        correoAlterno,
+        departamento,
+        esJefe,
+        esDiscapacitado,
+        rol
+    }
+    if (!funcionario.esJefe) {
+        funcionario.esJefe = 0;
+    }
+    if (!funcionario.esDiscapacitado) {
+        funcionario.esDiscapacitado = 0;
+    }
+    await controladorAplicacion.modificarFuncionario(funcionario);
+    res.send('ok');
+});
+
+routerAdmin.get('/eliminadoFuncionario/:id', async(req, res) => {
+    let { id } = req.params;
+    await controladorAplicacion.eliminarFuncionario(id);
+    res.send('ok');
 });
 
 //--------------------Estacionamientos

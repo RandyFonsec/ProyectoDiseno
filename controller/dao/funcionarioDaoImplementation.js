@@ -16,7 +16,7 @@ class FuncionarioDaoImplementation extends DAO {
 
     create(objeto) {
         const insertFuncionario = 'INSERT INTO Funcionario (identificacion, nombre, primerApellido, segundoApellido, numeroCelular, correoInstitucional, correoAlterno, jefe, discapacidad, idDepartamento, idTipoFuncionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-        db.query(insertFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.departamento, (objeto.rol + 1)], function(err, result) {
+        db.query(insertFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.departamento, objeto.rol], function(err, result) {
             if (err) {
                 console.log(err);
             } else {
@@ -25,6 +25,27 @@ class FuncionarioDaoImplementation extends DAO {
         });
     }
 
+
+    update(objeto) {
+        const updateFuncionario = 'UPDATE Funcionario SET identificacion = ?, nombre = ?, primerApellido = ?, segundoApellido = ?, numeroCelular = ?, correoInstitucional = ? , correoAlterno = ?, jefe = ?, discapacidad = ?, notificacionesAlternas = ?, idDepartamento = ?, idTipoFuncionario = ? WHERE identificacion = ?';
+        return db.query(updateFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, true, objeto.departamento, objeto.rol, objeto.identificacion]);
+    }
+
+    getAll() {
+        const selectFuncionario = 'SELECT * FROM Funcionario WHERE eliminado = 0';
+        return db.query(selectFuncionario);
+    }
+
+    get(key) {
+        const selectFuncionario = 'SELECT * FROM Funcionario WHERE identificacion = ?;';
+        return db.query(selectFuncionario, [key]);
+    }
+
+
+    delete(key) {
+        const updateFuncionario = 'UPDATE Funcionario SET eliminado = 1 WHERE identificacion = ?';
+        return db.query(updateFuncionario, [key]);
+    }
 }
 
 module.exports = FuncionarioDaoImplementation;
