@@ -1,10 +1,12 @@
+const ControladorAplicacion = require('./controller/controladorAplicacion');
 const express = require('express')
 const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const routesAdmin = require('./routes/RoutesAdmin.js');
-
+const controladorAplicacion = new ControladorAplicacion();
+const GestorFuncionarios = require('./controller/gestorFuncionarios');
 //git push heroku main: Actualiza el sitio web
 
 
@@ -49,39 +51,36 @@ app.use(session({
 
 //Routes
 app.get('/', (req, res) => {
+
     res.render('inicioSesion.ejs');
 });
 
 app.use('/admin', routesAdmin);
 
-
-app.post('/inicio', (req, res) => {
+app.post('/inicio', async(req, res) => {
     var { nombreUsuario, contrasenna } = req.body;
-    req.session.loggedin = true;
-    req.session.username = nombreUsuario;
 
-    res.redirect('admin');
-});
-app.post('/test', (req, res) => {
-    const names = ['isLunes', 'isMartes', 'isMiercoles', 'isJueves', 'isViernes', 'isSabado'];
-    console.log(req.body);
-    res.send('departamento ' + req.body.departamento);
-    for (var i = 0; i < names.length; i++) {
-        if (req.body[names[i]]) {
-            console.log(names[i]);
+    if (nombreUsuario == 'admin' && contrasenna == 'admin') {
+        res.redirect('/admin');
+    } else {
+        const result = await controladorAplicacion.validarFuncionario(nombreUsuario, contrasenna);
+        if (result.length == 0) {
+            const mensaje = 'Correo o contraseña incorrectos';
+            res.render('inicioSesion.ejs', { error: mensaje })
         } else {
-            console.log("no " + names[i]);
+            express.session.userInfo = result;
+            express.session.loggedin = true;
+            res.send('Logeado');
         }
     }
-    const a = ['No se pudo'];
-    console.log(req.body.departamento);
-    res.send('ok');
+
+
+
 
 });
 
+
 app.get('*', (req, res) => {
-
-
     res.send("404 ERROR");
 });
 

@@ -28,6 +28,11 @@ class GestorFuncionarios {
         const resultado = funcionarioDaoImplementation.delete(identificacion);
         return resultado;
     }
+
+    validarFuncionario(correo, contrasenna) {
+        const resultado = funcionarioDaoImplementation.get(correo, contrasenna);
+        return resultado;
+    }
 }
 
 module.exports = GestorFuncionarios;

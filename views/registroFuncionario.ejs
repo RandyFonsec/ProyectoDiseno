@@ -42,7 +42,6 @@
             <div id="depar" class="row mb-3">
 
                 <div class="col-6"><select name="departamento" class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
                     <% departments_list.forEach (function (department) { %>
                         <option value="<%=department.idDepartamento%>"><%= department.descripcion %></option>
                     <% }) %>
@@ -84,6 +83,10 @@
                     <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox2" value="2">
                     <label class="form-check-label" for="inlineCheckbox2">Docente</label>
                 </div>
+            </div>
+            <div class="mb-3">
+                <label for="contra" class="form-label">Contraseña:</label>
+                <input type="text" name="contrasenna" class="form-control" id="contra" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Registrar funcionario</button>

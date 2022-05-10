@@ -15,8 +15,8 @@ class FuncionarioDaoImplementation extends DAO {
     }
 
     create(objeto) {
-        const insertFuncionario = 'INSERT INTO Funcionario (identificacion, nombre, primerApellido, segundoApellido, numeroCelular, correoInstitucional, correoAlterno, jefe, discapacidad, notificacionesAlternas, idDepartamento, idTipoFuncionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-        db.query(insertFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.alternas, objeto.departamento, objeto.rol], function(err, result) {
+        const insertFuncionario = 'INSERT INTO Funcionario (identificacion, nombre, primerApellido, segundoApellido, numeroCelular, correoInstitucional, correoAlterno, jefe, discapacidad, notificacionesAlternas, idDepartamento, idTipoFuncionario, contrasenna) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+        db.query(insertFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.alternas, objeto.departamento, objeto.rol, objeto.contrasenna], function(err, result) {
             if (err) {
                 console.log(err);
             } else {
@@ -45,6 +45,11 @@ class FuncionarioDaoImplementation extends DAO {
     delete(key) {
         const updateFuncionario = 'UPDATE Funcionario SET eliminado = 1 WHERE identificacion = ?';
         return db.query(updateFuncionario, [key]);
+    }
+
+    get(correo, contrasenna) {
+        const selectFuncionario = 'SELECT * FROM Funcionario WHERE correoInstitucional = ? and contrasenna = ?;';
+        return db.query(selectFuncionario, [correo, contrasenna]);
     }
 }
 

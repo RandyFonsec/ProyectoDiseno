@@ -17,7 +17,6 @@ routerAdmin.use(function(req, res, next) {
         res.send("No haz iniciado");
     }*/
     next();
-
 });
 //Home
 routerAdmin.get('/', (req, res) => {
@@ -40,7 +39,7 @@ routerAdmin.get('/registroFuncionario', async(req, res) => {
 });
 
 routerAdmin.post('/registroFuncionario', async(req, res) => {
-    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, alternas, rol } = req.body;
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, alternas, rol, contrasenna } = req.body;
     const funcionario = {
         identificacion,
         nombre,
@@ -53,7 +52,8 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
         esJefe,
         esDiscapacitado,
         alternas,
-        rol
+        rol,
+        contrasenna
     }
     if (!funcionario.esJefe) {
         funcionario.esJefe = 0;
