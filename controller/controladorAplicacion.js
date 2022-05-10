@@ -35,6 +35,10 @@ class ControladorAplicacion {
     eliminarFuncionario(identificacion) {
         return this.gestorFuncionarios.eliminarFuncionario(identificacion);
     }
+    agregarEstacionamiento (estacionamiento) {
+        return this.gestorEstacionamientos.agregarEstacionamiento (estacionamiento);
+    }
+
 }
 
 module.exports = ControladorAplicacion;

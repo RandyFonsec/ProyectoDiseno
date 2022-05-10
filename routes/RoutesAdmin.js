@@ -124,8 +124,23 @@ routerAdmin.get('/edicionEstacionamientos', (req, res) => {
     res.render('edicionEstacionamientos.ejs', { data: lista });
 });
 
-routerAdmin.get('/registroEstacionamiento', (req, res) => {
-    res.render('registroEstacionamiento.ejs');
+routerAdmin.get('/registroEstacionamiento', async (req, res) => {
+    const tiposEstacionamiento = await db.query('SELECT * FROM TipoEstacionamiento;');
+    res.render('registroEstacionamiento.ejs', { tiposEstacionamiento });
+});
+
+routerAdmin.post ('/registroEstacionamiento', async (req, res) => {
+    const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento } = req.body;
+    console.log(req.body);
+    const estacionamiento = {
+        identificador, 
+        ubicacion, 
+        horarioApertura, 
+        horarioCierre, 
+        tipoEstacionamiento, 
+    }
+    await controladorAplicacion.agregarEstacionamiento (estacionamiento);
+    res.send ('received');
 });
 
 routerAdmin.get('/edicionFuncionarios/:id', (req, res) => {
