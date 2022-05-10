@@ -40,7 +40,7 @@ routerAdmin.get('/registroFuncionario', async(req, res) => {
 });
 
 routerAdmin.post('/registroFuncionario', async(req, res) => {
-    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, rol } = req.body;
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, alternas, rol } = req.body;
     const funcionario = {
         identificacion,
         nombre,
@@ -52,6 +52,7 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
         departamento,
         esJefe,
         esDiscapacitado,
+        alternas,
         rol
     }
     if (!funcionario.esJefe) {
@@ -59,6 +60,9 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
     }
     if (!funcionario.esDiscapacitado) {
         funcionario.esDiscapacitado = 0;
+    }
+    if (!funcionario.alternas) {
+        funcionario.alternas = 0;
     }
     await controladorAplicacion.agregarFuncionario(funcionario);
     res.send('received');
@@ -84,7 +88,7 @@ routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
 });
 
 routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
-    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, rol } = req.body;
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, alternas, rol } = req.body;
     const funcionario = {
         identificacion,
         nombre,
@@ -96,13 +100,18 @@ routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
         departamento,
         esJefe,
         esDiscapacitado,
-        rol
+        alternas,
+        rol,
     }
+    console.log(alternas);
     if (!funcionario.esJefe) {
         funcionario.esJefe = 0;
     }
     if (!funcionario.esDiscapacitado) {
         funcionario.esDiscapacitado = 0;
+    }
+    if (!funcionario.alternas) {
+        funcionario.alternas = 0;
     }
     await controladorAplicacion.modificarFuncionario(funcionario);
     res.send('ok');
@@ -124,23 +133,23 @@ routerAdmin.get('/edicionEstacionamientos', (req, res) => {
     res.render('edicionEstacionamientos.ejs', { data: lista });
 });
 
-routerAdmin.get('/registroEstacionamiento', async (req, res) => {
+routerAdmin.get('/registroEstacionamiento', async(req, res) => {
     const tiposEstacionamiento = await db.query('SELECT * FROM TipoEstacionamiento;');
     res.render('registroEstacionamiento.ejs', { tiposEstacionamiento });
 });
 
-routerAdmin.post ('/registroEstacionamiento', async (req, res) => {
+routerAdmin.post('/registroEstacionamiento', async(req, res) => {
     const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento } = req.body;
     console.log(req.body);
     const estacionamiento = {
-        identificador, 
-        ubicacion, 
-        horarioApertura, 
-        horarioCierre, 
-        tipoEstacionamiento, 
+        identificador,
+        ubicacion,
+        horarioApertura,
+        horarioCierre,
+        tipoEstacionamiento,
     }
-    await controladorAplicacion.agregarEstacionamiento (estacionamiento);
-    res.send ('received');
+    await controladorAplicacion.agregarEstacionamiento(estacionamiento);
+    res.send('received');
 });
 
 routerAdmin.get('/edicionFuncionarios/:id', (req, res) => {

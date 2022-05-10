@@ -53,7 +53,7 @@
                   </select>
                 </div>
 
-                <div class="col-3">
+                <div class="col-2">
                     <div class="form-check align-text-bottom">
 
                         <%if (funcionario.jefe == 1) { %>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
 
-                <div class="col-3">
+                <div class="col-2">
                     <div class="form-check align-text-bottom">
                         <%if (funcionario.discapacidad == 1) { %>
                             <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esDiscapacitado" checked>
@@ -84,6 +84,24 @@
                                     <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esDiscapacitado">
                         <label class="form-check-label" for="flexCheckDefault">
                           Tiene alguna discapacidad
+                        </label>
+                            <% } %>
+
+
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check align-text-bottom">
+                        <%if (funcionario.notificacionesAlternas == 1) { %>
+                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="alternas" checked>
+                            <label class="form-check-label" for="flexCheckDefault">
+                          Notificaciones alternas
+                        </label>
+                            <label class="form-check-label" for="flexCheckDefault">
+                        <% } else { %>
+                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="alternas" >
+                            <label class="form-check-label" for="flexCheckDefault">
+                          Notificaciones alternas
                         </label>
                             <% } %>
 

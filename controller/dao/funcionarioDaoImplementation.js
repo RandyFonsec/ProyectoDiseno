@@ -15,8 +15,8 @@ class FuncionarioDaoImplementation extends DAO {
     }
 
     create(objeto) {
-        const insertFuncionario = 'INSERT INTO Funcionario (identificacion, nombre, primerApellido, segundoApellido, numeroCelular, correoInstitucional, correoAlterno, jefe, discapacidad, idDepartamento, idTipoFuncionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-        db.query(insertFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.departamento, objeto.rol], function(err, result) {
+        const insertFuncionario = 'INSERT INTO Funcionario (identificacion, nombre, primerApellido, segundoApellido, numeroCelular, correoInstitucional, correoAlterno, jefe, discapacidad, notificacionesAlternas, idDepartamento, idTipoFuncionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+        db.query(insertFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.alternas, objeto.departamento, objeto.rol], function(err, result) {
             if (err) {
                 console.log(err);
             } else {
@@ -28,7 +28,7 @@ class FuncionarioDaoImplementation extends DAO {
 
     update(objeto) {
         const updateFuncionario = 'UPDATE Funcionario SET identificacion = ?, nombre = ?, primerApellido = ?, segundoApellido = ?, numeroCelular = ?, correoInstitucional = ? , correoAlterno = ?, jefe = ?, discapacidad = ?, notificacionesAlternas = ?, idDepartamento = ?, idTipoFuncionario = ? WHERE identificacion = ?';
-        return db.query(updateFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, true, objeto.departamento, objeto.rol, objeto.identificacion]);
+        return db.query(updateFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.alternas, objeto.departamento, objeto.rol, objeto.identificacion]);
     }
 
     getAll() {
