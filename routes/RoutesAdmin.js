@@ -25,21 +25,20 @@ routerAdmin.get('/', (req, res) => {
 
 //TODO: Ver nombres xdd
 //TODO: Bug navbar
+
 //--------------------Funcionarios ??? 
-routerAdmin.get('/gestionFuncionarios', (req, res) => {
-    res.render('gestionFuncionarios.ejs');
+routerAdmin.get ('/gestionFuncionarios', (req, res) => {
+    res.render ('gestionFuncionarios.ejs');
 })
 
-routerAdmin.get('/registroFuncionario', async(req, res) => {
+routerAdmin.get ('/registroFuncionario', async (req, res) => {
     const departments_list = await db.query('SELECT * FROM Departamento');
-    res.render('registroFuncionario.ejs', { departments_list });
-    console.log()
-
-
+    res.render ('registroFuncionario.ejs', { departments_list });
 });
 
 routerAdmin.post('/registroFuncionario', async(req, res) => {
-    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, alternas, rol, contrasenna } = req.body;
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, 
+            departamento, esJefe, esDiscapacitado, alternas, rol, contrasenna } = req.body;
     const funcionario = {
         identificacion,
         nombre,
@@ -64,31 +63,31 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
     if (!funcionario.alternas) {
         funcionario.alternas = 0;
     }
-    await controladorAplicacion.agregarFuncionario(funcionario);
-    res.send('received');
+    await controladorAplicacion.agregarFuncionario (funcionario);
+    res.send ('received');
 });
 
-
-routerAdmin.get('/edicionFuncionarios', async(req, res) => {
+routerAdmin.get('/edicionFuncionarios', async (req, res) => {
     const { id } = req.query;
     if (id) {
-        let lista = await controladorAplicacion.obtenerFuncionario(id);
-        res.render('edicionFuncionarios.ejs', { data: lista });
+        let lista = await controladorAplicacion.obtenerFuncionario (id);
+        res.render ('edicionFuncionarios.ejs', { data: lista });
     } else {
-        let lista = await controladorAplicacion.obtenerFuncionarios();
-        res.render('edicionFuncionarios.ejs', { data: lista });
+        let lista = await controladorAplicacion.obtenerFuncionarios ();
+        res.render ('edicionFuncionarios.ejs', { data: lista });
     }
-
 });
-routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
+
+routerAdmin.get('/edicionFuncionario/:id', async (req, res) => {
     let { id } = req.params;
     let lista = await controladorAplicacion.obtenerFuncionario(id);
-    const departments_list = await db.query('SELECT * FROM Departamento');
+    const departments_list = await db.query ('SELECT * FROM Departamento');
     res.render('edicionFuncionario.ejs', { funcionario: lista[0], departments_list });
 });
 
 routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
-    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento, esJefe, esDiscapacitado, alternas, rol } = req.body;
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, 
+            departamento, esJefe, esDiscapacitado, alternas, rol } = req.body;
     const funcionario = {
         identificacion,
         nombre,
@@ -103,7 +102,6 @@ routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
         alternas,
         rol,
     }
-    console.log(alternas);
     if (!funcionario.esJefe) {
         funcionario.esJefe = 0;
     }
@@ -113,7 +111,7 @@ routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
     if (!funcionario.alternas) {
         funcionario.alternas = 0;
     }
-    await controladorAplicacion.modificarFuncionario(funcionario);
+    await controladorAplicacion.modificarFuncionario (funcionario);
     res.send('ok');
 });
 
@@ -124,23 +122,22 @@ routerAdmin.get('/eliminadoFuncionario/:id', async(req, res) => {
 });
 
 //--------------------Estacionamientos
-routerAdmin.get('/gestionEstacionamientos', (req, res) => {
-    res.render('gestionEstacionamientos.ejs');
+routerAdmin.get ('/gestionEstacionamientos', (req, res) => {
+    res.render ('gestionEstacionamientos.ejs');
 });
 
-routerAdmin.get('/edicionEstacionamientos', (req, res) => {
+/* routerAdmin.get('/edicionEstacionamientos', (req, res) => {
     let lista = [{ identificacion: 12, nombre: '1' }, { identificacion: 123, nombre: '121' }, { identificacion: 22212, nombre: '121311' }]
     res.render('edicionEstacionamientos.ejs', { data: lista });
+}); */
+
+routerAdmin.get ('/registroEstacionamiento', async (req, res) => {
+    const tiposEstacionamiento = await db.query ('SELECT * FROM TipoEstacionamiento;');
+    res.render ('registroEstacionamiento.ejs', { tiposEstacionamiento });
 });
 
-routerAdmin.get('/registroEstacionamiento', async(req, res) => {
-    const tiposEstacionamiento = await db.query('SELECT * FROM TipoEstacionamiento;');
-    res.render('registroEstacionamiento.ejs', { tiposEstacionamiento });
-});
-
-routerAdmin.post('/registroEstacionamiento', async(req, res) => {
+routerAdmin.post ('/registroEstacionamiento', async (req, res) => {
     const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento } = req.body;
-    console.log(req.body);
     const estacionamiento = {
         identificador,
         ubicacion,
@@ -148,15 +145,40 @@ routerAdmin.post('/registroEstacionamiento', async(req, res) => {
         horarioCierre,
         tipoEstacionamiento,
     }
-    await controladorAplicacion.agregarEstacionamiento(estacionamiento);
-    res.send('received');
+    await controladorAplicacion.agregarEstacionamiento (estacionamiento);
+    res.send ('received');
 });
 
-routerAdmin.get('/edicionFuncionarios/:id', (req, res) => {
+routerAdmin.get ('/edicionEstacionamientos', async (req, res) => {
+    const estacionamientos = await controladorAplicacion.obtenerEstacionamientos ();
+    res.render ('edicionEstacionamientos.ejs', { estacionamientos });
+
+}); 
+
+routerAdmin.get ('/edicionEstacionamiento/:id', async (req, res) => {
     let { id } = req.params;
-    console.log(id);
-    console.log("HERE");
-    res.send(id);
+    let estacionamiento = await controladorAplicacion.obtenerEstacionamiento (id);
+    const tiposEstacionamiento = await db.query ('SELECT * FROM TipoEstacionamiento');
+    res.render('edicionEstacionamiento.ejs', { estacionamiento : estacionamiento[0], tiposEstacionamiento });
+});
+
+routerAdmin.post ('/actualizarEstacionamiento/:id', async (req, res) => {
+    const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento } = req.body;
+    const estacionamiento = {
+        identificador,
+        ubicacion,
+        horarioApertura,
+        horarioCierre,
+        tipoEstacionamiento,
+    }
+    await controladorAplicacion.modificarEstacionamiento (estacionamiento);
+    res.send ('received');
+});
+
+routerAdmin.get ('/eliminarEstacionamiento/:id', async (req, res) => {
+    let { id } = req.params;
+    await controladorAplicacion.eliminarEstacionamiento (id);
+    res.send('ok');
 });
 
 //--------------------Espacios

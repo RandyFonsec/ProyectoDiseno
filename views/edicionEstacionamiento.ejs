@@ -1,38 +1,47 @@
 <%- include ('partials/_headerAdmin')  %>
     <div class="container my-4 d-flex justify-content-center">
-
-        <form>
-
+        <form id="content" action="/admin/actualizarEstacionamiento/<%=estacionamiento.identificador%>" method="post">
+            <div class="mb-3">
+                <label for="iden" class="form-label">Identificador:</label>
+                <input type="text" name="identificador" class="form-control" id="iden" value="<%=estacionamiento.identificador%>" readonly required>
+            </div>
             <div class="mb-3">
                 <label for="ub" class="form-label">Ubicación:</label>
-                <input type="text" class="form-control" id="ub">
+                <input type="text" name="ubicacion" class="form-control" id="ub" value="<%=estacionamiento.ubicacion%>" required>
             </div>
             <div class="mb-3">
                 <div class="container">
                     <div class="row">
                         <div class="col-5">
                             <label for="aper" class="form-label">Horario apertura:</label>
-                            <input type="text" class="form-control" id="aper">
+                            <input type="text" name="horarioApertura" class="form-control" id="aper" value="<%=estacionamiento.horaApertura%>" required>
                         </div>
                         <div class="col-2"></div>
                         <div class="col-5">
                             <label for="cie" class="form-label">Horario cierre:</label>
-                            <input type="text" class="form-control" id="cie">
+                            <input type="text" name="horarioCierre" class="form-control" id="cie" value="<%=estacionamiento.horaCierre%>" required>
                         </div>
                     </div>
+                </div>
+            </div>
+            <label class="mb-3" for="depar">Tipo de estacionamiento:</label>
+            <div id="depar" class="row mb-3">
+                <div class="col-6"><select name="tipoEstacionamiento" class="form-select" aria-label="Default select example">
+                    <% tiposEstacionamiento.forEach (function (tipoEstacionamiento) { %>
+                        <%if(tipoEstacionamiento.idTipoEstacionamiento == estacionamiento.idTipoEstacionamiento){%>
+                            <option selected value="<%=estacionamiento.idTipoEstacionamiento%>"><%= tipoEstacionamiento.tipoEstacionamiento %></option>
+                        <%}else{%>
+                            <option value="<%=tipoEstacionamiento.idTipoEstacionamiento%>"><%= tipoEstacionamiento.tipoEstacionamiento %></option>
+                        <%}%>
+                    <% }) %>
+                  </select>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlFile1">Fotografía:</label>
                 <input type="file" class="form-control" id="exampleFormControlFile1">
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Señas:</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Agregar</button>
+            <button type="submit" class="btn btn-primary">Modificar estacionamiento</button>
         </form>
     </div>
-
-    <%- include ('partials/_footerAdmin')  %>
+<%- include ('partials/_footerAdmin')  %>

@@ -19,11 +19,31 @@ class EstacionamientoDaoImplementation extends DAO {
         db.query (insertEstacionamiento, [objeto.identificador, objeto.ubicacion, objeto.horarioApertura, objeto.horarioCierre, objeto.tipoEstacionamiento], function(err, result) {
             if (err) {
                 console.log (err);
+            } else {
+                console.log("Estacionamiento Id:- " + result.insertId); 
             }
-            else {
-                console.log("Estacionamiento Id:- " + result.insertId); }
-        }
-    );
+        });
+    }
+
+    update (objeto) {
+        const updateEstacionamiento = 'UPDATE Estacionamiento SET identificador = ?, ubicacion = ?, horaApertura = ?, horaCierre = ?, idTipoEstacionamiento = ? WHERE identificador = ?';
+        return db.query (updateEstacionamiento, [objeto.identificador, objeto.ubicacion, objeto.horarioApertura, objeto.horarioCierre,objeto.tipoEstacionamiento, objeto.identificador]);
+    }
+
+    getAll () {
+        const selectEstacionamiento = 'SELECT * FROM Estacionamiento WHERE eliminado = 0';
+        return db.query(selectEstacionamiento);
+    }
+
+    get (key) {
+        const selectEstacionamiento = 'SELECT * FROM Estacionamiento WHERE identificador = ?;';
+        return db.query(selectEstacionamiento, [key]);
+    }
+
+
+    delete (key) {
+        const updateEstacionamiento = 'UPDATE Estacionamiento SET eliminado = 1 WHERE identificador = ?';
+        return db.query(updateEstacionamiento, [key]);
     }
 
 }

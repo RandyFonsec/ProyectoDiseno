@@ -35,12 +35,29 @@ class ControladorAplicacion {
     eliminarFuncionario(identificacion) {
         return this.gestorFuncionarios.eliminarFuncionario(identificacion);
     }
-    agregarEstacionamiento(estacionamiento) {
-        return this.gestorEstacionamientos.agregarEstacionamiento(estacionamiento);
-    }
 
     validarFuncionario(correo, contrasenna) {
         return this.gestorFuncionarios.validarFuncionario(correo, contrasenna);
+    }
+
+    agregarEstacionamiento (estacionamiento) {
+        return this.gestorEstacionamientos.agregarEstacionamiento (estacionamiento);
+    }
+
+    modificarEstacionamiento (estacionamiento) {
+        return this.gestorEstacionamientos.modificarEstacionamiento (estacionamiento);
+    }
+
+    obtenerEstacionamientos () {
+        return this.gestorEstacionamientos.obtenerEstacionamientos ();
+    }
+
+    obtenerEstacionamiento (key) {
+        return this.gestorEstacionamientos.obtenerEstacionamiento (key);
+    }
+
+    eliminarEstacionamiento (identificador) {
+        return this.gestorEstacionamientos.eliminarEstacionamiento (identificador);
     }
 
 }
