@@ -9,8 +9,8 @@ var routerFuncionario = express.Router();
 const db = require('../controller/dao/dbconnection');
 
 //Valida que haya iniciado la sesión
-routerAdmin.use(function(req, res, next) {
-    /*if (req.session.loggedin) {
+routerFuncionario.use(function(req, res, next) {
+    /*if (req.session.loggedin and typeof req.session.userInfo != 'undefined') {
         next();
     } else {
         res.send("No haz iniciado");
@@ -20,9 +20,15 @@ routerAdmin.use(function(req, res, next) {
 
 
 //Home
-routerAdmin.get('/', (req, res) => {
-    res.render('gestionFuncionarios.ejs');
+routerFuncionario.get('/', (req, res) => {
+    res.render('gestionPlacas.ejs');
 })
+
+routerFuncionario.post('/gestionPlacas', (req, res) => {
+    res.render('gestionPlacas.ejs')
+})
+
+
 
 
 //export this router to use in our index.js

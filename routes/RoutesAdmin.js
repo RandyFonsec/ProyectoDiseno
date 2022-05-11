@@ -11,7 +11,7 @@ const GestorFuncionarios = require('../controller/gestorFuncionarios');
 
 //Valida que haya iniciado la sesión
 routerAdmin.use(function(req, res, next) {
-    /*if (req.session.loggedin) {
+    /*if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
         next();
     } else {
         res.send("No haz iniciado");

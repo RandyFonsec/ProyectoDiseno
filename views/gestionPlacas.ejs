@@ -1,19 +1,63 @@
-<%- include ('partials/_headerAdmin')  %>
-    <div class="container d-flex justify-content-center">
-        <div class="card text-center m-3  ">
-            <div class="card-header">
-                Gestión de placas
+<%- include ('partials/_headerFuncionario')  %>
+    <div class="container my-4 d-flex justify-content-center">
+
+        <div class="row">
+            <div class="row">
+                <label for="" class="fs-2 text mb-4">Consulta funcionarios:</label>
             </div>
-            <div class="card-body text-center">
-                <div class="mx-auto">
-                    <a class="btn btn-primary mx-auto mb-4" href="#" role="button">Agregar nueva placa</a>
+
+
+            <form action="funcionario/gestionPlacas" method="post">
+                <div class="mb-3">
+                    <div class="row">
+                        <label for="id" class="form-label">Agregar placa:</label>
+                        <div class="col">
+                            <input type="text" name="idPlaca" class="form-control" id="id" required>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="mx-auto">
-                    <a class="btn btn-primary mx-auto mb-4" href="edicionEstacionamientos" role="button">Consultar placas</a>
+            </form>
+
+
+            <div class="row my-5">
+                <label for="lista" class="my-3 fs-3 text">Lista de placas asociadas:</label>
+                <div id="lista" class="container">
+
+                    <%if(typeof data != 'undefined'){%>
+                        <%for(var i=0; i<data.length;i++){%>
+                            <div class="row my-3">
+                                <div class="col-3">
+                                    <label for="">Id: <%=data[i].placa%></label>
+                                </div>
+                                <div class="col-3">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <a href="edicionFuncionario/<%=data[i].idPlaca%>" class="btn btn-primary " role="button">Editar</a>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="eliminadoFuncionario/<%=data[i].idPlaca%>" class="btn btn-danger " role="button">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+                                <%}%>
+
                 </div>
             </div>
+
+
+
         </div>
+
+
+
+
     </div>
 
-
-    <%- include ('partials/_footerAdmin')  %>
+    <%- include ('partials/_footerFuncionario')  %>
