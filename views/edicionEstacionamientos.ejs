@@ -2,24 +2,6 @@
     <div class="container my-4 d-flex justify-content-center">
 
         <div class="row">
-            <div class="row">
-                <label for="" class="fs-2 text mb-4">Consulta estacionamientos:</label>
-            </div>
-
-
-            <form action="edicionFuncionarios" method="get">
-                <div class="mb-3">
-                    <div class="row">
-                        <label for="id" class="form-label">Id estacionamiento:</label>
-                        <div class="col">
-                            <input type="number" name="id" class="form-control" id="id" required>
-                        </div>
-                        <div class="col">
-                            <input type="submit" class="btn btn-primary">
-                        </div>
-                    </div>
-                </div>
-            </form>
 
 
             <div class="row my-5">
@@ -32,16 +14,16 @@
                                 <div class="col-3">
                                     <label for="">Identificador: <%=estacionamientos[estacionamiento].identificador%></label>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-9">
                                     <div class="container">
                                         <div class="row">
-                                            <div class="col-4">
+                                            <div class="col-2">
                                                 <a href="edicionEstacionamiento/<%=estacionamientos[estacionamiento].identificador%>" class="btn btn-primary " role="button">Editar</a>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-2">
                                                 <a href="eliminarEstacionamiento/<%=estacionamientos[estacionamiento].identificador%>" class="btn btn-danger " role="button">Eliminar</a>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-2">
                                                 <a href="edicionEspacios/<%=estacionamientos[estacionamiento].identificador%>" class="btn btn-info " role="button">Espacios</a>
                                             </div>
                                         </div>
