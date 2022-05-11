@@ -20,12 +20,14 @@ routerFuncionario.use(function(req, res, next) {
 
 
 //Home
-routerFuncionario.get('/', (req, res) => {
-    res.render('gestionPlacas.ejs');
+routerFuncionario.get('/', async(req, res) => {
+    const placas = await controladorAplicacion.obtenerPlacas(session.userInfo.identificacion);
+    res.render('gestionPlacas.ejs', { data: placas });
 })
 
-routerFuncionario.post('/gestionPlacas', (req, res) => {
-    res.render('gestionPlacas.ejs')
+routerFuncionario.post('/gestionPlacas', async(req, res) => {
+    console.log(session.userInfo);
+
 })
 
 

@@ -40,26 +40,37 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.validarFuncionario(correo, contrasenna);
     }
 
-    agregarEstacionamiento (estacionamiento) {
-        return this.gestorEstacionamientos.agregarEstacionamiento (estacionamiento);
+    agregarEstacionamiento(estacionamiento) {
+        return this.gestorEstacionamientos.agregarEstacionamiento(estacionamiento);
     }
 
-    modificarEstacionamiento (estacionamiento) {
-        return this.gestorEstacionamientos.modificarEstacionamiento (estacionamiento);
+    modificarEstacionamiento(estacionamiento) {
+        return this.gestorEstacionamientos.modificarEstacionamiento(estacionamiento);
     }
 
-    obtenerEstacionamientos () {
-        return this.gestorEstacionamientos.obtenerEstacionamientos ();
+    obtenerEstacionamientos() {
+        return this.gestorEstacionamientos.obtenerEstacionamientos();
     }
 
-    obtenerEstacionamiento (key) {
-        return this.gestorEstacionamientos.obtenerEstacionamiento (key);
+    obtenerEstacionamiento(key) {
+        return this.gestorEstacionamientos.obtenerEstacionamiento(key);
     }
 
-    eliminarEstacionamiento (identificador) {
-        return this.gestorEstacionamientos.eliminarEstacionamiento (identificador);
+    eliminarEstacionamiento(identificador) {
+        return this.gestorEstacionamientos.eliminarEstacionamiento(identificador);
     }
 
+    obtenerDepartamentos() {
+        return this.gestorFuncionarios.obtenerDepartamentos();
+    }
+
+    obtenerTiposEstacionamiento() {
+        return this.gestorEstacionamientos.obtenerTiposEstacionamiento();
+    }
+
+    obtenerPlacas(identificacion) {
+        return this.gestorFuncionarios.obtenerPlacas(identificacion);
+    }
 }
 
 module.exports = ControladorAplicacion;

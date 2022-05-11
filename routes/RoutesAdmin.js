@@ -32,7 +32,7 @@ routerAdmin.get('/gestionFuncionarios', (req, res) => {
 })
 
 routerAdmin.get('/registroFuncionario', async(req, res) => {
-    const departments_list = await db.query('SELECT * FROM Departamento');
+    const departments_list = await controladorAplicacion.obtenerDepartamentos();
     res.render('registroFuncionario.ejs', { departments_list });
 });
 
@@ -94,7 +94,7 @@ routerAdmin.get('/edicionFuncionarios', async(req, res) => {
 routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
     let { id } = req.params;
     let lista = await controladorAplicacion.obtenerFuncionario(id);
-    const departments_list = await db.query('SELECT * FROM Departamento');
+    const departments_list = await controladorAplicacion.obtenerDepartamentos();
     res.render('edicionFuncionario.ejs', { funcionario: lista[0], departments_list });
 });
 
@@ -158,7 +158,7 @@ routerAdmin.get('/gestionEstacionamientos', (req, res) => {
 }); */
 
 routerAdmin.get('/registroEstacionamiento', async(req, res) => {
-    const tiposEstacionamiento = await db.query('SELECT * FROM TipoEstacionamiento;');
+    const tiposEstacionamiento = await controladorAplicacion.obtenerT
     res.render('registroEstacionamiento.ejs', { tiposEstacionamiento });
 });
 
@@ -184,7 +184,7 @@ routerAdmin.get('/edicionEstacionamientos', async(req, res) => {
 routerAdmin.get('/edicionEstacionamiento/:id', async(req, res) => {
     let { id } = req.params;
     let estacionamiento = await controladorAplicacion.obtenerEstacionamiento(id);
-    const tiposEstacionamiento = await db.query('SELECT * FROM TipoEstacionamiento');
+    const tiposEstacionamiento = await controladorAplicacion.obtenerTiposEstacionamiento();
     res.render('edicionEstacionamiento.ejs', { estacionamiento: estacionamiento[0], tiposEstacionamiento });
 });
 

@@ -1,5 +1,7 @@
 const FuncionarioDaoImplementation = require('./dao/funcionarioDaoImplementation');
+const UtilsDaoImplementation = require('./dao/utilsDaoImplementation');
 const funcionarioDaoImplementation = new FuncionarioDaoImplementation();
+const utilsDaoImplementation = new UtilsDaoImplementation();
 
 class GestorFuncionarios {
 
@@ -9,7 +11,7 @@ class GestorFuncionarios {
         const resultado = funcionarioDaoImplementation.create(funcionario);
         return resultado != undefined ? true : false;
     }
-    
+
     obtenerFuncionarios() {
         const resultado = funcionarioDaoImplementation.getAll();
         return resultado;
@@ -32,6 +34,16 @@ class GestorFuncionarios {
 
     validarFuncionario(correo, contrasenna) {
         const resultado = funcionarioDaoImplementation.get(correo, contrasenna);
+        return resultado;
+    }
+
+    obtenerDepartamentos() {
+        const resultado = utilsDaoImplementation.getDepartamentos();
+        return resultado;
+    }
+
+    obtenePlacas(identificacion) {
+        const resultado = utilsDaoImplementation.getPlacas(identificacion);
         return resultado;
     }
 }
