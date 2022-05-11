@@ -26,26 +26,23 @@
                 <label for="lista" class="my-3 fs-3 text">Lista de estacionamientos:</label>
                 <div id="lista" class="container">
 
-                    <%if(data){%>
-                        <%for(var i=0; i<data.length;i++){%>
+                    <%if (estacionamientos){%>
+                        <%for (var estacionamiento = 0; estacionamiento < estacionamientos.length; estacionamiento++) {%>
                             <div class="row my-3">
                                 <div class="col-3">
-                                    <label for="">Id: <%=data[i].identificacion%></label>
-                                </div>
-                                <div class="col-3">
-                                    <label for="">Nombre: <%=data[i].nombre%></label>
+                                    <label for="">Identificador: <%=estacionamientos[estacionamiento].identificador%></label>
                                 </div>
                                 <div class="col-3">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-4">
-                                                <a href="/edicionFuncionario/<%=data[i].identificacion%>" class="btn btn-primary " role="button">Editar</a>
+                                                <a href="edicionEstacionamiento/<%=estacionamientos[estacionamiento].identificador%>" class="btn btn-primary " role="button">Editar</a>
                                             </div>
                                             <div class="col-4">
-                                                <a href="/eliminadoFuncionario/<%=data[i].identificacion%>" class="btn btn-danger " role="button">Eliminar</a>
+                                                <a href="eliminarEstacionamiento/<%=estacionamientos[estacionamiento].identificador%>" class="btn btn-danger " role="button">Eliminar</a>
                                             </div>
                                             <div class="col-4">
-                                                <a href="edicionEspacios/<%=data[i].identificacion%>" class="btn btn-info " role="button">Espacios</a>
+                                                <a href="edicionEspacios/<%=estacionamientos[estacionamiento].identificador%>" class="btn btn-info " role="button">Espacios</a>
                                             </div>
                                         </div>
                                     </div>

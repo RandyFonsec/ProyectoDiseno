@@ -9,6 +9,7 @@ class GestorFuncionarios {
         const resultado = funcionarioDaoImplementation.create(funcionario);
         return resultado != undefined ? true : false;
     }
+    
     obtenerFuncionarios() {
         const resultado = funcionarioDaoImplementation.getAll();
         return resultado;
