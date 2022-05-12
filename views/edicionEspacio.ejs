@@ -1,0 +1,34 @@
+<%- include ('partials/_headerAdmin')  %>
+    <div class="container my-4 d-flex justify-content-center">
+        <form id="content" action="/admin/gestionEspacios/actualizarEspacio/<%=espacio.identificador%>" method="post">
+        <div class="row">
+            
+            <div class="mb-3">
+                <label for="iden" class="form-label">Identificador:</label>
+                <input type="text" name="identificador" class="form-control" id="iden" value="<%=espacio.identificador%>" readonly required>
+            </div>
+
+            <label class="mb-3" for="depar">Tipo de espacio:</label>
+            <div id="depar" class="row mb-3">
+                <div class="col-6"><select name="tipoEspacio" class="form-select" aria-label="Default select example">
+                    <% tiposEspacio.forEach (function (tipoEspacio) { %>
+                        <%if(tipoEspacio.idTipoEspacio == espacio.idTipoEspacio){%>
+                            <option selected value="<%=tipoEspacio.idTipoEspacio%>"><%= tipoEspacio.tipoEspacio %></option>
+                        <%}else{%>
+                            <option value="<%=tipoEspacio.idTipoEspacio%>"><%= tipoEspacio.tipoEspacio %></option>
+                        <%}%>
+                    <% }) %>
+                  </select>
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary">Modificar espacio</button>
+                </div>
+            </div>        
+
+        </div>
+
+    </div>
+
+
+
+    <%- include ('partials/_footerAdmin')  %>

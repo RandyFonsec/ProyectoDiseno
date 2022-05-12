@@ -36,8 +36,13 @@ class GestorEstacionamientos {
         return resultado;
     }
 
-    obtenerEspacios () {
-        const resultado = utilsDaoImplementation.getEspacios ();
+    obtenerEspacio (identificador) {
+        const resultado = utilsDaoImplementation.getEspacio (identificador);
+        return resultado;
+    }
+
+    obtenerEspacios (idEstacionamiento) {
+        const resultado = utilsDaoImplementation.getEspacios (idEstacionamiento);
         return resultado;
     }
 

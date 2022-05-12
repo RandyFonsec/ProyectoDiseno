@@ -3,14 +3,15 @@
 
         <div class="row">
             <div class="row">
-                <label for="" class="fs-2 text mb-4">Consulta placas:</label>
+                <label for="" class="fs-2 text mb-4">Gestión de placas:</label>
             </div>
 
 
             <form action="funcionario/gestionPlacas" method="post">
                 <div class="mb-3">
                     <div class="row">
-                        <label for="id" class="form-label">Agregar placa:</label>
+                        <label for="" class="fs-3 text mb-4">Agregar placa:</label>
+                        <label for="id" class="form-label">Placa:</label>
                         <div class="col">
                             <input type="text" name="idPlaca" class="form-control" id="id" required>
                         </div>
@@ -23,7 +24,7 @@
 
 
             <div class="row my-5">
-                <label for="lista" class="my-3 fs-3 text">Lista de placas asociadas:</label>
+                <label for="lista" class="my-3 fs-3 text">Lista de placas autorizadas:</label>
                 <div id="lista" class="container">
 
                     <%if(typeof data != 'undefined'){%>

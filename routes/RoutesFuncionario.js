@@ -25,6 +25,7 @@ routerFuncionario.use(function(req, res, next) {
 //Home
 routerFuncionario.get('/', async(req, res) => {
     const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.identificacion);
+    console.log(placas);
     res.render('gestionPlacas.ejs', { data: placas });
 });
 

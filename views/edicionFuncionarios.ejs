@@ -1,12 +1,9 @@
 <%- include ('partials/_headerAdmin')  %>
     <div class="container my-4 d-flex justify-content-center">
-
         <div class="row">
             <div class="row">
                 <label for="" class="fs-2 text mb-4">Consulta funcionarios:</label>
             </div>
-
-
             <form action="edicionFuncionarios" method="get">
                 <div class="mb-3">
                     <div class="row">
@@ -20,20 +17,17 @@
                     </div>
                 </div>
             </form>
-
-
             <div class="row my-5">
-                <label for="lista" class="my-3 fs-3 text">Lista de funcionarios:</label>
+                <label for="lista" class="my-3 fs-3 text">Lista de funcionarios registrados:</label>
                 <div id="lista" class="container">
-
                     <%if(data){%>
                         <%for(var i=0; i<data.length;i++){%>
                             <div class="row my-3">
                                 <div class="col-3">
-                                    <label for="">Id: <%=data[i].identificacion%></label>
+                                    <label for="">Identificación: <%=data[i].identificacion%></label>
                                 </div>
                                 <div class="col-3">
-                                    <label for="">Nombre: <%=data[i].nombre%></label>
+                                    <label for="">Nombre: <%=data[i].nombre%> <%=data[i].primerApellido%> <%=data[i].segundoApellido%></label>
                                 </div>
                                 <div class="col-3">
                                     <div class="container">
@@ -42,27 +36,16 @@
                                                 <a href="edicionFuncionario/<%=data[i].identificacion%>" class="btn btn-primary " role="button">Editar</a>
                                             </div>
                                             <div class="col-4">
-                                                <a href="eliminadoFuncionario/<%=data[i].identificacion%>" class="btn btn-danger " role="button">Eliminar</a>
+                                                <a href="eliminarFuncionario/<%=data[i].identificacion%>" class="btn btn-danger " role="button">Eliminar</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <%}%>
-                                <%}%>
-
+                        <%}%>
+                    <%}%>
                 </div>
             </div>
-
-
-
         </div>
-
-
-
-
     </div>
-
-
-
-    <%- include ('partials/_footerAdmin')  %>
+<%- include ('partials/_footerAdmin')  %>

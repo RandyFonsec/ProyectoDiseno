@@ -1,5 +1,6 @@
 const FuncionarioDaoImplementation = require('./dao/funcionarioDaoImplementation');
 const UtilsDaoImplementation = require('./dao/utilsDaoImplementation');
+
 const funcionarioDaoImplementation = new FuncionarioDaoImplementation();
 const utilsDaoImplementation = new UtilsDaoImplementation();
 
@@ -33,7 +34,7 @@ class GestorFuncionarios {
     }
 
     validarFuncionario(correo, contrasenna) {
-        const resultado = funcionarioDaoImplementation.get(correo, contrasenna);
+        const resultado = funcionarioDaoImplementation.getByMail (correo, contrasenna);
         return resultado;
     }
 

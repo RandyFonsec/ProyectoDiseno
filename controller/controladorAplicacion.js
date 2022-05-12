@@ -68,8 +68,12 @@ class ControladorAplicacion {
         return this.gestorEstacionamientos.obtenerTiposEstacionamiento();
     }
 
-    obtenerEspacios () {
-        return this.gestorEstacionamientos.obtenerEspacios();
+    obtenerEspacio (identificador) {
+        return this.gestorEstacionamientos.obtenerEspacio (identificador);
+    }
+
+    obtenerEspacios (idEstacionamiento) {
+        return this.gestorEstacionamientos.obtenerEspacios(idEstacionamiento);
     }
 
     obtenerTiposEspacio () {
@@ -79,6 +83,7 @@ class ControladorAplicacion {
     obtenerPlacas(identificacion) {
         return this.gestorFuncionarios.obtenerPlacas (identificacion);
     }
+    
 
     agregarEspacio (espacio) {
         return this.gestorEstacionamientos.agregarEspacio (espacio);

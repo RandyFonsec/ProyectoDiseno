@@ -47,15 +47,16 @@ class UtilsDaoImplementation extends DAO {
     getTiposEspacio () {
         return db.query ('SELECT * FROM TipoEspacio') ;
     }
+
+    getEspacio (key) {
+        const getEspacio = 'SELECT * FROM Espacio WHERE eliminado = 0 and identificador = ?;' ;
+        return db.query (getEspacio, [key]);
+    }
     
-    getEspacios () {
-        return db.query ('SELECT * FROM Espacio WHERE eliminado = 0;') ;
+    getEspacios (idEstacionamiento) {
+        const getEspacios = 'SELECT * FROM Espacio WHERE eliminado = 0 AND idEstacionamiento = ?;' ;
+        return db.query (getEspacios, [idEstacionamiento]);
     }
-
-    getPlacas (identificacion) {
-        return db.query('SELECT * FROM Placa WHERE idFuncionario = (SELECT idFuncionario from Funcionario WHERE identificacion = ?)', [identificacion]);
-    }
-
     createEspacio (objeto) {
         const insertEspacio = 'INSERT INTO Espacio (identificador, idTipoEspacio, idEstacionamiento) VALUES (?, ?, ?);';
         return db.query(insertEspacio, [objeto.identificador, objeto.tipoEspacio, objeto.id]);

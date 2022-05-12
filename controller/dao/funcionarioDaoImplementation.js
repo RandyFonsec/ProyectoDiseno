@@ -25,7 +25,6 @@ class FuncionarioDaoImplementation extends DAO {
         });
     }
 
-
     update(objeto) {
         const updateFuncionario = 'UPDATE Funcionario SET identificacion = ?, nombre = ?, primerApellido = ?, segundoApellido = ?, numeroCelular = ?, correoInstitucional = ? , correoAlterno = ?, jefe = ?, discapacidad = ?, notificacionesAlternas = ?, idDepartamento = ?, idTipoFuncionario = ? WHERE identificacion = ?';
         return db.query(updateFuncionario, [objeto.identificacion, objeto.nombre, objeto.apellido1, objeto.apellido2, objeto.telefono, objeto.correo, objeto.correoAlterno, objeto.esJefe, objeto.esDiscapacitado, objeto.alternas, objeto.departamento, objeto.rol, objeto.identificacion]);
@@ -36,22 +35,22 @@ class FuncionarioDaoImplementation extends DAO {
         return db.query(selectFuncionario);
     }
 
-    get(key) {
+    get (key) {
         const selectFuncionario = 'SELECT * FROM Funcionario WHERE identificacion = ?';
-        const res = db.query(selectFuncionario, [key]);
-        return res;
+        return db.query(selectFuncionario, [key]);
     }
 
-
-    delete(key) {
+    delete (key) {
         const updateFuncionario = 'UPDATE Funcionario SET eliminado = 1 WHERE identificacion = ?';
         return db.query(updateFuncionario, [key]);
     }
 
-    get(correo, contrasenna) {
-        const selectFuncionario = 'SELECT * FROM Funcionario WHERE correoInstitucional = ? and contrasenna = ?;';
+    getByMail (correo, contrasenna) {
+        console.log("erroneo");
+        const selectFuncionario = 'SELECT * FROM Funcionario WHERE correoInstitucional = ? and contrasenna = ? and eliminado = 0;';
         return db.query(selectFuncionario, [correo, contrasenna]);
     }
+
 }
 
 module.exports = FuncionarioDaoImplementation;

@@ -14,8 +14,6 @@ const GestorFuncionarios = require('../controller/gestorFuncionarios');
 const dias = ['l', 'k', 'm', 'j', 'v', 's'];
 const periodos = ['m', 't', 'n'];
 
-
-
 //Valida que haya iniciado la sesión
 routerAdmin.use(function(req, res, next) {
     /*if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
@@ -23,8 +21,9 @@ routerAdmin.use(function(req, res, next) {
     } else {
         res.send("No haz iniciado");
     }*/
-    next();
+    next(); 
 });
+
 //Home
 routerAdmin.get('/', (req, res) => {
     res.render('gestionFuncionarios.ejs');
@@ -33,7 +32,7 @@ routerAdmin.get('/', (req, res) => {
 //TODO: Ver nombres xdd
 //TODO: Bug navbar
 
-//--------------------Funcionarios ??? 
+// ----- Funcionarios -----
 routerAdmin.get('/gestionFuncionarios', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
@@ -84,7 +83,8 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
         funcionario.alternas = 0;
     }
     await controladorAplicacion.agregarFuncionario(funcionario);
-    res.send('received');
+    // res.render ('gestionFuncionarios.ejs');
+    res.redirect ('/admin/gestionFuncionarios');
 });
 
 routerAdmin.get('/edicionFuncionarios', async(req, res) => {
@@ -100,11 +100,11 @@ routerAdmin.get('/edicionFuncionarios', async(req, res) => {
 
 routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
     let { id } = req.params;
-    let lista = await controladorAplicacion.obtenerFuncionario(id);
-    console.log(lista) ;
+    console.log("id" + id);
+    let funcionario = await controladorAplicacion.obtenerFuncionario(id);
+    console.log(funcionario) ;
     const departments_list = await controladorAplicacion.obtenerDepartamentos();
-    console.log(lista);
-    res.render('edicionFuncionario.ejs', { funcionario: lista[0], departments_list });
+    res.render('edicionFuncionario.ejs', { funcionario: funcionario[0], departments_list });
 });
 
 routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
@@ -146,18 +146,17 @@ routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
         funcionario.alternas = 0;
     }
     await controladorAplicacion.modificarFuncionario(funcionario);
-    res.send('ok');
+    res.redirect ('/admin/gestionFuncionarios');
 });
 
-routerAdmin.get('/eliminadoFuncionario/:id', async(req, res) => {
+routerAdmin.get('/eliminarFuncionario/:id', async(req, res) => {
     let { id } = req.params;
     await controladorAplicacion.eliminarFuncionario(id);
-    res.send('ok');
+    res.redirect ('/admin/gestionFuncionarios');
 });
 
-//--------------------Estacionamientos
+// Estacionamientos
 routerAdmin.get('/gestionEstacionamientos', (req, res) => {
-
     res.render('gestionEstacionamientos.ejs');
 });
 
@@ -181,13 +180,12 @@ routerAdmin.post('/registroEstacionamiento', async(req, res) => {
         tipoEstacionamiento,
     }
     await controladorAplicacion.agregarEstacionamiento(estacionamiento);
-    res.send('received');
+    res.redirect ('/admin/gestionEstacionamientos');
 });
 
 routerAdmin.get('/edicionEstacionamientos', async(req, res) => {
     const estacionamientos = await controladorAplicacion.obtenerEstacionamientos();
     res.render('edicionEstacionamientos.ejs', { estacionamientos });
-
 });
 
 routerAdmin.get('/edicionEstacionamiento/:id', async(req, res) => {
@@ -207,13 +205,13 @@ routerAdmin.post('/actualizarEstacionamiento/:id', async(req, res) => {
         tipoEstacionamiento,
     }
     await controladorAplicacion.modificarEstacionamiento(estacionamiento);
-    res.send('received');
+    res.redirect ('/admin/gestionEstacionamientos');
 });
 
 routerAdmin.get('/eliminarEstacionamiento/:id', async(req, res) => {
     let { id } = req.params;
     await controladorAplicacion.eliminarEstacionamiento(id);
-    res.send('ok');
+    res.redirect ('/admin/gestionEstacionamientos');
 });
 
 //--------------------Espacios
@@ -225,7 +223,7 @@ routerAdmin.get('/eliminarEstacionamiento/:id', async(req, res) => {
 routerAdmin.get ('/gestionEspacios/:id', async (req, res) => {
     const { id } = req.params ;
     const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio ();
-    const espacios = await controladorAplicacion.obtenerEspacios ();
+    const espacios = await controladorAplicacion.obtenerEspacios (id);
     res.render ('gestionEspacios.ejs', { espacios, tiposEspacio, idEstacionamiento : id })
 })
 
@@ -238,23 +236,30 @@ routerAdmin.post ('/registroEspacio/:id', async (req, res) => {
         id
     }
     await controladorAplicacion.agregarEspacio(espacio);
-    res.send('received');
+    res.redirect ('/admin/edicionEstacionamientos');
 });
 
 routerAdmin.get ('/gestionEspacios/edicionEspacio/:id', async (req, res) => {
+    let {id} = req.params;
+    const espacio = await controladorAplicacion.obtenerEspacio (id) ;
+    const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio ();
+    res.render ('edicionEspacio.ejs', { espacio : espacio[0], tiposEspacio })
+});
+
+routerAdmin.post ('/gestionEspacios/actualizarEspacio/:id', async (req, res) => {
     const { identificador, tipoEspacio } = req.body;
     const espacio = {
         identificador,
         tipoEspacio
     }
     await controladorAplicacion.modificarEspacio (espacio);
-    res.send('received');
+    res.redirect ('/admin/edicionEstacionamientos');
 });
 
 routerAdmin.get ('/gestionEspacios/eliminarEspacio/:id', async(req, res) => {
     let { id } = req.params;
     await controladorAplicacion.eliminarEspacio (id);
-    res.send('ok');
+    res.redirect ('/admin/edicionEstacionamientos');
 });
 
 //--------------------Placas
@@ -264,29 +269,19 @@ routerAdmin.get('/gestionPlacas', (req, res) => {
 });
 
 
-//---------------------Informes
+// Informes
 
 routerAdmin.get('/reportes', (req, res) => {
     res.render("reportes.ejs");
 });
 
 routerAdmin.get('/reporteGrafica', async(req, res) => {
-
     let manana = await controladorAplicacion.getCantidadxFranja('m');
     let tarde = await controladorAplicacion.getCantidadxFranja('t');
     let noche = await controladorAplicacion.getCantidadxFranja('n');
-
-    console.log(manana);
-    console.log(tarde);
-    console.log(noche);
-
-
     let listaManana = [0, 0, 0, 0, 0, 0];
     let listaTarde = [0, 0, 0, 0, 0, 0];
     let listaNoche = [0, 0, 0, 0, 0, 0];
-
-
-
     for (var i = 0; i < manana.length; i++) {
         var index = dias.indexOf(manana[i].dia);
         listaManana[index] = manana[i].cantidad;
@@ -299,11 +294,8 @@ routerAdmin.get('/reporteGrafica', async(req, res) => {
         var index = dias.indexOf(noche[i].dia);
         listaNoche[index] = noche[i].cantidad;
     }
-
     res.render("grafica.ejs", { listaManana, listaTarde, listaNoche })
 });
-
-
 
 //export this router to use in our index.js
 module.exports = routerAdmin;
