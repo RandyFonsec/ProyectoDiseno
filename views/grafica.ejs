@@ -1,0 +1,74 @@
+<%include('partials/_headerAdmin')%>
+    <div class="container d-flex mx-auto my-auto">
+        <canvas id="myChart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            var manana = "<%=listaManana%>";
+
+            var listaManana = manana.split(",");
+
+            var tarde = "<%=listaTarde%>";
+
+            var listaTarde = tarde.split(",");
+
+            var noche = "<%=listaNoche%>";
+
+            var listaNoche = noche.split(",");
+
+            const labels = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: 'Mañana',
+                    data: listaManana,
+                    backgroundColor: 'rgba(255, 0, 0)',
+                    stack: 'Stack 0',
+                }, {
+                    label: 'Tarde',
+                    data: listaTarde,
+                    backgroundColor: 'rgba(0, 255, 0)',
+                    stack: 'Stack 1',
+                }, {
+                    label: 'Noche',
+                    data: listaNoche,
+                    backgroundColor: 'rgba(0, 0, 255)',
+                    stack: 'Stack 2',
+                }, ]
+            };
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Estadísticas horarias'
+                        },
+                    },
+                    responsive: true,
+                    interaction: {
+                        intersect: false,
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    }
+                }
+            };
+        </script>
+        <script>
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        </script>
+
+
+        <%include('partials/_footerAdmin')%>
+
+    </div>

@@ -42,9 +42,27 @@ class GestorFuncionarios {
         return resultado;
     }
 
-    obtenePlacas(identificacion) {
+    obtenerPlacas(identificacion) {
         const resultado = utilsDaoImplementation.getPlacas(identificacion);
         return resultado;
+    }
+    eliminarPlaca(idFuncionario, idPlaca) {
+        const resultado = utilsDaoImplementation.deletePlaca(idFuncionario, idPlaca);
+        return resultado.length != 0;
+    }
+
+    agregarPlaca(idFuncionario, idPlaca) {
+        const resultado = utilsDaoImplementation.createPlaca(idFuncionario, idPlaca);
+        return resultado.length != 0;
+    }
+
+    crearFranja(lista) {
+        const resultado = utilsDaoImplementation.createFranja(lista);
+        return resultado.length != 0;
+    }
+
+    getCantidadxFranja(franja) {
+        return utilsDaoImplementation.getCantidadxFranja(franja);
     }
 }
 

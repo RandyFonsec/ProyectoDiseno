@@ -71,6 +71,21 @@ class ControladorAplicacion {
     obtenerPlacas(identificacion) {
         return this.gestorFuncionarios.obtenerPlacas(identificacion);
     }
+
+    eliminarPlaca(idFuncionario, idPlaca) {
+        return this.gestorFuncionarios.eliminarPlaca(idFuncionario, idPlaca);
+    }
+
+    agregarPlaca(idFuncionario, idPlaca) {
+        return this.gestorFuncionarios.agregarPlaca(idFuncionario, idPlaca);
+    }
+
+    crearFranja(lista) {
+        return this.gestorFuncionarios.crearFranja(lista);
+    }
+    getCantidadxFranja(franja) {
+        return this.gestorFuncionarios.getCantidadxFranja(franja);
+    }
 }
 
 module.exports = ControladorAplicacion;

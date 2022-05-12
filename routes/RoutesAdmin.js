@@ -7,7 +7,14 @@ var express = require('express');
 var routerAdmin = express.Router();
 
 const db = require('../controller/dao/dbconnection');
+
 const GestorFuncionarios = require('../controller/gestorFuncionarios');
+
+
+const dias = ['l', 'k', 'm', 'j', 'v', 's'];
+const periodos = ['m', 't', 'n'];
+
+
 
 //Valida que haya iniciado la sesión
 routerAdmin.use(function(req, res, next) {
@@ -95,6 +102,7 @@ routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
     let { id } = req.params;
     let lista = await controladorAplicacion.obtenerFuncionario(id);
     const departments_list = await controladorAplicacion.obtenerDepartamentos();
+    console.log(lista);
     res.render('edicionFuncionario.ejs', { funcionario: lista[0], departments_list });
 });
 
@@ -227,6 +235,48 @@ routerAdmin.get('/registroEspacio', (req, res) => {
 routerAdmin.get('/gestionPlacas', (req, res) => {
     res.render('gestionPlacas.ejs');
 });
+
+
+//---------------------Informes
+
+routerAdmin.get('/reportes', (req, res) => {
+    res.render("reportes.ejs");
+});
+
+routerAdmin.get('/reporteGrafica', async(req, res) => {
+
+    let manana = await controladorAplicacion.getCantidadxFranja('m');
+    let tarde = await controladorAplicacion.getCantidadxFranja('t');
+    let noche = await controladorAplicacion.getCantidadxFranja('n');
+
+    console.log(manana);
+    console.log(tarde);
+    console.log(noche);
+
+
+    let listaManana = [0, 0, 0, 0, 0, 0];
+    let listaTarde = [0, 0, 0, 0, 0, 0];
+    let listaNoche = [0, 0, 0, 0, 0, 0];
+
+
+
+    for (var i = 0; i < manana.length; i++) {
+        var index = dias.indexOf(manana[i].dia);
+        listaManana[index] = manana[i].cantidad;
+    }
+    for (var i = 0; i < tarde.length; i++) {
+        var index = dias.indexOf(tarde[i].dia);
+        listaTarde[index] = tarde[i].cantidad;
+    }
+    for (var i = 0; i < noche.length; i++) {
+        var index = dias.indexOf(noche[i].dia);
+        listaNoche[index] = noche[i].cantidad;
+    }
+
+    res.render("grafica.ejs", { listaManana, listaTarde, listaNoche })
+});
+
+
 
 //export this router to use in our index.js
 module.exports = routerAdmin;

@@ -32,5 +32,6 @@ pool.getConnection((err, connection) => {
 // Para permitir el uso de promesas 
 pool.query = promisify(pool.query);
 
+
 // Exportar la conexión
 module.exports = pool;

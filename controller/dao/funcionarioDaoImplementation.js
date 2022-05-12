@@ -37,8 +37,9 @@ class FuncionarioDaoImplementation extends DAO {
     }
 
     get(key) {
-        const selectFuncionario = 'SELECT * FROM Funcionario WHERE identificacion = ?;';
-        return db.query(selectFuncionario, [key]);
+        const selectFuncionario = 'SELECT * FROM Funcionario WHERE identificacion = ?';
+        const res = db.query(selectFuncionario, [key]);
+        return res;
     }
 
 

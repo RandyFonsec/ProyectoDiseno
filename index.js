@@ -1,6 +1,7 @@
 const ControladorAplicacion = require('./controller/controladorAplicacion');
 const express = require('express')
 const app = express();
+
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
@@ -8,7 +9,6 @@ const routesAdmin = require('./routes/RoutesAdmin.js');
 const routesFuncionario = require('./routes/RoutesFuncionario.js');
 
 const controladorAplicacion = new ControladorAplicacion();
-const GestorFuncionarios = require('./controller/gestorFuncionarios');
 
 
 //git push heroku main: Actualiza el sitio web
@@ -25,13 +25,15 @@ app.set('view engine', 'ejs');
 
 //sesion
 app.set('trust proxy', 1) // trust first proxy
+
 app.use(session({
-        secret: 'keyboard cat',
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: true }
-    }))
-    // Create application/x-www-form-urlencoded parser  
+    resave: true,
+    saveUninitialized: true,
+    secret: "secret"
+}));
+
+
+// Create application/x-www-form-urlencoded parser  
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
@@ -52,23 +54,20 @@ app.use(express.static('public'));
 
 
 
-
-
 //Routes
-app.get('/', (req, res) => {
 
+
+app.get('/', (req, res) => {
     res.render('inicioSesion.ejs');
 });
 
-app.use('/admin', routesAdmin);
 
-app.use('/funcionario', routesFuncionario);
 
 app.post('/inicio', async(req, res) => {
     var { nombreUsuario, contrasenna } = req.body;
 
     if (nombreUsuario == 'admin' && contrasenna == 'admin') {
-        session.loggedin = true;
+        req.session.loggedin = true;
         res.redirect('/admin');
     } else {
         const result = await controladorAplicacion.validarFuncionario(nombreUsuario, contrasenna);
@@ -76,16 +75,15 @@ app.post('/inicio', async(req, res) => {
             const mensaje = 'Correo o contraseña incorrectos';
             res.render('inicioSesion.ejs', { error: mensaje })
         } else {
-            session.userInfo = result;
-            session.loggedin = true;
+            req.session.userInfo = result[0];
+            req.session.loggedin = true;
             res.redirect('/funcionario');
         }
     }
-
-
-
-
 });
+app.use('/admin', routesAdmin);
+
+app.use('/funcionario', routesFuncionario);
 
 
 app.get('*', (req, res) => {
