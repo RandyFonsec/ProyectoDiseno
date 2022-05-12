@@ -221,10 +221,10 @@ routerAdmin.get('/edicionEspacios/:id', (req, res) => {
     res.render('edicionEspacios.ejs', { data: lista });
 });
 
-routerAdmin.get('/edicionEspacios/:id', (req, res) => {
+routerAdmin.get ('/gestionEspacios/:id', (req, res) => {
     let lista = [{ identificacion: 12 }, { identificacion: 123 }, { identificacion: 22212 }]
-    res.render('edicionEspacios.ejs', { data: lista });
-});
+    res.render('gestionEspacios.ejs', { data: lista });
+})
 
 routerAdmin.get('/registroEspacio', (req, res) => {
     res.render('registroEspacio.ejs');

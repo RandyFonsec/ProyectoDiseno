@@ -2,24 +2,21 @@
     <div class="container my-4 d-flex justify-content-center">
 
         <div class="row">
-            <div class="row">
-                <label for="" class="fs-2 text mb-4">Consulta espacios:</label>
+            
+            <div class="mb-3">
+                <label for="iden" class="form-label">Identificador:</label>
+                <input type="text" name="identificador" class="form-control" id="iden" required>
             </div>
 
-
-            <form action="edicionFuncionarios" method="get">
-                <div class="mb-3">
-                    <div class="row">
-                        <label for="id" class="form-label">Número espacio:</label>
-                        <div class="col">
-                            <input type="number" name="id" class="form-control" id="id" required>
-                        </div>
-                        <div class="col">
-                            <input type="submit" class="btn btn-primary">
-                        </div>
-                    </div>
+            <label class="mb-3" for="depar">Tipo de espacio:</label>
+            <div id="depar" class="row mb-3">
+                <div class="col-6"><select name="tipoEspacio" class="form-select" aria-label="Default select example">
+                    <% tiposEspacio.forEach (function (tipoEspacio) { %>
+                        <option value="<%=tipoEspacio.idTipoEspacio%>"><%= tipoEspacio.tipoEspacio %></option>
+                    <% }) %>
+                  </select>
                 </div>
-            </form>
+            </div>
 
 
             <div class="row my-5">
