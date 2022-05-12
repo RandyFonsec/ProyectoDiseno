@@ -101,6 +101,7 @@ routerAdmin.get('/edicionFuncionarios', async(req, res) => {
 routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
     let { id } = req.params;
     let lista = await controladorAplicacion.obtenerFuncionario(id);
+    console.log(lista) ;
     const departments_list = await controladorAplicacion.obtenerDepartamentos();
     console.log(lista);
     res.render('edicionFuncionario.ejs', { funcionario: lista[0], departments_list });
@@ -166,7 +167,7 @@ routerAdmin.get('/gestionEstacionamientos', (req, res) => {
 }); */
 
 routerAdmin.get('/registroEstacionamiento', async(req, res) => {
-    const tiposEstacionamiento = await controladorAplicacion.obtenerT
+    const tiposEstacionamiento = await controladorAplicacion.obtenerTiposEstacionamiento() ;
     res.render('registroEstacionamiento.ejs', { tiposEstacionamiento });
 });
 
@@ -216,18 +217,44 @@ routerAdmin.get('/eliminarEstacionamiento/:id', async(req, res) => {
 });
 
 //--------------------Espacios
-routerAdmin.get('/edicionEspacios/:id', (req, res) => {
-    let lista = [{ identificacion: 12 }, { identificacion: 123 }, { identificacion: 22212 }]
-    res.render('edicionEspacios.ejs', { data: lista });
-});
+// routerAdmin.get('/edicionEspacios/:id', (req, res) => {
+   // const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio();
+    //res.render('edicionEspacios.ejs', { tiposEspacio });
+//});
 
-routerAdmin.get ('/gestionEspacios/:id', (req, res) => {
-    let lista = [{ identificacion: 12 }, { identificacion: 123 }, { identificacion: 22212 }]
-    res.render('gestionEspacios.ejs', { data: lista });
+routerAdmin.get ('/gestionEspacios/:id', async (req, res) => {
+    const { id } = req.params ;
+    const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio ();
+    const espacios = await controladorAplicacion.obtenerEspacios ();
+    res.render ('gestionEspacios.ejs', { espacios, tiposEspacio, idEstacionamiento : id })
 })
 
-routerAdmin.get('/registroEspacio', (req, res) => {
-    res.render('registroEspacio.ejs');
+routerAdmin.post ('/registroEspacio/:id', async (req, res) => {
+    const { identificador, tipoEspacio } = req.body;
+    const { id } = req.params;
+    const espacio = {
+        identificador,
+        tipoEspacio,
+        id
+    }
+    await controladorAplicacion.agregarEspacio(espacio);
+    res.send('received');
+});
+
+routerAdmin.get ('/gestionEspacios/edicionEspacio/:id', async (req, res) => {
+    const { identificador, tipoEspacio } = req.body;
+    const espacio = {
+        identificador,
+        tipoEspacio
+    }
+    await controladorAplicacion.modificarEspacio (espacio);
+    res.send('received');
+});
+
+routerAdmin.get ('/gestionEspacios/eliminarEspacio/:id', async(req, res) => {
+    let { id } = req.params;
+    await controladorAplicacion.eliminarEspacio (id);
+    res.send('ok');
 });
 
 //--------------------Placas

@@ -68,8 +68,28 @@ class ControladorAplicacion {
         return this.gestorEstacionamientos.obtenerTiposEstacionamiento();
     }
 
+    obtenerEspacios () {
+        return this.gestorEstacionamientos.obtenerEspacios();
+    }
+
+    obtenerTiposEspacio () {
+        return this.gestorEstacionamientos.obtenerTiposEspacio ();
+    }
+
     obtenerPlacas(identificacion) {
-        return this.gestorFuncionarios.obtenerPlacas(identificacion);
+        return this.gestorFuncionarios.obtenerPlacas (identificacion);
+    }
+
+    agregarEspacio (espacio) {
+        return this.gestorEstacionamientos.agregarEspacio (espacio);
+    }
+
+    modificarEspacio (espacio) {
+        return this.gestorEstacionamientos.modificarEspacio (espacio);
+    }
+
+    eliminarEspacio (identificador) {
+        return this.gestorEstacionamientos.eliminarEspacio (identificador);
     }
 
     eliminarPlaca(idFuncionario, idPlaca) {
@@ -83,6 +103,7 @@ class ControladorAplicacion {
     crearFranja(lista) {
         return this.gestorFuncionarios.crearFranja(lista);
     }
+    
     getCantidadxFranja(franja) {
         return this.gestorFuncionarios.getCantidadxFranja(franja);
     }

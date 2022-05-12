@@ -36,6 +36,31 @@ class GestorEstacionamientos {
         return resultado;
     }
 
+    obtenerEspacios () {
+        const resultado = utilsDaoImplementation.getEspacios ();
+        return resultado;
+    }
+
+    obtenerTiposEspacio () {
+        const resultado = utilsDaoImplementation.getTiposEspacio ();
+        return resultado;
+    }
+
+    agregarEspacio (espacio) {
+        const resultado = utilsDaoImplementation.createEspacio (espacio);
+        return resultado;
+    }
+
+    modificarEspacio (espacio) {
+        const resultado = utilsDaoImplementation.updateEspacio (espacio);
+        return resultado;
+    }
+
+    eliminarEspacio (espacio) {
+        const resultado = utilsDaoImplementation.deleteEspacio (espacio);
+        return resultado;
+    }
+
 }
 
 module.exports = GestorEstacionamientos;
