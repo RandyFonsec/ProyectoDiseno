@@ -50,7 +50,6 @@ app.get('/', (req, res) => {
 
 app.post('/inicio', async(req, res) => {
     var { nombreUsuario, contrasenna } = req.body;
-    req.session.destroy();
     if (nombreUsuario == 'admin' && contrasenna == 'admin') {
         req.session.loggedin = true;
         res.redirect('/admin');
