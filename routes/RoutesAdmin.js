@@ -19,7 +19,8 @@ routerAdmin.use(function(req, res, next) {
     if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
         next();
     } else {
-        res.send("No haz iniciado");
+        const alerta = "No haz iniciado sesión";
+        res.render("inicioSesion.ejs", { alerta: alerta });
     }
 });
 
