@@ -36,33 +36,38 @@ class GestorEstacionamientos {
         return resultado;
     }
 
-    obtenerEspacio (identificador) {
-        const resultado = utilsDaoImplementation.getEspacio (identificador);
+    obtenerEspacio(identificador) {
+        const resultado = utilsDaoImplementation.getEspacio(identificador);
         return resultado;
     }
 
-    obtenerEspacios (idEstacionamiento) {
-        const resultado = utilsDaoImplementation.getEspacios (idEstacionamiento);
+    obtenerEspacios(idEstacionamiento) {
+        const resultado = utilsDaoImplementation.getEspacios(idEstacionamiento);
         return resultado;
     }
 
-    obtenerTiposEspacio () {
-        const resultado = utilsDaoImplementation.getTiposEspacio ();
+    obtenerTiposEspacio() {
+        const resultado = utilsDaoImplementation.getTiposEspacio();
         return resultado;
     }
 
-    agregarEspacio (espacio) {
-        const resultado = utilsDaoImplementation.createEspacio (espacio);
+    agregarEspacio(espacio) {
+        const resultado = utilsDaoImplementation.createEspacio(espacio);
         return resultado;
     }
 
-    modificarEspacio (espacio) {
-        const resultado = utilsDaoImplementation.updateEspacio (espacio);
+    modificarEspacio(espacio) {
+        const resultado = utilsDaoImplementation.updateEspacio(espacio);
         return resultado;
     }
 
-    eliminarEspacio (espacio) {
-        const resultado = utilsDaoImplementation.deleteEspacio (espacio);
+    eliminarEspacio(espacio) {
+        const resultado = utilsDaoImplementation.deleteEspacio(espacio);
+        return resultado;
+    }
+
+    obtenerEstacionamientosConTipo() {
+        const resultado = estacionamientoDaoImplementation.obtenerEstacionamientosConTipo();
         return resultado;
     }
 

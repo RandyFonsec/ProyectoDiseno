@@ -14,18 +14,16 @@ const periodos = ['m', 't', 'n'];
 
 //Valida que haya iniciado la sesión
 routerFuncionario.use(function(req, res, next) {
-    /*if (req.session.loggedin and typeof req.session.userInfo != 'undefined') {
+    if (req.session.loggedin && typeof req.session.userInfo != 'undefined') {
         next();
     } else {
         res.send("No haz iniciado");
-    }*/
-    next();
+    }
 });
 
 //Home
 routerFuncionario.get('/', async(req, res) => {
     const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.identificacion);
-    console.log(placas);
     res.render('gestionPlacas.ejs', { data: placas });
 });
 

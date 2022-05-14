@@ -34,7 +34,7 @@ class GestorFuncionarios {
     }
 
     validarFuncionario(correo, contrasenna) {
-        const resultado = funcionarioDaoImplementation.getByMail (correo, contrasenna);
+        const resultado = funcionarioDaoImplementation.getByMail(correo, contrasenna);
         return resultado;
     }
 
@@ -64,6 +64,27 @@ class GestorFuncionarios {
 
     getCantidadxFranja(franja) {
         return utilsDaoImplementation.getCantidadxFranja(franja);
+    }
+
+
+    obtenerDepartamento(idDepartamento) {
+        return utilsDaoImplementation.getDepartamento(idDepartamento);
+    }
+
+    obtenerTipoFuncionario(idTipoFuncionario) {
+        return utilsDaoImplementation.getTipoFuncionario(idTipoFuncionario);
+    }
+
+    obtenerFuncionariosTotal() {
+        return funcionarioDaoImplementation.getAllTotal();
+    }
+
+    obtenerFuncionarioTotal(idFuncionario) {
+        return funcionarioDaoImplementation.getTotal(idFuncionario);
+    }
+
+    obtenerFuncionariosxDepartamento(idDepartamento) {
+        return funcionarioDaoImplementation.getByDepartamento(idDepartamento);
     }
 }
 

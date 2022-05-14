@@ -16,12 +16,11 @@ const periodos = ['m', 't', 'n'];
 
 //Valida que haya iniciado la sesión
 routerAdmin.use(function(req, res, next) {
-    /*if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
+    if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
         next();
     } else {
         res.send("No haz iniciado");
-    }*/
-    next(); 
+    }
 });
 
 //Home
@@ -84,7 +83,7 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
     }
     await controladorAplicacion.agregarFuncionario(funcionario);
     // res.render ('gestionFuncionarios.ejs');
-    res.redirect ('/admin/gestionFuncionarios');
+    res.redirect('/admin/gestionFuncionarios');
 });
 
 routerAdmin.get('/edicionFuncionarios', async(req, res) => {
@@ -102,7 +101,7 @@ routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
     let { id } = req.params;
     console.log("id" + id);
     let funcionario = await controladorAplicacion.obtenerFuncionario(id);
-    console.log(funcionario) ;
+    console.log(funcionario);
     const departments_list = await controladorAplicacion.obtenerDepartamentos();
     res.render('edicionFuncionario.ejs', { funcionario: funcionario[0], departments_list });
 });
@@ -146,13 +145,13 @@ routerAdmin.post('/actualizarFuncionario/:id', async(req, res) => {
         funcionario.alternas = 0;
     }
     await controladorAplicacion.modificarFuncionario(funcionario);
-    res.redirect ('/admin/gestionFuncionarios');
+    res.redirect('/admin/gestionFuncionarios');
 });
 
 routerAdmin.get('/eliminarFuncionario/:id', async(req, res) => {
     let { id } = req.params;
     await controladorAplicacion.eliminarFuncionario(id);
-    res.redirect ('/admin/gestionFuncionarios');
+    res.redirect('/admin/gestionFuncionarios');
 });
 
 // Estacionamientos
@@ -160,13 +159,9 @@ routerAdmin.get('/gestionEstacionamientos', (req, res) => {
     res.render('gestionEstacionamientos.ejs');
 });
 
-/* routerAdmin.get('/edicionEstacionamientos', (req, res) => {
-    let lista = [{ identificacion: 12, nombre: '1' }, { identificacion: 123, nombre: '121' }, { identificacion: 22212, nombre: '121311' }]
-    res.render('edicionEstacionamientos.ejs', { data: lista });
-}); */
 
 routerAdmin.get('/registroEstacionamiento', async(req, res) => {
-    const tiposEstacionamiento = await controladorAplicacion.obtenerTiposEstacionamiento() ;
+    const tiposEstacionamiento = await controladorAplicacion.obtenerTiposEstacionamiento();
     res.render('registroEstacionamiento.ejs', { tiposEstacionamiento });
 });
 
@@ -180,7 +175,7 @@ routerAdmin.post('/registroEstacionamiento', async(req, res) => {
         tipoEstacionamiento,
     }
     await controladorAplicacion.agregarEstacionamiento(estacionamiento);
-    res.redirect ('/admin/gestionEstacionamientos');
+    res.redirect('/admin/gestionEstacionamientos');
 });
 
 routerAdmin.get('/edicionEstacionamientos', async(req, res) => {
@@ -205,29 +200,25 @@ routerAdmin.post('/actualizarEstacionamiento/:id', async(req, res) => {
         tipoEstacionamiento,
     }
     await controladorAplicacion.modificarEstacionamiento(estacionamiento);
-    res.redirect ('/admin/gestionEstacionamientos');
+    res.redirect('/admin/gestionEstacionamientos');
 });
 
 routerAdmin.get('/eliminarEstacionamiento/:id', async(req, res) => {
     let { id } = req.params;
     await controladorAplicacion.eliminarEstacionamiento(id);
-    res.redirect ('/admin/gestionEstacionamientos');
+    res.redirect('/admin/gestionEstacionamientos');
 });
 
 //--------------------Espacios
-// routerAdmin.get('/edicionEspacios/:id', (req, res) => {
-   // const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio();
-    //res.render('edicionEspacios.ejs', { tiposEspacio });
-//});
 
-routerAdmin.get ('/gestionEspacios/:id', async (req, res) => {
-    const { id } = req.params ;
-    const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio ();
-    const espacios = await controladorAplicacion.obtenerEspacios (id);
-    res.render ('gestionEspacios.ejs', { espacios, tiposEspacio, idEstacionamiento : id })
+routerAdmin.get('/gestionEspacios/:id', async(req, res) => {
+    const { id } = req.params;
+    const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio();
+    const espacios = await controladorAplicacion.obtenerEspacios(id);
+    res.render('gestionEspacios.ejs', { espacios, tiposEspacio, idEstacionamiento: id })
 })
 
-routerAdmin.post ('/registroEspacio/:id', async (req, res) => {
+routerAdmin.post('/registroEspacio/:id', async(req, res) => {
     const { identificador, tipoEspacio } = req.body;
     const { id } = req.params;
     const espacio = {
@@ -236,30 +227,30 @@ routerAdmin.post ('/registroEspacio/:id', async (req, res) => {
         id
     }
     await controladorAplicacion.agregarEspacio(espacio);
-    res.redirect ('/admin/edicionEstacionamientos');
+    res.redirect('/admin/edicionEstacionamientos');
 });
 
-routerAdmin.get ('/gestionEspacios/edicionEspacio/:id', async (req, res) => {
-    let {id} = req.params;
-    const espacio = await controladorAplicacion.obtenerEspacio (id) ;
-    const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio ();
-    res.render ('edicionEspacio.ejs', { espacio : espacio[0], tiposEspacio })
+routerAdmin.get('/gestionEspacios/edicionEspacio/:id', async(req, res) => {
+    let { id } = req.params;
+    const espacio = await controladorAplicacion.obtenerEspacio(id);
+    const tiposEspacio = await controladorAplicacion.obtenerTiposEspacio();
+    res.render('edicionEspacio.ejs', { espacio: espacio[0], tiposEspacio })
 });
 
-routerAdmin.post ('/gestionEspacios/actualizarEspacio/:id', async (req, res) => {
+routerAdmin.post('/gestionEspacios/actualizarEspacio/:id', async(req, res) => {
     const { identificador, tipoEspacio } = req.body;
     const espacio = {
         identificador,
         tipoEspacio
     }
-    await controladorAplicacion.modificarEspacio (espacio);
-    res.redirect ('/admin/edicionEstacionamientos');
+    await controladorAplicacion.modificarEspacio(espacio);
+    res.redirect('/admin/edicionEstacionamientos');
 });
 
-routerAdmin.get ('/gestionEspacios/eliminarEspacio/:id', async(req, res) => {
+routerAdmin.get('/gestionEspacios/eliminarEspacio/:id', async(req, res) => {
     let { id } = req.params;
-    await controladorAplicacion.eliminarEspacio (id);
-    res.redirect ('/admin/edicionEstacionamientos');
+    await controladorAplicacion.eliminarEspacio(id);
+    res.redirect('/admin/edicionEstacionamientos');
 });
 
 //--------------------Placas
@@ -296,6 +287,41 @@ routerAdmin.get('/reporteGrafica', async(req, res) => {
     }
     res.render("grafica.ejs", { listaManana, listaTarde, listaNoche })
 });
+
+
+routerAdmin.get('/reporteEstacionamientos', async(req, res) => {
+    const estacionamientos = await controladorAplicacion.obtenerEstacionamientosConTipo();
+    res.render('detalleEstacionamientos.ejs', { estacionamientos });
+});
+
+routerAdmin.get('/reporteFuncionarios', async(req, res) => {
+    const funcionarios = await controladorAplicacion.obtenerFuncionariosTotal();
+
+    const departamentos = await controladorAplicacion.obtenerDepartamentos();
+    res.render('detalleFuncionarios.ejs', { funcionarios, departamentos });
+});
+
+routerAdmin.get('/reporteFuncionarios/:departamento', async(req, res) => {
+
+    const { departamento } = req.params;
+    const funcionarios = await controladorAplicacion.obtenerFuncionariosxDepartamento(departamento);
+    const departamentos = await controladorAplicacion.obtenerDepartamentos();
+    res.render('detalleFuncionarios.ejs', { funcionarios, departamentos });
+
+});
+
+
+routerAdmin.get('/reporteFuncionario', async(req, res) => {
+    const { identificacion } = req.query;
+    const funcionario = await controladorAplicacion.obtenerFuncionarioTotal(identificacion);
+    console.log(funcionario[0]);
+    res.render("detalleFuncionario.ejs", { funcionario: funcionario[0] });
+
+
+})
+
+
+
 
 //export this router to use in our index.js
 module.exports = routerAdmin;

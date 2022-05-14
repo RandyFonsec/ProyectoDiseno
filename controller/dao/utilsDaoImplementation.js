@@ -19,7 +19,14 @@ class UtilsDaoImplementation extends DAO {
         return db.query('SELECT * FROM Departamento');
     }
 
-    getTiposEstacionamiento () {
+    getDepartamento(idDepartamento) {
+        return db.query('SELECT * FROM Departamento WHERE idDepartamento = ?', [idDepartamento]);
+    }
+
+    getTipoFuncionario(idTipoFuncionario) {
+        return db.query("SELECT * FROM TipoFuncionario WHERE idTipoFuncionario = ?", [idTipoFuncionario]);
+    }
+    getTiposEstacionamiento() {
         return db.query('SELECT * FROM TipoEstacionamiento');
     }
 
@@ -44,33 +51,34 @@ class UtilsDaoImplementation extends DAO {
         return db.query('SELECT dia, COUNT(*) AS cantidad FROM FranjaHoraria WHERE horario = ? AND activo = 1 group by dia;', [dia]);
     }
 
-    getTiposEspacio () {
-        return db.query ('SELECT * FROM TipoEspacio') ;
+    getTiposEspacio() {
+        return db.query('SELECT * FROM TipoEspacio');
     }
 
-    getEspacio (key) {
-        const getEspacio = 'SELECT * FROM Espacio WHERE eliminado = 0 and identificador = ?;' ;
-        return db.query (getEspacio, [key]);
+    getEspacio(key) {
+        const getEspacio = 'SELECT * FROM Espacio WHERE eliminado = 0 and identificador = ?;';
+        return db.query(getEspacio, [key]);
     }
-    
-    getEspacios (idEstacionamiento) {
-        const getEspacios = 'SELECT * FROM Espacio WHERE eliminado = 0 AND idEstacionamiento = ?;' ;
-        return db.query (getEspacios, [idEstacionamiento]);
+
+    getEspacios(idEstacionamiento) {
+        const getEspacios = 'SELECT * FROM Espacio WHERE eliminado = 0 AND idEstacionamiento = ?;';
+        return db.query(getEspacios, [idEstacionamiento]);
     }
-    createEspacio (objeto) {
+    createEspacio(objeto) {
         const insertEspacio = 'INSERT INTO Espacio (identificador, idTipoEspacio, idEstacionamiento) VALUES (?, ?, ?);';
         return db.query(insertEspacio, [objeto.identificador, objeto.tipoEspacio, objeto.id]);
     }
 
-    updateEspacio (objeto) {
+    updateEspacio(objeto) {
         const updateEspacio = 'UPDATE Espacio SET idTipoEspacio = ? WHERE identificador = ?;'
         return db.query(updateEspacio, [objeto.tipoEspacio, objeto.identificador]);
     }
 
-    deleteEspacio (key) {
+    deleteEspacio(key) {
         const updateEspacio = 'UPDATE Espacio SET eliminado = 1 WHERE identificador = ?';
         return db.query(updateEspacio, [key]);
     }
+
 
 }
 

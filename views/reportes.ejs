@@ -1,25 +1,40 @@
 <%- include ('partials/_headerAdmin')  %>
-    <div class="container d-flex content-center">
-        <div class="row">
-            <div class="col-12">
-                <form action="reporteGrafica" method="get">
-                    <button type="submit" class="btn btn-primary">Estadística franjas horarias</button>
-                </form>
+    <div class="container d-flex justify-content-center">
+        <div class="card text-center m-5  ">
+            <div class="card-header">
+                Gestión de funcionarios
             </div>
-            <div class="col-3">
-                <form action="reporteGrafica" method="get">
-                    <button type="submit" class="btn btn-primary">Estadística franjas horarias</button>
-                </form>
-            </div>
-            <div class="col-3">
+            <div class="card-body text-center">
 
+                <div class="d-grid gap-2 col-12 mx-auto my-4">
+                    <form action="reporteGrafica" method="get">
+                        <button type="submit" class="btn btn-primary">Estadística franjas horarias</button>
+                    </form>
+                </div>
+                <div class="d-grid gap-2 col-12 mx-auto my-4">
+                    <form action="reporteEstacionamientos" method="get">
+                        <button type="submit" class="btn btn-primary">Detalle estacionamientos</button>
+                    </form>
+                </div>
+                <div class="d-grid gap-2 col-12 mx-auto my-4">
+                    <form action="reporteFuncionarios" method="get">
+                        <button type="submit" class="btn btn-primary">Detalle funcionarios</button>
+                    </form>
+                </div>
+                <div class="d-grid gap-2 col-12 mx-auto my-4">
+                    <label for="Fila">Buscar funcionario:</label>
+                    <form id="Fila" class="row" action="reporteFuncionario" method="get">
+                        <div class="col-auto">
+                            <label for="inputPassword2" class="visually-hidden">Identificacion</label>
+                            <input type="text" class="form-control" id="inputPassword2" name="identificacion" placeholder="Identificacion">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="col-3">
-
-            </div>
-
         </div>
-
     </div>
 
 

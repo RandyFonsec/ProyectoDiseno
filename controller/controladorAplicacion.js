@@ -68,33 +68,33 @@ class ControladorAplicacion {
         return this.gestorEstacionamientos.obtenerTiposEstacionamiento();
     }
 
-    obtenerEspacio (identificador) {
-        return this.gestorEstacionamientos.obtenerEspacio (identificador);
+    obtenerEspacio(identificador) {
+        return this.gestorEstacionamientos.obtenerEspacio(identificador);
     }
 
-    obtenerEspacios (idEstacionamiento) {
+    obtenerEspacios(idEstacionamiento) {
         return this.gestorEstacionamientos.obtenerEspacios(idEstacionamiento);
     }
 
-    obtenerTiposEspacio () {
-        return this.gestorEstacionamientos.obtenerTiposEspacio ();
+    obtenerTiposEspacio() {
+        return this.gestorEstacionamientos.obtenerTiposEspacio();
     }
 
     obtenerPlacas(identificacion) {
-        return this.gestorFuncionarios.obtenerPlacas (identificacion);
-    }
-    
-
-    agregarEspacio (espacio) {
-        return this.gestorEstacionamientos.agregarEspacio (espacio);
+        return this.gestorFuncionarios.obtenerPlacas(identificacion);
     }
 
-    modificarEspacio (espacio) {
-        return this.gestorEstacionamientos.modificarEspacio (espacio);
+
+    agregarEspacio(espacio) {
+        return this.gestorEstacionamientos.agregarEspacio(espacio);
     }
 
-    eliminarEspacio (identificador) {
-        return this.gestorEstacionamientos.eliminarEspacio (identificador);
+    modificarEspacio(espacio) {
+        return this.gestorEstacionamientos.modificarEspacio(espacio);
+    }
+
+    eliminarEspacio(identificador) {
+        return this.gestorEstacionamientos.eliminarEspacio(identificador);
     }
 
     eliminarPlaca(idFuncionario, idPlaca) {
@@ -108,9 +108,34 @@ class ControladorAplicacion {
     crearFranja(lista) {
         return this.gestorFuncionarios.crearFranja(lista);
     }
-    
+
     getCantidadxFranja(franja) {
         return this.gestorFuncionarios.getCantidadxFranja(franja);
+    }
+    obtenerEstacionamientosConTipo() {
+        return this.gestorEstacionamientos.obtenerEstacionamientosConTipo();
+    }
+
+    obtenerDepartamento(idDepartamento) {
+        return this.gestorFuncionarios.obtenerDepartamento(idDepartamento);
+
+    }
+
+    obtenerTipoFuncionario(idTipoFuncionario) {
+        return this.gestorFuncionarios.obtenerTipoFuncionario(idTipoFuncionario);
+    }
+
+    obtenerFuncionariosTotal() {
+        return this.gestorFuncionarios.obtenerFuncionariosTotal();
+    }
+
+
+    obtenerFuncionarioTotal(idFuncionario) {
+        return this.gestorFuncionarios.obtenerFuncionarioTotal(idFuncionario);
+    }
+
+    obtenerFuncionariosxDepartamento(idDepartamento) {
+        return this.gestorFuncionarios.obtenerFuncionariosxDepartamento(idDepartamento);
     }
 }
 

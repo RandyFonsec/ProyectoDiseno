@@ -1,0 +1,108 @@
+<%- include ('partials/_headerAdmin')  %>
+
+
+    <div class="container d-flex my-5 justify-content-center">
+
+        <ul class="list-group ">
+            <div class="row">
+                <div class="col-3">
+                    Filtrar:
+                </div>
+                <div>
+
+                </div>
+                <div class="col-9">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          Elegir departamento
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a class="dropdown-item" href="/admin/reporteFuncionarios%>">
+                                    Todos
+                                </a>
+                            </li>
+                            <%for(var i= 0; i<departamentos.length; i++){%>
+                                <li>
+                                    <a class="dropdown-item" href="/admin/reporteFuncionarios/<%=departamentos[i].idDepartamento%>">
+                                        <%=departamentos[i].descripcion%>
+                                    </a>
+                                </li>
+                                <%}%>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class=" mt-3 mx-2">Lista de funcionarios:</h3>
+
+            <%for(var i = 0; i<funcionarios.length; i++){%>
+
+
+
+                <div class="container border border-2 mx-5 my-3">
+                    <div class="row row-cols-1 border-bottom">
+                        <div class="col">
+                            Identificación: <br>
+                            <%=funcionarios[i].identificacion%>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 border-bottom">
+                        <div class="col">
+                            Nombre completo: <br>
+                            <%=funcionarios[i].nombreCompleto%>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 border-bottom">
+                        <div class="col">
+                            Número celular: <br>
+                            <%=funcionarios[i].numeroCelular%>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 border-bottom">
+                        <div class="col">
+                            Correo institucional: <br>
+                            <%=funcionarios[i].correoInstitucional%>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 border-bottom">
+                        <div class="col">
+                            Correo Alterno: <br>
+                            <%=funcionarios[i].correoAlterno%>
+                        </div>
+                    </div>
+                    <%if(funcionarios[i].jefe == 1){%>
+                        <div class="row row-cols-1 border-bottom">
+                            <div class="col">
+                                Es jefe de departamento
+                            </div>
+                        </div>
+                        <%}%>
+                            <%if(funcionarios[i].discapacidad == 1){%>
+                                <div class="row row-cols-1 border-bottom">
+                                    <div class="col">
+                                        Tiene discapacidad
+                                    </div>
+                                </div>
+                                <%}%>
+
+                                    <div class="row row-cols-1 ">
+                                        <div class="col">
+                                            Departamento: <br>
+                                            <%=funcionarios[i].departamento%>
+                                        </div>
+                                    </div>
+
+
+                </div>
+                <%}%>
+        </ul>
+
+
+    </div>
+
+
+
+
+
+    <%- include ('partials/_footerAdmin')  %>

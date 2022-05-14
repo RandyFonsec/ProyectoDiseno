@@ -1,0 +1,72 @@
+<%- include ('partials/_headerAdmin')  %>
+
+
+    <div class="container d-flex my-5 justify-content-center">
+
+
+        <h3 class=" mt-3 mx-2">Funcionario buscado:</h3>
+
+        <div class="container border border-2 mx-5 my-3">
+            <div class="row row-cols-1 border-bottom">
+                <div class="col">
+                    Identificación: <br>
+                    <%=funcionario.identificacion%>
+                </div>
+            </div>
+            <div class="row row-cols-1 border-bottom">
+                <div class="col">
+                    Nombre completo: <br>
+                    <%=funcionario.nombreCompleto%>
+                </div>
+            </div>
+            <div class="row row-cols-1 border-bottom">
+                <div class="col">
+                    Número celular: <br>
+                    <%=funcionario.numeroCelular%>
+                </div>
+            </div>
+            <div class="row row-cols-1 border-bottom">
+                <div class="col">
+                    Correo institucional: <br>
+                    <%=funcionario.correoInstitucional%>
+                </div>
+            </div>
+            <div class="row row-cols-1 border-bottom">
+                <div class="col">
+                    Correo Alterno: <br>
+                    <%=funcionario.correoAlterno%>
+                </div>
+            </div>
+            <%if(funcionario.jefe == 1){%>
+                <div class="row row-cols-1 border-bottom">
+                    <div class="col">
+                        Es jefe de departamento
+                    </div>
+                </div>
+                <%}%>
+                    <%if(funcionario.discapacidad == 1){%>
+                        <div class="row row-cols-1 border-bottom">
+                            <div class="col">
+                                Tiene discapacidad
+                            </div>
+                        </div>
+                        <%}%>
+
+                            <div class="row row-cols-1 ">
+                                <div class="col">
+                                    Departamento: <br>
+                                    <%=funcionario.departamento%>
+                                </div>
+                            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <%- include ('partials/_footerAdmin')  %>

@@ -1,0 +1,65 @@
+<%- include ('partials/_headerAdmin')  %>
+
+
+    <div class="container d-flex my-5 justify-content-center">
+
+        <ul class="list-group ">
+            <h3 class=" mt-3 mx-2">Lista de estacionamientos:</h3>
+
+            <%for(var i = 0; i<estacionamientos.length; i++){%>
+
+
+
+                <div class="container border border-2 mx-5 my-3">
+                    <div class="row row-cols-3">
+                        <div class="col">
+                            Identificador:
+                        </div>
+                        <div class="col">
+                            Hora Apertura:
+                        </div>
+                        <div class="col">
+                            Hora Cierre:
+                        </div>
+                    </div>
+                    <div class="row row-cols-3">
+                        <div class="col">
+                            <%=estacionamientos[i].identificador%>
+                        </div>
+                        <div class="col">
+                            <%=estacionamientos[i].horaApertura%>
+                        </div>
+                        <div class="col">
+                            <%=estacionamientos[i].horaCierre%>
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 mt-3">
+                        <div class="col">
+                            Tipo estacionamiento:
+                        </div>
+                        <div class="col">
+                            Ubicacion:
+                        </div>
+                    </div>
+                    <div class="row row-cols-2">
+                        <div class="col">
+                            <%=estacionamientos[i].tipoEstacionamiento%>
+                        </div>
+                        <div class="col">
+                            <%=estacionamientos[i].ubicacion%>
+                        </div>
+                    </div>
+
+
+                </div>
+                <%}%>
+        </ul>
+
+
+    </div>
+
+
+
+
+
+    <%- include ('partials/_footerAdmin')  %>
