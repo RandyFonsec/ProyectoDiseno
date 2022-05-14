@@ -20,7 +20,7 @@ app.set('view engine', 'ejs');
 
 
 // Sesión
-app.set('trust proxy', 1) 
+app.set('trust proxy', 1)
 
 app.use(session({
     resave: true,
@@ -48,20 +48,21 @@ app.get('/', (req, res) => {
     res.render('inicioSesion.ejs');
 });
 
-app.post('/inicio', async (req, res) => {
+app.post('/inicio', async(req, res) => {
     var { nombreUsuario, contrasenna } = req.body;
+    req.session.destroy();
     if (nombreUsuario == 'admin' && contrasenna == 'admin') {
         req.session.loggedin = true;
         res.redirect('/admin');
     } else {
-        const result = await controladorAplicacion.validarFuncionario (nombreUsuario, contrasenna);
+        const result = await controladorAplicacion.validarFuncionario(nombreUsuario, contrasenna);
         if (result.length == 0) {
             const mensaje = 'Correo o contraseña incorrectos';
             res.render('inicioSesion.ejs', { error: mensaje })
         } else {
             req.session.userInfo = result[0];
             req.session.loggedin = true;
-            res.redirect ('/funcionario');
+            res.redirect('/funcionario');
         }
     }
 });
