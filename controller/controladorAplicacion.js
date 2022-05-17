@@ -116,6 +116,7 @@ class ControladorAplicacion {
     getCantidadxFranja(franja) {
         return this.gestorFuncionarios.getCantidadxFranja(franja);
     }
+    
     obtenerEstacionamientosConTipo() {
         return this.gestorEstacionamientos.obtenerEstacionamientosConTipo();
     }

@@ -15,6 +15,9 @@ const { type } = require('express/lib/response');
 const dias = ['l', 'k', 'm', 'j', 'v', 's'];
 const periodos = ['m', 't', 'n'];
 
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+
 //Valida que haya iniciado la sesión
 routerAdmin.use(function(req, res, next) {
     if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
@@ -64,6 +67,8 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
         const error = "Ya existe un funcionario con la identificación o el correo brindado";
         res.render("gestionFuncionarios.ejs", { error : error });
     }
+    await controladorAplicacion.agregarFuncionario(funcionario);
+    res.redirect ('/admin/gestionFuncionarios');
 });
 
 routerAdmin.get('/edicionFuncionarios', async(req, res) => {
@@ -237,6 +242,23 @@ routerAdmin.get('/gestionPlacas', (req, res) => {
 routerAdmin.get('/reportes', (req, res) => {
     res.render("reportes.ejs");
 });
+
+routerAdmin.get('/informeEstacionamientos', async(req, res) => {
+    const estacionamientos = await controladorAplicacion.obtenerEstacionamientosConTipo();
+    let pdfDoc = new PDFDocument;
+    pdfDoc.pipe(fs.createWriteStream('reporte.pdf')) ;
+    for (let estacionamiento of estacionamientos) {
+        let ilist = []
+        for (let atributo in estacionamiento) {
+            ilist.push (atributo + ": " + estacionamiento[atributo]) ;
+        }
+        let olist = ["Estacionamiento", ilist];
+        pdfDoc.list (olist);
+        pdfDoc.moveDown(0.5);
+    }
+    pdfDoc.end();
+    res.render('informeEstacionamientos.ejs', { estacionamientos });
+})
 
 routerAdmin.get('/reporteGrafica', async(req, res) => {
     let manana = await controladorAplicacion.getCantidadxFranja('m');
