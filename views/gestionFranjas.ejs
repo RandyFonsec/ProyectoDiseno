@@ -9,29 +9,65 @@
                 <div class="col-6 col-md-4">Día</div>
                 <div class="col-6 col-md-8 mx-auto">Franja Horaria</div>
             </div>
-            <% const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; 
-    const names = ['l','k','m','j','v','s'];
-    for(var day = 0; day < days.length; day++) {%>
+            <%const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; 
+              const names = ['l','k','m','j','v','s'];
+              
+              for(var day = 0; day < days.length; day++) {%>
                 <div class="row my-2">
                     <div class="row my-1">
+
                         <div class="col-4 col-md-4">
                             <div class="form-check form-check-inline">
-                                <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1">
-                                <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+                                <%if(franjas[day*3+0].activo==1 || franjas[day*3+1].activo==1 || franjas[day*3+2].activo==1){%>
+
+                                    <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1" checked>
+                                    <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+
+                                    <%}else{%>
+                                        <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1">
+                                        <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+
+                                        <%}%>
                             </div>
                         </div>
+
                         <div class="col-8 col-md-8">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" name="<%=names[day]%>m" type="checkbox" id="inlineCheckbox1">
-                                <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
+                                <%if(franjas[day*3+0].activo==1){%>
+                                    <input class="form-check-input" name="<%=names[day]%>m" type="checkbox" id="inlineCheckbox1" checked>
+                                    <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
+
+                                    <%}else{%>
+
+                                        <input class="form-check-input" name="<%=names[day]%>m" type="checkbox" id="inlineCheckbox1">
+                                        <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
+
+                                        <%} %>
+
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" name="<%=names[day]%>t" type="checkbox" id="inlineCheckbox1">
-                                <label class="form-check-label" for="inlineCheckbox1">Tarde</label>
+                                <%if(franjas[day*3+1].activo==1){%>
+                                    <input class="form-check-input" name="<%=names[day]%>t" type="checkbox" id="inlineCheckbox2" checked>
+                                    <label class="form-check-label" for="inlineCheckbox2">Tarde</label>
+
+                                    <%}else{%>
+
+                                        <input class="form-check-input" name="<%=names[day]%>t" type="checkbox" id="inlineCheckbox2">
+                                        <label class="form-check-label" for="inlineCheckbox2">Tarde</label>
+
+                                        <%} %>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" name="<%=names[day]%>n" type="checkbox" id="inlineCheckbox1">
-                                <label class="form-check-label" for="inlineCheckbox1">Noche</label>
+                                <%if(franjas[day*3+2].activo==1){%>
+                                    <input class="form-check-input" name="<%=names[day]%>n" type="checkbox" id="inlineCheckbox3" checked>
+                                    <label class="form-check-label" for="inlineCheckbox3">Noche</label>
+
+                                    <%}else{%>
+
+                                        <input class="form-check-input" name="<%=names[day]%>n" type="checkbox" id="inlineCheckbox3">
+                                        <label class="form-check-label" for="inlineCheckbox3">Noche</label>
+
+                                        <%} %>
                             </div>
                         </div>
                     </div>

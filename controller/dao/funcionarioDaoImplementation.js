@@ -1,6 +1,8 @@
 //const db = require ('./controller/dao/dbconnection');
 const db = require('./dbconnection');
 const DAO = require('./dao');
+const Utils = require('../utils');
+const utils = new Utils();
 
 class FuncionarioDaoImplementation extends DAO {
 
@@ -20,7 +22,8 @@ class FuncionarioDaoImplementation extends DAO {
             if (err) {
                 console.log(err);
             } else {
-                console.log("Employee Id:- " + result.insertId);
+                const lista = utils.crearListaFranjas(result.insertId);
+                db.query('INSERT INTO FranjaHoraria(dia,horario,activo,idFuncionario) VALUES ?', [lista]);
             }
         });
     }
@@ -35,7 +38,7 @@ class FuncionarioDaoImplementation extends DAO {
         return db.query(selectFuncionario);
     }
     getAllTotal() {
-        const selectFuncionario = 'SELECT f.identificacion, CONCAT(f.nombre, " ", f.primerApellido, " ", f.segundoApellido) AS nombreCompleto, f.numeroCelular, f.correoInstitucional, f.correoAlterno, f.jefe, f.discapacidad, CONCAT(d.codigoDepartamento," - " , d.descripcion) AS departamento, t.tipoFuncionario FROM Funcionario AS f INNER JOIN Departamento AS d ON d.idDepartamento = f.idDepartamento INNER JOIN TipoFuncionario AS t ON t.idTipoFuncionario = f.idTipoFuncionario;';
+        const selectFuncionario = 'SELECT f.identificacion, CONCAT(f.nombre, " ", f.primerApellido, " ", f.segundoApellido) AS nombreCompleto, f.numeroCelular, f.correoInstitucional, f.correoAlterno, f.jefe, f.discapacidad, CONCAT(d.codigoDepartamento," - " , d.descripcion) AS departamento, t.tipoFuncionario FROM Funcionario AS f INNER JOIN Departamento AS d ON d.idDepartamento = f.idDepartamento INNER JOIN TipoFuncionario AS t ON t.idTipoFuncionario = f.idTipoFuncionario WHERE eliminado = 0;';
         return db.query(selectFuncionario);
     }
 

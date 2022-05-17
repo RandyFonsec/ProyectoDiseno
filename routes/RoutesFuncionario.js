@@ -1,4 +1,5 @@
 const ControladorAplicacion = require('../controller/controladorAplicacion');
+const utils = require('../controller/utils');
 
 const controladorAplicacion = new ControladorAplicacion();
 
@@ -7,6 +8,7 @@ var express = require('express');
 var routerFuncionario = express.Router();
 
 const db = require('../controller/dao/dbconnection');
+const Utils = require('../controller/utils');
 
 
 const dias = ['l', 'k', 'm', 'j', 'v', 's'];
@@ -41,11 +43,14 @@ routerFuncionario.get('/eliminarPlaca/:id', async(req, res) => {
 });
 
 
-routerFuncionario.get('/franjas', (req, res) => {
-    res.render('gestionFranjas.ejs')
+routerFuncionario.get('/franjas', async(req, res) => {
+    const id = req.session.userInfo.idFuncionario;
+    const franjas = await controladorAplicacion.obtenerFranjas(id);
+    res.render('gestionFranjas.ejs', { franjas });
 });
 
-routerFuncionario.post('/franjas', async(req, res) => {
+routerFuncionario.post('/franjas', (req, res) => {
+
     const id = req.session.userInfo.idFuncionario;
     const lista = [];
     let lista2 = [];
@@ -55,24 +60,25 @@ routerFuncionario.post('/franjas', async(req, res) => {
         if (req.body[dias[i]]) {
             for (var j = 0; j < periodos.length; j++) {
                 if (req.body[dias[i] + periodos[j]]) {
-                    lista2 = [dias[i], periodos[j], 1, id];
+                    lista2 = [1, dias[i], periodos[j], id];
                 } else {
-                    lista2 = [dias[i], periodos[j], 0, id];
+                    lista2 = [0, dias[i], periodos[j], id];
                 }
                 lista.push(lista2);
                 lista2 = [];
             }
         } else {
             for (var j = 0; j < periodos.length; j++) {
-                lista2 = [dias[i], periodos[j], 0, id];
+                lista2 = [0, dias[i], periodos[j], id];
                 lista.push(lista2);
                 lista2 = [];
             }
         }
     }
 
-    await controladorAplicacion.crearFranja(lista);
+    controladorAplicacion.actualizarFranjas(lista);
     res.redirect('/funcionario/franjas');
+
 });
 
 
