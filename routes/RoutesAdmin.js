@@ -9,6 +9,7 @@ var routerAdmin = express.Router();
 const db = require('../controller/dao/dbconnection');
 
 const GestorFuncionarios = require('../controller/gestorFuncionarios');
+const { type } = require('express/lib/response');
 
 
 const dias = ['l', 'k', 'm', 'j', 'v', 's'];
@@ -28,50 +29,23 @@ routerAdmin.get('/', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
 
-//TODO: Ver nombres xdd
-//TODO: Bug navbar
+// Rutas de funcionario
 
-// ----- Funcionarios -----
 routerAdmin.get('/gestionFuncionarios', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
 
 routerAdmin.get('/registroFuncionario', async(req, res) => {
-    const departments_list = await controladorAplicacion.obtenerDepartamentos();
-    res.render('registroFuncionario.ejs', { departments_list });
+    const listaDepartamentos = await controladorAplicacion.obtenerDepartamentos();
+    console.log(listaDepartamentos);
+    res.render('registroFuncionario.ejs', { listaDepartamentos });
 });
 
 routerAdmin.post('/registroFuncionario', async(req, res) => {
-    const {
-        identificacion,
-        nombre,
-        apellido1,
-        apellido2,
-        telefono,
-        correo,
-        correoAlterno,
-        departamento,
-        esJefe,
-        esDiscapacitado,
-        alternas,
-        rol,
-        contrasenna
-    } = req.body;
-    const funcionario = {
-        identificacion,
-        nombre,
-        apellido1,
-        apellido2,
-        telefono,
-        correo,
-        correoAlterno,
-        departamento,
-        esJefe,
-        esDiscapacitado,
-        alternas,
-        rol,
-        contrasenna
-    }
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento,
+            esJefe, esDiscapacitado, alternas, rol, contrasenna } = req.body;
+    const funcionario = { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno,
+                            departamento, esJefe, esDiscapacitado, alternas, rol, contrasenna }
     if (!funcionario.esJefe) {
         funcionario.esJefe = 0;
     }
@@ -81,27 +55,25 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
     if (!funcionario.alternas) {
         funcionario.alternas = 0;
     }
-    await controladorAplicacion.agregarFuncionario(funcionario);
-    // res.render ('gestionFuncionarios.ejs');
-    res.redirect('/admin/gestionFuncionarios');
-});
-
-routerAdmin.get('/edicionFuncionarios', async(req, res) => {
-    const { id } = req.query;
-    if (id) {
-        let lista = await controladorAplicacion.obtenerFuncionario(id);
-        res.render('edicionFuncionarios.ejs', { data: lista });
+    const funcionariodb = await controladorAplicacion.validarRegistroFuncionario(funcionario.identificacion, funcionario.correo) ;
+    if (!funcionariodb[0]) {
+        await controladorAplicacion.agregarFuncionario(funcionario);
+        const alerta = "El funcionario ha sido registrado exitosamente";
+        res.render("gestionFuncionarios.ejs", { alerta : alerta });
     } else {
-        let lista = await controladorAplicacion.obtenerFuncionarios();
-        res.render('edicionFuncionarios.ejs', { data: lista });
+        const error = "Ya existe un funcionario con la identificación o el correo brindado";
+        res.render("gestionFuncionarios.ejs", { error : error });
     }
 });
 
+routerAdmin.get('/edicionFuncionarios', async(req, res) => {
+    let lista = await controladorAplicacion.obtenerFuncionarios();
+    res.render('edicionFuncionarios.ejs', { data: lista });
+});
+
 routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
-    let { id } = req.params;
-    console.log("id" + id);
-    let funcionario = await controladorAplicacion.obtenerFuncionario(id);
-    console.log(funcionario);
+    let { id } = req.params ; 
+    let funcionario = await controladorAplicacion.obtenerFuncionario(id); 
     const departments_list = await controladorAplicacion.obtenerDepartamentos();
     res.render('edicionFuncionario.ejs', { funcionario: funcionario[0], departments_list });
 });

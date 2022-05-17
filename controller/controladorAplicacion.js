@@ -40,6 +40,10 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.validarFuncionario(correo, contrasenna);
     }
 
+    validarRegistroFuncionario (identificacion, correo) {
+        return this.gestorFuncionarios.validarRegistroFuncionario(identificacion, correo) ;
+    }
+
     agregarEstacionamiento(estacionamiento) {
         return this.gestorEstacionamientos.agregarEstacionamiento(estacionamiento);
     }

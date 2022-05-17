@@ -49,8 +49,9 @@ class EstacionamientoDaoImplementation extends DAO {
     getTiposEstacionamiento() {
         return db.query('SELECT * FROM TipoEstacionamiento;');
     }
+
     obtenerEstacionamientosConTipo() {
-        const query = "SELECT e.identificador, e.ubicacion, e.horaApertura, e.horaCierre,e.eliminado,t.tipoEstacionamiento FROM Estacionamiento AS e INNER JOIN TipoEstacionamiento AS t ON t.idTipoEstacionamiento = e.idTipoEstacionamiento WHERE e.eliminado = 0;";
+        const query = 'SELECT identificador, ubicacion, horaApertura, horaCierre, tipoEstacionamiento FROM Estacionamiento INNER JOIN TipoEstacionamiento ON Estacionamiento.idTipoEstacionamiento = TipoEstacionamiento.idTipoEstacionamiento WHERE eliminado = 0;';
         return db.query(query);
     }
 }

@@ -1,22 +1,6 @@
 <%- include ('partials/_headerAdmin')  %>
     <div class="container my-4 d-flex justify-content-center">
         <div class="row">
-            <div class="row">
-                <label for="" class="fs-2 text mb-4">Consulta funcionarios:</label>
-            </div>
-            <form action="edicionFuncionarios" method="get">
-                <div class="mb-3">
-                    <div class="row">
-                        <label for="id" class="form-label">Identificación:</label>
-                        <div class="col">
-                            <input type="number" name="id" class="form-control" id="id" required>
-                        </div>
-                        <div class="col">
-                            <input type="submit" class="btn btn-primary">
-                        </div>
-                    </div>
-                </div>
-            </form>
             <div class="row my-5">
                 <label for="lista" class="my-3 fs-3 text">Lista de funcionarios registrados:</label>
                 <div id="lista" class="container">

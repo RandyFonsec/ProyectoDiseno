@@ -1,3 +1,4 @@
+const res = require('express/lib/response');
 const FuncionarioDaoImplementation = require('./dao/funcionarioDaoImplementation');
 const UtilsDaoImplementation = require('./dao/utilsDaoImplementation');
 
@@ -36,6 +37,11 @@ class GestorFuncionarios {
     validarFuncionario(correo, contrasenna) {
         const resultado = funcionarioDaoImplementation.getByMail(correo, contrasenna);
         return resultado;
+    }
+
+    validarRegistroFuncionario (identificacion, correo) {
+        const resultado = funcionarioDaoImplementation.validarRegistroFuncionario(identificacion, correo);
+        return resultado ;
     }
 
     obtenerDepartamentos() {
