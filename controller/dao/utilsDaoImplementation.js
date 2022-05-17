@@ -57,7 +57,6 @@ class UtilsDaoImplementation extends DAO {
     updateFranjas(lista) {
         var values = lista;
         var queries = '';
-
         values.forEach(function(item) {
             queries += "UPDATE FranjaHoraria SET activo =" + item[0] + " WHERE dia = '" + item[1] + "' AND horario = '" + item[2] + "' AND idFuncionario = " + item[3] + "; ";
         });
