@@ -44,6 +44,10 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.validarRegistroFuncionario(identificacion, correo) ;
     }
 
+    validarRegistroEstacionamiento (identificador) {
+        return this.gestorEstacionamientos.validarRegistroEstacionamiento (identificador) ;
+    }
+
     agregarEstacionamiento(estacionamiento) {
         return this.gestorEstacionamientos.agregarEstacionamiento(estacionamiento);
     }
@@ -86,6 +90,10 @@ class ControladorAplicacion {
 
     obtenerPlacas(identificacion) {
         return this.gestorFuncionarios.obtenerPlacas(identificacion);
+    }
+
+    validarRegistroPlaca (placa) {
+        return this.gestorFuncionarios.validarRegistroPlaca (placa) ;
     }
 
 

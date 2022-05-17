@@ -54,6 +54,11 @@ class EstacionamientoDaoImplementation extends DAO {
         const query = 'SELECT identificador, ubicacion, horaApertura, horaCierre, tipoEstacionamiento FROM Estacionamiento INNER JOIN TipoEstacionamiento ON Estacionamiento.idTipoEstacionamiento = TipoEstacionamiento.idTipoEstacionamiento WHERE eliminado = 0;';
         return db.query(query);
     }
+
+    validarRegistroEstacionamiento (identificador) {
+        const selectEstacionamiento = 'SELECT * FROM Estacionamiento WHERE identificador = ?;' ;
+        return db.query(selectEstacionamiento, [identificador]) ;
+    }
 }
 
 module.exports = EstacionamientoDaoImplementation;

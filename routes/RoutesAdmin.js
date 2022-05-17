@@ -23,18 +23,17 @@ routerAdmin.use(function(req, res, next) {
     if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
         next();
     } else {
-        const alerta = "No haz iniciado sesión";
+        const alerta = "No has iniciado sesión";
         res.render("inicioSesion.ejs", { alerta: alerta });
     }
 });
 
-//Home
+// Home
 routerAdmin.get('/', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
 
 // Rutas de funcionario
-
 routerAdmin.get('/gestionFuncionarios', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
@@ -68,8 +67,8 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
         const error = "Ya existe un funcionario con la identificación o el correo brindado";
         res.render("gestionFuncionarios.ejs", { error : error });
     }
-    await controladorAplicacion.agregarFuncionario(funcionario);
-    res.redirect ('/admin/gestionFuncionarios');
+    // await controladorAplicacion.agregarFuncionario(funcionario);
+    // res.redirect ('/admin/gestionFuncionarios');
 });
 
 routerAdmin.get('/edicionFuncionarios', async(req, res) => {
@@ -132,11 +131,11 @@ routerAdmin.get('/eliminarFuncionario/:id', async(req, res) => {
     res.redirect('/admin/gestionFuncionarios');
 });
 
-// Estacionamientos
+// Rutas de estacionamientos
+
 routerAdmin.get('/gestionEstacionamientos', (req, res) => {
     res.render('gestionEstacionamientos.ejs');
 });
-
 
 routerAdmin.get('/registroEstacionamiento', async(req, res) => {
     const tiposEstacionamiento = await controladorAplicacion.obtenerTiposEstacionamiento();
@@ -152,8 +151,15 @@ routerAdmin.post('/registroEstacionamiento', async(req, res) => {
         horarioCierre,
         tipoEstacionamiento,
     }
-    await controladorAplicacion.agregarEstacionamiento(estacionamiento);
-    res.redirect('/admin/gestionEstacionamientos');
+    const estacionamientodb = await controladorAplicacion.validarRegistroEstacionamiento(estacionamiento.identificador) ;
+    if (!estacionamientodb[0]) {
+        await controladorAplicacion.agregarEstacionamiento(estacionamiento);
+        const alerta = "El estacionamiento ha sido registrado exitosamente";
+        res.render("gestionEstacionamientos.ejs", { alerta : alerta });
+    } else {
+        const error = "Ya existe un estacionamiento con el identificador brindado";
+        res.render("gestionEstacionamientos.ejs", { error : error });
+    }
 });
 
 routerAdmin.get('/edicionEstacionamientos', async(req, res) => {
@@ -286,6 +292,7 @@ routerAdmin.get('/reporteGrafica', async(req, res) => {
 
 routerAdmin.get('/reporteEstacionamientos', async(req, res) => {
     const estacionamientos = await controladorAplicacion.obtenerEstacionamientosConTipo();
+    console.log(estacionamientos);
     res.render('detalleEstacionamientos.ejs', { estacionamientos });
 });
 

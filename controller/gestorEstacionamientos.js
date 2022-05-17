@@ -72,7 +72,12 @@ class GestorEstacionamientos {
     }
 
     obtenerEstacionamientosConTipo () {
-        const resultado = utilsDaoImplementation.getEstacionamientosConTipo() ;
+        const resultado = estacionamientoDaoImplementation.obtenerEstacionamientosConTipo() ;
+        return resultado ;
+    }
+
+    validarRegistroEstacionamiento (identificador) {
+        const resultado = estacionamientoDaoImplementation.validarRegistroEstacionamiento (identificador) ;
         return resultado ;
     }
 

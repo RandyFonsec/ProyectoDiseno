@@ -30,10 +30,10 @@ class UtilsDaoImplementation extends DAO {
         return db.query('SELECT * FROM TipoEstacionamiento');
     }
 
-    getEstacionamientosConTipo () {
+    /* getEstacionamientosConTipo () {
         const selectEstacionamientosTipo = 'SELECT identificador as \'Identificador\', ubicacion as \'Ubicación\', horaApertura as \'Hora de apertura\', horaCierre as \'Hora de cierre\', tipoEstacionamiento as \'Tipo de estacionamiento\' FROM Estacionamiento INNER JOIN TipoEstacionamiento ON Estacionamiento.idTipoEstacionamiento = TipoEstacionamiento.idTipoEstacionamiento WHERE eliminado = 0;';
         return db.query (selectEstacionamientosTipo) ;
-    }
+    } */
 
     getPlacas(identificacion) {
         return db.query('SELECT * FROM Placa WHERE idFuncionario = (SELECT idFuncionario from Funcionario WHERE identificacion = ?) AND eliminada = 0', [identificacion]);
@@ -96,6 +96,11 @@ class UtilsDaoImplementation extends DAO {
     deleteEspacio(key) {
         const updateEspacio = 'UPDATE Espacio SET eliminado = 1 WHERE identificador = ?';
         return db.query(updateEspacio, [key]);
+    }
+
+    validarRegistroPlaca (placa) {
+        const selectPlaca = 'SELECT * FROM Placa WHERE placa = ? AND eliminada = 0;';
+        return db.query(selectPlaca, [placa]);
     }
 
 
