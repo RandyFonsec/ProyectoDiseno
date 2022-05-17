@@ -37,12 +37,10 @@ routerFuncionario.post('/gestionPlacas', async(req, res) => {
     if (!placadb[0]) {
         await controladorAplicacion.agregarPlaca(req.session.userInfo.idFuncionario, idPlaca);
         const alerta = "La placa ha sido registrado exitosamente";
-        console.log("La placa ha sido registrado exitosamente");
         const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.identificacion);
         res.render("gestionPlacas.ejs", { data: placas, alerta: alerta });
     } else {
         const error = "Ya existe una placa con esa identificación";
-        console.log("Ya existe una placa con esa identificación");
         const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.identificacion);
         res.render("gestionPlacas.ejs", { data: placas, error: error });
     }
