@@ -57,6 +57,10 @@ class GestorFuncionarios {
         return resultado.length != 0;
     }
 
+    obtenerFranjas(idFuncionario) {
+        return utilsDaoImplementation.getFranjas(idFuncionario);
+    }
+
     crearFranja(lista) {
         const resultado = utilsDaoImplementation.createFranja(lista);
         return resultado.length != 0;
@@ -66,6 +70,9 @@ class GestorFuncionarios {
         return utilsDaoImplementation.getCantidadxFranja(franja);
     }
 
+    actualizarFranjas(lista) {
+        return utilsDaoImplementation.updateFranjas(lista)
+    }
 
     obtenerDepartamento(idDepartamento) {
         return utilsDaoImplementation.getDepartamento(idDepartamento);

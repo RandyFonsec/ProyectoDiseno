@@ -47,8 +47,21 @@ class UtilsDaoImplementation extends DAO {
         return result;
     }
 
+    getFranjas(idFuncionario) {
+        return db.query('SELECT * FROM bgtvabkkjjkeiuxdcsho.FranjaHoraria WHERE idFuncionario = ?;', [idFuncionario]);
+    }
     getCantidadxFranja(dia) {
         return db.query('SELECT dia, COUNT(*) AS cantidad FROM FranjaHoraria WHERE horario = ? AND activo = 1 group by dia;', [dia]);
+    }
+
+    updateFranjas(lista) {
+        var values = lista;
+        var queries = '';
+
+        values.forEach(function(item) {
+            queries += "UPDATE FranjaHoraria SET activo =" + item[0] + " WHERE dia = '" + item[1] + "' AND horario = '" + item[2] + "' AND idFuncionario = " + item[3] + "; ";
+        });
+        return db.query(queries);
     }
 
     getTiposEspacio() {

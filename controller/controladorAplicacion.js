@@ -104,13 +104,19 @@ class ControladorAplicacion {
     agregarPlaca(idFuncionario, idPlaca) {
         return this.gestorFuncionarios.agregarPlaca(idFuncionario, idPlaca);
     }
-
+    obtenerFranjas(idFuncionario) {
+        return this.gestorFuncionarios.obtenerFranjas(idFuncionario);
+    }
     crearFranja(lista) {
         return this.gestorFuncionarios.crearFranja(lista);
     }
 
     getCantidadxFranja(franja) {
         return this.gestorFuncionarios.getCantidadxFranja(franja);
+    }
+
+    actualizarFranjas(lista) {
+        return this.gestorFuncionarios.actualizarFranjas(lista);
     }
     obtenerEstacionamientosConTipo() {
         return this.gestorEstacionamientos.obtenerEstacionamientosConTipo();
