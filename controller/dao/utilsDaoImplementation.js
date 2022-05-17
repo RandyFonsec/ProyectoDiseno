@@ -36,7 +36,7 @@ class UtilsDaoImplementation extends DAO {
     } */
 
     getPlacas(identificacion) {
-        return db.query('SELECT * FROM Placa WHERE idFuncionario = (SELECT idFuncionario from Funcionario WHERE identificacion = ?) AND eliminada = 0', [identificacion]);
+        return db.query('SELECT * FROM Placa WHERE idFuncionario = ? AND eliminada = 0', [identificacion]);
     }
 
     deletePlaca(idFuncionario, idPlaca) {
@@ -82,7 +82,7 @@ class UtilsDaoImplementation extends DAO {
         return db.query(getEspacios, [idEstacionamiento]);
     }
 
-    createEspacio (objeto) {
+    createEspacio(objeto) {
         const insertEspacio = 'INSERT INTO Espacio (identificador, idTipoEspacio, idEstacionamiento) VALUES (?, ?, ?);';
         return db.query(insertEspacio, [objeto.identificador, objeto.tipoEspacio, objeto.id]);
     }
@@ -97,7 +97,7 @@ class UtilsDaoImplementation extends DAO {
         return db.query(updateEspacio, [key]);
     }
 
-    validarRegistroPlaca (placa) {
+    validarRegistroPlaca(placa) {
         const selectPlaca = 'SELECT * FROM Placa WHERE placa = ? AND eliminada = 0;';
         return db.query(selectPlaca, [placa]);
     }

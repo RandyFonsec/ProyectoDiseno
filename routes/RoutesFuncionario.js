@@ -25,7 +25,7 @@ routerFuncionario.use(function(req, res, next) {
 
 // Home
 routerFuncionario.get('/', async(req, res) => {
-    const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.identificacion);
+    const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.idFuncionario);
     res.render('gestionPlacas.ejs', { data: placas });
 });
 
@@ -37,7 +37,7 @@ routerFuncionario.post('/gestionPlacas', async(req, res) => {
     if (!placadb[0]) {
         await controladorAplicacion.agregarPlaca(req.session.userInfo.idFuncionario, idPlaca);
         const alerta = "La placa ha sido registrado exitosamente";
-        const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.identificacion);
+        const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.idFuncionario);
         res.render("gestionPlacas.ejs", { data: placas, alerta: alerta });
     } else {
         const error = "Ya existe una placa con esa identificación";
