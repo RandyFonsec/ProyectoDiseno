@@ -29,7 +29,7 @@
 
             <div class="mb-3">
                 <label for="correo" class="form-label">Correo institucional:</label>
-                <input type="email" name="correo" class="form-control" id="correo" required>
+                <input type="email" pattern="^[A-Za-z0-9._%+-]+@tec.ac.cr|itcr.ac.cr$" name="correo" class="form-control" id="correo" required>
             </div>
 
             <div class="mb-3">
@@ -92,4 +92,4 @@
         </form>
         </div>
 
-<%- include ('partials/_footerAdmin')  %>
+        <%- include ('partials/_footerAdmin')  %>

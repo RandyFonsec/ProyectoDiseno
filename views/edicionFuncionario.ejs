@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <label for="" class="fs-2 text">Modificación de funcionario:</label>
             </div>
-            
+
             <div class="mb-3">
                 <label for="identificacion" class="form-label">Identificación:</label>
                 <input type="number" name="identificacion" class="form-control" id="identificacion" value="<%=funcionario.identificacion%>" readonly required>
@@ -30,7 +30,7 @@
 
             <div class="mb-3">
                 <label for="correo" class="form-label">Correo institucional:</label>
-                <input type="email" name="correo" value="<%=funcionario.correoInstitucional%>" class="form-control" id="correo" required>
+                <input type="email" pattern="^[A-Za-z0-9._%+-]+@tec.ac.cr|itcr.ac.cr$" name="correo" value="<%=funcionario.correoInstitucional%>" class="form-control" id="correo" required>
             </div>
 
             <div class="mb-3">
