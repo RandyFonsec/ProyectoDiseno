@@ -1,62 +1,66 @@
 <%- include ('partials/_headerFuncionario')  %>
-<%- include ('partials/_alertas')  %>
-    <div class="container my-4 d-flex justify-content-center">
 
-        <div class="row">
+
+    <%- include ('partials/_alertas')  %>
+
+
+        <div class="container my-4 d-flex justify-content-center">
+
             <div class="row">
-                <label for="" class="fs-2 text mb-4">Gestión de placas:</label>
-            </div>
+                <div class="row">
+                    <label for="" class="fs-2 text mb-4">Gestión de placas:</label>
+                </div>
 
 
-            <form action="/funcionario/gestionPlacas" method="post">
-                <div class="mb-3">
-                    <div class="row">
-                        <label for="" class="fs-3 text mb-4">Agregar placa:</label>
-                        <label for="id" class="form-label">Placa:</label>
-                        <div class="col">
-                            <input type="text" name="idPlaca" class="form-control" id="id" required>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary">Agregar</button>
+                <form action="/funcionario/gestionPlacas" method="post">
+                    <div class="mb-3">
+                        <div class="row">
+                            <label for="" class="fs-3 text mb-4">Agregar placa:</label>
+                            <label for="id" class="form-label">Placa:</label>
+                            <div class="col">
+                                <input type="text" name="idPlaca" class="form-control" id="id" required>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">Agregar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
 
 
-            <div class="row my-5">
-                <label for="lista" class="my-3 fs-3 text">Lista de placas autorizadas:</label>
-                <div id="lista" class="container">
+                <div class="row my-5">
+                    <label for="lista" class="my-3 fs-3 text">Lista de placas autorizadas:</label>
+                    <div id="lista" class="container">
 
-                    <%if(typeof data != 'undefined'){%>
-                        <%for(var i=0; i<data.length;i++){%>
-                            <div class="row my-3">
-                                <div class="col-3">
-                                    <label for="">Placa: <%=data[i].placa%></label>
-                                </div>
-                                <div class="col-3">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <a href="/funcionario/eliminarPlaca/<%=data[i].idPlaca%>" class="btn btn-danger " role="button">Eliminar</a>
+                        <%if(typeof data != 'undefined'){%>
+                            <%for(var i=0; i<data.length;i++){%>
+                                <div class="row my-3">
+                                    <div class="col-3">
+                                        <label for="">Placa: <%=data[i].placa%></label>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <a href="/funcionario/eliminarPlaca/<%=data[i].idPlaca%>" class="btn btn-danger " role="button">Eliminar</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <%}%>
                                 <%}%>
+                                    <%}%>
 
+                    </div>
                 </div>
+
+
+
             </div>
+
 
 
 
         </div>
 
-
-
-
-    </div>
-
-    <%- include ('partials/_footerFuncionario')  %>
+        <%- include ('partials/_footerFuncionario')  %>
