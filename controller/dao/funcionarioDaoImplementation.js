@@ -66,6 +66,11 @@ class FuncionarioDaoImplementation extends DAO {
         return db.query(selectFuncionario, [idDepartamento]);
     }
 
+    validarRegistroFuncionario (identificacion, correo) {
+        const selectFuncionario = 'SELECT * FROM Funcionario WHERE identificacion = ?  OR correoInstitucional = ? ;' ;
+        return db.query(selectFuncionario, [identificacion, correo]) ;
+    }
+
 }
 
 module.exports = FuncionarioDaoImplementation;

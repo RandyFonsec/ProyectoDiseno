@@ -9,70 +9,46 @@ var routerAdmin = express.Router();
 const db = require('../controller/dao/dbconnection');
 
 const GestorFuncionarios = require('../controller/gestorFuncionarios');
+const { type } = require('express/lib/response');
 
 
 const dias = ['l', 'k', 'm', 'j', 'v', 's'];
 const periodos = ['m', 't', 'n'];
+
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 
 //Valida que haya iniciado la sesión
 routerAdmin.use(function(req, res, next) {
     if (req.session.loggedin && typeof req.session.userInfo == 'undefined') {
         next();
     } else {
-        const alerta = "No haz iniciado sesión";
+        const alerta = "No has iniciado sesión";
         res.render("inicioSesion.ejs", { alerta: alerta });
     }
 });
 
-//Home
+// Home
 routerAdmin.get('/', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
 
-//TODO: Ver nombres xdd
-//TODO: Bug navbar
-
-// ----- Funcionarios -----
+// Rutas de funcionario
 routerAdmin.get('/gestionFuncionarios', (req, res) => {
     res.render('gestionFuncionarios.ejs');
 })
 
 routerAdmin.get('/registroFuncionario', async(req, res) => {
-    const departments_list = await controladorAplicacion.obtenerDepartamentos();
-    res.render('registroFuncionario.ejs', { departments_list });
+    const listaDepartamentos = await controladorAplicacion.obtenerDepartamentos();
+    console.log(listaDepartamentos);
+    res.render('registroFuncionario.ejs', { listaDepartamentos });
 });
 
 routerAdmin.post('/registroFuncionario', async(req, res) => {
-    const {
-        identificacion,
-        nombre,
-        apellido1,
-        apellido2,
-        telefono,
-        correo,
-        correoAlterno,
-        departamento,
-        esJefe,
-        esDiscapacitado,
-        alternas,
-        rol,
-        contrasenna
-    } = req.body;
-    const funcionario = {
-        identificacion,
-        nombre,
-        apellido1,
-        apellido2,
-        telefono,
-        correo,
-        correoAlterno,
-        departamento,
-        esJefe,
-        esDiscapacitado,
-        alternas,
-        rol,
-        contrasenna
-    }
+    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento,
+            esJefe, esDiscapacitado, alternas, rol, contrasenna } = req.body;
+    const funcionario = { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno,
+                            departamento, esJefe, esDiscapacitado, alternas, rol, contrasenna }
     if (!funcionario.esJefe) {
         funcionario.esJefe = 0;
     }
@@ -82,27 +58,27 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
     if (!funcionario.alternas) {
         funcionario.alternas = 0;
     }
-    await controladorAplicacion.agregarFuncionario(funcionario);
-    // res.render ('gestionFuncionarios.ejs');
-    res.redirect('/admin/gestionFuncionarios');
+    const funcionariodb = await controladorAplicacion.validarRegistroFuncionario(funcionario.identificacion, funcionario.correo) ;
+    if (!funcionariodb[0]) {
+        await controladorAplicacion.agregarFuncionario(funcionario);
+        const alerta = "El funcionario ha sido registrado exitosamente";
+        res.render("gestionFuncionarios.ejs", { alerta : alerta });
+    } else {
+        const error = "Ya existe un funcionario con la identificación o el correo brindado";
+        res.render("gestionFuncionarios.ejs", { error : error });
+    }
+    // await controladorAplicacion.agregarFuncionario(funcionario);
+    // res.redirect ('/admin/gestionFuncionarios');
 });
 
 routerAdmin.get('/edicionFuncionarios', async(req, res) => {
-    const { id } = req.query;
-    if (id) {
-        let lista = await controladorAplicacion.obtenerFuncionario(id);
-        res.render('edicionFuncionarios.ejs', { data: lista });
-    } else {
-        let lista = await controladorAplicacion.obtenerFuncionarios();
-        res.render('edicionFuncionarios.ejs', { data: lista });
-    }
+    let lista = await controladorAplicacion.obtenerFuncionarios();
+    res.render('edicionFuncionarios.ejs', { data: lista });
 });
 
 routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
-    let { id } = req.params;
-    console.log("id" + id);
-    let funcionario = await controladorAplicacion.obtenerFuncionario(id);
-    console.log(funcionario);
+    let { id } = req.params ; 
+    let funcionario = await controladorAplicacion.obtenerFuncionario(id); 
     const departments_list = await controladorAplicacion.obtenerDepartamentos();
     res.render('edicionFuncionario.ejs', { funcionario: funcionario[0], departments_list });
 });
@@ -155,11 +131,11 @@ routerAdmin.get('/eliminarFuncionario/:id', async(req, res) => {
     res.redirect('/admin/gestionFuncionarios');
 });
 
-// Estacionamientos
+// Rutas de estacionamientos
+
 routerAdmin.get('/gestionEstacionamientos', (req, res) => {
     res.render('gestionEstacionamientos.ejs');
 });
-
 
 routerAdmin.get('/registroEstacionamiento', async(req, res) => {
     const tiposEstacionamiento = await controladorAplicacion.obtenerTiposEstacionamiento();
@@ -175,8 +151,15 @@ routerAdmin.post('/registroEstacionamiento', async(req, res) => {
         horarioCierre,
         tipoEstacionamiento,
     }
-    await controladorAplicacion.agregarEstacionamiento(estacionamiento);
-    res.redirect('/admin/gestionEstacionamientos');
+    const estacionamientodb = await controladorAplicacion.validarRegistroEstacionamiento(estacionamiento.identificador) ;
+    if (!estacionamientodb[0]) {
+        await controladorAplicacion.agregarEstacionamiento(estacionamiento);
+        const alerta = "El estacionamiento ha sido registrado exitosamente";
+        res.render("gestionEstacionamientos.ejs", { alerta : alerta });
+    } else {
+        const error = "Ya existe un estacionamiento con el identificador brindado";
+        res.render("gestionEstacionamientos.ejs", { error : error });
+    }
 });
 
 routerAdmin.get('/edicionEstacionamientos', async(req, res) => {
@@ -267,6 +250,23 @@ routerAdmin.get('/reportes', (req, res) => {
     res.render("reportes.ejs");
 });
 
+routerAdmin.get('/informeEstacionamientos', async(req, res) => {
+    const estacionamientos = await controladorAplicacion.obtenerEstacionamientosConTipo();
+    let pdfDoc = new PDFDocument;
+    pdfDoc.pipe(fs.createWriteStream('reporte.pdf')) ;
+    for (let estacionamiento of estacionamientos) {
+        let ilist = []
+        for (let atributo in estacionamiento) {
+            ilist.push (atributo + ": " + estacionamiento[atributo]) ;
+        }
+        let olist = ["Estacionamiento", ilist];
+        pdfDoc.list (olist);
+        pdfDoc.moveDown(0.5);
+    }
+    pdfDoc.end();
+    res.render('informeEstacionamientos.ejs', { estacionamientos });
+})
+
 routerAdmin.get('/reporteGrafica', async(req, res) => {
     let manana = await controladorAplicacion.getCantidadxFranja('m');
     let tarde = await controladorAplicacion.getCantidadxFranja('t');
@@ -292,6 +292,7 @@ routerAdmin.get('/reporteGrafica', async(req, res) => {
 
 routerAdmin.get('/reporteEstacionamientos', async(req, res) => {
     const estacionamientos = await controladorAplicacion.obtenerEstacionamientosConTipo();
+    console.log(estacionamientos);
     res.render('detalleEstacionamientos.ejs', { estacionamientos });
 });
 

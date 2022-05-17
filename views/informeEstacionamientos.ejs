@@ -1,0 +1,39 @@
+<%- include ('partials/_headerAdmin')  %>
+    <div class="container my-4 d-flex justify-content-center">
+
+        <div class="row">
+
+
+            <div class="row my-5">
+                <label for="lista" class="my-3 fs-3 text">Estacionamientos registrados:</label>
+                <div id="lista" class="container">
+
+                    <%if (estacionamientos){%>
+                        <%for (var estacionamiento = 0; estacionamiento < estacionamientos.length; estacionamiento++) {%>
+                            <div class="row my-3">
+                                <div class="col-15">
+                                    <label for="">Identificador: <%=estacionamientos[estacionamiento].identificador%></label>
+                                    <label for="">Ubicación: <%=estacionamientos[estacionamiento].ubicacion%></label>
+                                    <label for="">Hora de apertura: <%=estacionamientos[estacionamiento].horaApertura%></label>
+                                    <label for="">Hora de cierre: <%=estacionamientos[estacionamiento].horaCierre%></label>
+                                    <label for="">Tipo de estacionamiento: <%=estacionamientos[estacionamiento].tipoEstacionamiento%></label>
+                                </div>
+                            </div>
+                            <%}%>
+                                <%}%>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+    <%- include ('partials/_footerAdmin')  %>

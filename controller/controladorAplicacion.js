@@ -40,6 +40,14 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.validarFuncionario(correo, contrasenna);
     }
 
+    validarRegistroFuncionario (identificacion, correo) {
+        return this.gestorFuncionarios.validarRegistroFuncionario(identificacion, correo) ;
+    }
+
+    validarRegistroEstacionamiento (identificador) {
+        return this.gestorEstacionamientos.validarRegistroEstacionamiento (identificador) ;
+    }
+
     agregarEstacionamiento(estacionamiento) {
         return this.gestorEstacionamientos.agregarEstacionamiento(estacionamiento);
     }
@@ -84,6 +92,10 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.obtenerPlacas(identificacion);
     }
 
+    validarRegistroPlaca (placa) {
+        return this.gestorFuncionarios.validarRegistroPlaca (placa) ;
+    }
+
 
     agregarEspacio(espacio) {
         return this.gestorEstacionamientos.agregarEspacio(espacio);
@@ -118,6 +130,7 @@ class ControladorAplicacion {
     actualizarFranjas(lista) {
         return this.gestorFuncionarios.actualizarFranjas(lista);
     }
+    
     obtenerEstacionamientosConTipo() {
         return this.gestorEstacionamientos.obtenerEstacionamientosConTipo();
     }

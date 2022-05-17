@@ -19,21 +19,28 @@ routerFuncionario.use(function(req, res, next) {
     if (req.session.loggedin && typeof req.session.userInfo != 'undefined') {
         next();
     } else {
-        res.send("No haz iniciado");
+        res.send("No has iniciado");
     }
 });
 
-//Home
+// Home
 routerFuncionario.get('/', async(req, res) => {
     const placas = await controladorAplicacion.obtenerPlacas(req.session.userInfo.identificacion);
     res.render('gestionPlacas.ejs', { data: placas });
 });
 
+// Placas
 routerFuncionario.post('/gestionPlacas', async(req, res) => {
     const { idPlaca } = req.body;
-    const result = controladorAplicacion.agregarPlaca(req.session.userInfo.idFuncionario, idPlaca);
-    res.redirect('/funcionario');
-
+    const placadb = await controladorAplicacion.validarRegistroPlaca(idPlaca) ;
+    if (!placadb[0]) {
+        await controladorAplicacion.agregarPlaca(req.session.userInfo.idFuncionario, idPlaca);
+        const alerta = "La placa ha sido registrado exitosamente";
+        res.render("gestionPlacas.ejs", { alerta : alerta });
+    } else {
+        const error = "Ya existe una placa con esa identificación";9
+        res.render("gestionPlacas.ejs", { error : error });
+    }
 });
 
 routerFuncionario.get('/eliminarPlaca/:id', async(req, res) => {

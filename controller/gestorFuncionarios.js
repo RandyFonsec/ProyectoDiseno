@@ -1,3 +1,5 @@
+const res = require('express/lib/response');
+const EstacionamientoDaoImplementation = require('./dao/estacionamientoDaoImplementation');
 const FuncionarioDaoImplementation = require('./dao/funcionarioDaoImplementation');
 const UtilsDaoImplementation = require('./dao/utilsDaoImplementation');
 
@@ -38,6 +40,11 @@ class GestorFuncionarios {
         return resultado;
     }
 
+    validarRegistroFuncionario (identificacion, correo) {
+        const resultado = funcionarioDaoImplementation.validarRegistroFuncionario(identificacion, correo);
+        return resultado ;
+    }
+
     obtenerDepartamentos() {
         const resultado = utilsDaoImplementation.getDepartamentos();
         return resultado;
@@ -47,6 +54,7 @@ class GestorFuncionarios {
         const resultado = utilsDaoImplementation.getPlacas(identificacion);
         return resultado;
     }
+
     eliminarPlaca(idFuncionario, idPlaca) {
         const resultado = utilsDaoImplementation.deletePlaca(idFuncionario, idPlaca);
         return resultado.length != 0;
@@ -55,6 +63,11 @@ class GestorFuncionarios {
     agregarPlaca(idFuncionario, idPlaca) {
         const resultado = utilsDaoImplementation.createPlaca(idFuncionario, idPlaca);
         return resultado.length != 0;
+    }
+
+    validarRegistroPlaca (placa) {
+        const resultado = utilsDaoImplementation.validarRegistroPlaca (placa)
+        return resultado;
     }
 
     obtenerFranjas(idFuncionario) {
