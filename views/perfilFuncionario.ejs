@@ -1,0 +1,337 @@
+<%- include ('partials/_headerFuncionario')%>
+
+    <%if(typeof franjas != 'undefined'){%>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Modal -->
+        <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Mi franja horaria</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container dflex align-items-center m-t5">
+                            <div class="container dflex my-4 justify-content-center">
+                                <form action="/funcionario/franjas" method="post">
+                                    <div class="row my-2">
+                                        <div class="col-6 col-md-4">Día</div>
+                                        <div class="col-6 col-md-8 mx-auto">Franja Horaria</div>
+                                    </div>
+                                    <%const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; 
+                                      const names = ['l','k','m','j','v','s'];
+                                      
+                                      for(var day = 0; day < days.length; day++) {%>
+                                        <div class="row my-2">
+                                            <div class="row my-1">
+
+                                                <div class="col-4 col-md-4">
+                                                    <div class="form-check form-check-inline">
+                                                        <%if(franjas[day*3+0].activo==1 || franjas[day*3+1].activo==1 || franjas[day*3+2].activo==1){%>
+
+                                                            <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1" checked>
+                                                            <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+
+                                                            <%}else{%>
+                                                                <input name="<%=names[day]%>" class="form-check-input" type="checkbox" id="<%=days[day]%>" value="1">
+                                                                <label class="form-check-label" for="<%=days[day]%>"><%=days[day]%></label>
+
+                                                                <%}%>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-8 col-md-8">
+                                                    <div class="form-check form-check-inline">
+                                                        <%if(franjas[day*3+0].activo==1){%>
+                                                            <input class="form-check-input" name="<%=names[day]%>m" type="checkbox" id="inlineCheckbox1" checked>
+                                                            <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
+
+                                                            <%}else{%>
+
+                                                                <input class="form-check-input" name="<%=names[day]%>m" type="checkbox" id="inlineCheckbox1">
+                                                                <label class="form-check-label" for="inlineCheckbox1">Mañana</label>
+
+                                                                <%} %>
+
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <%if(franjas[day*3+1].activo==1){%>
+                                                            <input class="form-check-input" name="<%=names[day]%>t" type="checkbox" id="inlineCheckbox2" checked>
+                                                            <label class="form-check-label" for="inlineCheckbox2">Tarde</label>
+
+                                                            <%}else{%>
+
+                                                                <input class="form-check-input" name="<%=names[day]%>t" type="checkbox" id="inlineCheckbox2">
+                                                                <label class="form-check-label" for="inlineCheckbox2">Tarde</label>
+
+                                                                <%} %>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <%if(franjas[day*3+2].activo==1){%>
+                                                            <input class="form-check-input" name="<%=names[day]%>n" type="checkbox" id="inlineCheckbox3" checked>
+                                                            <label class="form-check-label" for="inlineCheckbox3">Noche</label>
+
+                                                            <%}else{%>
+
+                                                                <input class="form-check-input" name="<%=names[day]%>n" type="checkbox" id="inlineCheckbox3">
+                                                                <label class="form-check-label" for="inlineCheckbox3">Noche</label>
+
+                                                                <%} %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                            <button type="submit" class="btn btn-primary mt-5">Guardar</button>
+                                </form>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $("#exampleModal").modal('show');
+            });
+        </script>
+
+        <%}%>
+            <%if(typeof data != 'undefined'){%>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <!-- Modal -->
+                <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Gestión de placas</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <%- include ('partials/_alertas')  %>
+
+
+                                    <div class="container my-4 d-flex justify-content-center">
+
+                                        <div class="row">
+
+
+                                            <form action="/funcionario/perfil/placas" method="post">
+                                                <div class="mb-3">
+                                                    <div class="row">
+                                                        <label for="" class="fs-3 text mb-4">Agregar placa:</label>
+                                                        <label for="id" class="form-label">Placa:</label>
+                                                        <div class="col">
+                                                            <input type="text" name="idPlaca" class="form-control" id="id" required>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="submit" class="btn btn-primary">Agregar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+
+                                            <div class="row my-5">
+                                                <label for="lista" class="my-3 fs-3 text">Lista de placas autorizadas:</label>
+                                                <div id="lista" class="container">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Placa</th>
+                                                                <th scope="col">Acciones</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <%for(var i=0; i<data.length;i++){%>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=data[i].placa%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-4">
+                                                                            <a href="/funcionario/eliminarPlaca/<%=data[i].idPlaca%>" class="btn btn-danger " role="button">Eliminar</a>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <%}%>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+
+
+
+                                    </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        $("#exampleModal").modal('show');
+                    });
+                </script>
+
+                <%}%>
+
+
+
+                    <main div class="container my-4 d-flex justify-content-center">
+                        <form id="content" action="/admin/actualizarFuncionario/<%=funcionario.identificacion%>" method="post">
+                            <div class="mb-3">
+                                <label for="" class="fs-2 text">Mi información:</label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="identificacion" class="form-label">Identificación:</label>
+                                <input type="number" name="identificacion" class="form-control" id="identificacion" value="<%=funcionario.identificacion%>" readonly>
+                            </div>
+
+                            <label for="nombreCompleto">Nombre completo:</label>
+                            <div id="nombreCompleto" class="mb-3 row">
+                                <div class="col">
+                                    <input type="text" name="nombre" class="form-control" value="<%=funcionario.nombre%>" placeholder="Nombre" readonly>
+                                </div>
+                                <div class="col">
+                                    <input type="text" name="apellido1" class="form-control" value="<%=funcionario.primerApellido%>" placeholder="Primer apellido" readonly>
+                                </div>
+                                <div class="col">
+                                    <input type="text" name="apellido2" class="form-control" value="<%=funcionario.segundoApellido%>" placeholder="Segundo apellido" readonly>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tel" class="form-label">Número de teléfono:</label>
+                                <input type="number" name="telefono" value="<%=funcionario.numeroCelular%>" class="form-control" id="tel" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo institucional:</label>
+                                <input type="email" name="correo" value="<%=funcionario.correoInstitucional%>" class="form-control" id="correo" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo alterno:</label>
+                                <input type="email" name="correoAlterno" value="<%=funcionario.correoAlterno%>" class="form-control" id="correoAlterno" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Departamento:</label>
+                                <input type="email" name="correoAlterno" value="<%=departamento.descripcion%>" class="form-control" id="correoAlterno" readonly>
+                            </div>
+                            <div id="depar" class="row mb-3">
+
+                                <div class="col-3">
+                                    <div class="form-check align-text-bottom">
+
+                                        <%if (funcionario.jefe == 1) { %>
+                                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esJefe" checked disabled>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                              Es jefe
+                            </label>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                <% } else { %>
+                                    <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esJefe" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                              Es jefe
+                            </label>
+                                            <% } %>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="form-check align-text-bottom">
+                                        <%if (funcionario.discapacidad == 1) { %>
+                                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esDiscapacitado" checked disabled>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                          Discapacitado
+                        </label>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                        <% } else { %>
+                                    <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="esDiscapacitado" disabled>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Discapacitado
+                        </label>
+                                            <% } %>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-check align-text-bottom">
+                                        <%if (funcionario.notificacionesAlternas == 1) { %>
+                                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="alternas" checked disabled>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                          Notificaciones alternas
+                        </label>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                        <% } else { %>
+                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="alternas" disabled >
+                            <label class="form-check-label" for="flexCheckDefault">
+                          Notificaciones alternas
+                        </label>
+                                            <% } %>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="mb-3">Rol:</label>
+                            <div class="mb-3">
+
+                                <%if (funcionario.rol == 1) { %>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox1" value="1" checked disabled>
+                                        <label class="form-check-label" for="inlineCheckbox1">Administrativo</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox2" value="2" disabled>
+                                        <label class="form-check-label" for="inlineCheckbox2">Docente</label>
+                                    </div>
+
+                                    <% } else { %>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox1" value="1" disabled>
+                                            <label class="form-check-label" for="inlineCheckbox1">Administrativo</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="rol" type="radio" id="inlineCheckbox2" value="2" checked disabled>
+                                            <label class="form-check-label" for="inlineCheckbox2">Docente</label>
+                                        </div>
+
+
+                                        <% } %>
+
+                            </div>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <a href="/funcionario/perfil/franjas" class="btn btn-primary " role="button">Franja horaria</a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="/funcionario/perfil/placas" class="btn btn-primary " role="button">Placas</a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </form>
+                        </div>
+
+                        <%- include ('partials/_footerFuncionario')  %>
