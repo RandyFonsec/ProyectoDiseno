@@ -40,6 +40,10 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.validarFuncionario(correo, contrasenna);
     }
 
+    validarOperador(nombreUsuario, contrasenna) {
+        return this.gestorFuncionarios.validarOperador(nombreUsuario, contrasenna);
+    }
+
     validarRegistroFuncionario(identificacion, correo) {
         return this.gestorFuncionarios.validarRegistroFuncionario(identificacion, correo);
     }
@@ -195,6 +199,15 @@ class ControladorAplicacion {
 
     registrarVisita(objeto) {
         return this.gestorEstacionamientos.registrarVisita(objeto);
+    }
+
+    obtenerEstacionamientoPorEncargado(idOperador) {
+        return this.gestorEstacionamientos.obtenerEstacionamientoPorEncargado(idOperador);
+
+    }
+
+    obtenerReservacionesPorEstacionamiento(idEstacionamiento) {
+        return this.gestorEstacionamientos.obtenerReservacionesPorEstacionamiento(idEstacionamiento);
     }
 }
 

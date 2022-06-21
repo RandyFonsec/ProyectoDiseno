@@ -9,7 +9,7 @@ const session = require('express-session');
 const routesAdmin = require('./routes/RoutesAdmin.js');
 const routesFuncionario = require('./routes/RoutesFuncionario.js');
 const routesJefe = require('./routes/RoutesJefe.js');
-
+const routesOperador = require('./routes/RoutesOperador.js');
 // ´Para actualizar el sitio web: git push heroku main
 // Para compilar en desarrollo: npm run dev
 
@@ -61,8 +61,16 @@ app.post('/inicio', async(req, res) => {
     } else {
         const result = await controladorAplicacion.validarFuncionario(nombreUsuario, contrasenna);
         if (result.length == 0) {
-            const mensaje = 'Correo o contraseña incorrectos';
-            res.render('inicioSesion.ejs', { error: mensaje })
+            const operador = await controladorAplicacion.validarOperador(nombreUsuario, contrasenna);
+            if (operador.length == 0) {
+                const mensaje = 'Correo o contraseña incorrectos';
+                res.render('inicioSesion.ejs', { error: mensaje })
+            } else {
+                req.session.userInfo = operador[0];
+                req.session.loggedin = true;
+                res.redirect('/operador');
+            }
+
         } else {
             req.session.userInfo = result[0];
             req.session.loggedin = true;
@@ -79,6 +87,8 @@ app.post('/inicio', async(req, res) => {
 app.use('/admin', routesAdmin);
 app.use('/funcionario', routesFuncionario);
 app.use('/jefe', routesJefe);
+app.use('/operador', routesOperador);
+
 
 app.get('*', (req, res) => {
     res.send("404 ERROR");

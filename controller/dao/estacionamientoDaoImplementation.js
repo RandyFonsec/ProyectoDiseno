@@ -60,6 +60,11 @@ class EstacionamientoDaoImplementation extends DAO {
         return db.query(selectEstacionamiento, [identificador]);
     }
 
+    obtenerEstacionamientoPorEncargado(idOperador) {
+        const selectEstacionamiento = 'SELECT * FROM Estacionamiento WHERE idOperador = ?;';
+        return db.query(selectEstacionamiento, [idOperador]);
+    }
+
 
 
 

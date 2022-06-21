@@ -374,7 +374,6 @@ routerAdmin.get('/simulacion', async(req, res) => {
 
 routerAdmin.post('/simular', async(req, res) => {
     const { fecha, horario } = req.body;
-
     simulador.simular(fecha, horario);
     res.render('simulacion.ejs');
 

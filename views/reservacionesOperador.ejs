@@ -1,0 +1,70 @@
+<%-include('partials/_headerOperador')%>
+
+    <%-include('partials/_alertas')%>
+        <div class="container my-4 d-flex justify-content-center">
+            <div class="container">
+
+
+                <div class="row my-5">
+                    <div class="col">
+
+                        <h3> Reservaciones: </h3>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Identificador Espacio</th>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Detalle</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <%for(var i = 0; i< reservaciones.length ; i++){%>
+                                    <tr>
+                                        <td>
+                                            <%=reservaciones[i].identificador%>
+
+                                        </td>
+                                        <td>
+                                            <%=reservaciones[i].fecha%>
+                                        </td>
+                                        <td>
+                                            <%=reservaciones[i].tipoReserva%>
+                                        </td>
+                                        <td>
+                                            Visitante:
+                                            <%=reservaciones[i].nombreVisitante%> <br> Placa:
+                                                <%=reservaciones[i].numeroVehiculo%> <br> Motivo visita:
+                                                    <%=reservaciones[i].motivoVisita%> <br> Sitio visita:
+                                                        <%=reservaciones[i].sitioVisita%>
+
+
+                                        </td>
+                                        <td>
+                                            <div class="col-2">
+                                                <a href="/operador/liberar/<%=reservaciones[i].idEstacionamiento%>" class="btn btn-primary " role="button">Liberar</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        </div>
+
+        </div>
+
+
+        <%-include('partials/_footerOperador')%>

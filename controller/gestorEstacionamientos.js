@@ -113,6 +113,16 @@ class GestorEstacionamientos {
         const resultado = utilsDaoImplementation.registrarVisita(objeto);
         return resultado;
     }
+    obtenerEstacionamientoPorEncargado(idOperador) {
+        const resultado = estacionamientoDaoImplementation.obtenerEstacionamientoPorEncargado(idOperador);
+        return resultado;
+    }
+
+    obtenerReservacionesPorEstacionamiento(idEstacionamiento) {
+        const resultado = utilsDaoImplementation.obtenerReservacionesPorEstacionamiento(idEstacionamiento);
+        return resultado;
+    }
+    obtenerRe
 }
 
 module.exports = GestorEstacionamientos;

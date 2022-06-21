@@ -162,6 +162,11 @@ class UtilsDaoImplementation extends DAO {
         return db.query(insert, [objeto.jefe, objeto.dia, objeto.idEspacio, objeto.fecha, objeto.nombre, objeto.id, objeto.vehiculo, objeto.motivo, objeto.sitio]);
 
     }
+
+    obtenerReservacionesPorEstacionamiento(idEstacionamiento) {
+        const select = 'SELECT * FROM Reserva AS r INNER JOIN Espacio AS e ON e.idEspacio = r.idEspacio INNER JOIN TipoReserva AS tr ON tr.idTipoReserva = r.idTipoReserva WHERE r.activa = 1 AND r.idEspacio in (SELECT idEspacio FROM Espacio WHERE idEstacionamiento = ? AND reservado = 1);';
+        return db.query(select, [idEstacionamiento]);
+    }
 }
 
 module.exports = UtilsDaoImplementation;

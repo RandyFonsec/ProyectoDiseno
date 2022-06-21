@@ -40,6 +40,11 @@ class GestorFuncionarios {
         return resultado;
     }
 
+    validarOperador(nombreUsuario, contrasenna) {
+        const resultado = funcionarioDaoImplementation.validarOperador(nombreUsuario, contrasenna);
+        return resultado;
+    }
+
     validarRegistroFuncionario(identificacion, correo) {
         const resultado = funcionarioDaoImplementation.validarRegistroFuncionario(identificacion, correo);
         return resultado;

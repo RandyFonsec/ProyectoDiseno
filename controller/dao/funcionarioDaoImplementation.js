@@ -61,6 +61,11 @@ class FuncionarioDaoImplementation extends DAO {
         return db.query(selectFuncionario, [correo, contrasenna]);
     }
 
+    validarOperador(nombreUsuario, contrasenna) {
+        const selectFuncionario = 'SELECT * FROM Operador WHERE nombreUsuario = ? and contrasenna = ?';
+        return db.query(selectFuncionario, [nombreUsuario, contrasenna]);
+    }
+
     getByDepartamento(idDepartamento) {
         const selectFuncionario = 'SELECT f.identificacion, CONCAT(f.nombre, " ", f.primerApellido, " ", f.segundoApellido) AS nombreCompleto, f.numeroCelular, f.correoInstitucional, f.correoAlterno, f.jefe, f.discapacidad, CONCAT(d.codigoDepartamento," - " , d.descripcion) AS departamento, t.tipoFuncionario FROM Funcionario AS f INNER JOIN Departamento AS d ON d.idDepartamento = f.idDepartamento INNER JOIN TipoFuncionario AS t ON t.idTipoFuncionario = f.idTipoFuncionario WHERE f.idDepartamento = ?;';
         return db.query(selectFuncionario, [idDepartamento]);
