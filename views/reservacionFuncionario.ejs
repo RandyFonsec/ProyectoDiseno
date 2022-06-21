@@ -1,0 +1,255 @@
+<%- include('partials/_headerFuncionario')%>
+    <%- include('partials/_alertas')%>
+        <%if(typeof data != 'undefined'){%>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <!-- Modal -->
+            <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Espacios</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/funcionario/reservas/<%=data.identificador%>/espacios" method="get" class="">
+                                <div class="col my-3">
+                                    <label for="fecha">Fecha:</label>
+                                    <input type="date" class="form-control" id="fecha" name="fecha">
+                                </div>
+                                <div class="col my-3">
+                                    <label for="">Horario:</label>
+                                    <select class="form-select" name="horario">
+                                    <option value="m">Mañana</option>
+                                    <option value="t">Tarde</option>
+                                    <option value="n">Noche</option>
+                                    </select>
+                                </div>
+                                <div class="col my-3">
+                                    <button type="submit" class="btn btn-primary">Buscar espacios</button>
+                                </div>
+                            </form>
+                            <%if(typeof mensaje != 'undefined'){            %>
+                                <div class="alert alert-danger" role="alert">
+                                    <%=mensaje%>
+                                </div>
+                                <%}%>
+
+                                    <%if(typeof espacios != 'undefined'){            %>
+                                        <div class="row my-5">
+                                            <div class="col">
+                                                <h3> Lista de estacionamientos: </h3>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Espacio</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <%if(espacios){%>
+                                                            <%for(var i=0; i<espacios.length;i++){%>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p class="fs-4 mt-2 mx-3">
+                                                                            <%=espacios[i].identificador%>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <form action="/funcionario/reservar" method="post" class="">
+                                                                            <div class="mb-3 collapse">
+                                                                                <input type="number" name="idEspacio" value="<%=espacios[i].idEspacio%>" class="form-control" id="correo">
+                                                                            </div>
+                                                                            <div class="mb-3 collapse">
+                                                                                <input type="text" name="fecha" value="<%=infoReserva.fecha%>" class="form-control" id="correo" readonly required>
+                                                                            </div>
+                                                                            <div class="mb-3 collapse">
+                                                                                <input type="text" name="dia" value="<%=infoReserva.dia%>" class="form-control" id="correo" readonly required>
+                                                                            </div>
+                                                                            <div class="mb-3 collapse">
+                                                                                <input type="text" name="horario" value="<%=infoReserva.horario%>" class="form-control" id="correo" readonly required>
+                                                                            </div>
+
+                                                                            <div class="col my-3">
+                                                                                <button type="submit" class="btn btn-primary">Reservar</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                                <%}%>
+                                                                    <%}%>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <script>
+                $(document).ready(function() {
+                    $("#exampleModal").modal('show');
+                });
+            </script>
+
+            <%}%>
+
+
+
+                <%if(typeof reservaciones != 'undefined'){%>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                    <!-- Modal -->
+                    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">Historial de reservaciones</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Fecha</th>
+                                                <th>Día</th>
+                                                <th>Número espacio</th>
+                                                <th>Horario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <%if(reservaciones){%>
+                                                <%for(var i=0; i<reservaciones.length;i++){%>
+                                                    <tr>
+                                                        <td>
+                                                            <%= reservaciones[i].fecha%>
+                                                        </td>
+                                                        <td>
+                                                            <%getDay = function(dia){
+                                                                switch(dia){
+                                                                case 'l': return 'Lunes'; 
+                                                                case 'k': return 'Martes';
+                                                                case 'm': return 'Miércoles';
+                                                                case 'j': return 'Jueves';
+                                                                case 'v': return 'Viernes';
+                                                                case 's': return 'Sábado';
+                                                            }}%>
+                                                                <%=getDay(reservaciones[i].dia)%>
+
+
+                                                        </td>
+                                                        <td>
+                                                            <%= reservaciones[i].identificador%>
+                                                        </td>
+
+
+                                                        <td>
+                                                            <%getHorario = function(horario){
+                                                                switch(horario){
+                                                                case 'm': return 'Mañana'; 
+                                                                case 't': return 'Tarde';
+                                                                case 'n': return 'Noche';
+                                                            }}%>
+                                                                <%=getHorario(reservaciones[i].horario)%>
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <%}%>
+                                                        <%}%>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <script>
+                        $(document).ready(function() {
+                            $("#exampleModal").modal('show');
+                        });
+                    </script>
+
+                    <%}%>
+
+
+
+                        <div class="container my-4 d-flex justify-content-center">
+                            <div class="container">
+
+
+                                <div class="row my-5">
+                                    <div class="container" id="conte">
+                                        <div class="row">
+                                            <form action="/funcionario/reservaciones" method="post" class="">
+                                                <h3 class="mb-4">Consultar reservaciones en un rango:</h3>
+                                                <div id="horas" class="mb-3 row">
+                                                    <div class="col">
+                                                        <label for="desde">Desde:</label>
+                                                        <input type="date" name="desde" class="form-control" placeholder="Nombre" id="desde" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="hasta">Hasta:</label>
+                                                        <input type="date" name="hasta" class="form-control" id="hasta" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <br>
+                                                        <button type="submit" class="btn btn-primary">Consultar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row my-5">
+                                    <div class="col">
+                                        <h3> Lista de estacionamientos: </h3>
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">ID Estacionamiento</th>
+                                                    <th>Ubicacion</th>
+                                                    <th>Horario</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <%if(estacionamientos){%>
+                                                    <%for(var estacionamiento=0; estacionamiento<estacionamientos.length;estacionamiento++){%>
+                                                        <tr>
+                                                            <td>
+                                                                <%=estacionamientos[estacionamiento].identificador%>
+                                                            </td>
+                                                            <td>
+                                                                <%=estacionamientos[estacionamiento].ubicacion%>
+                                                            </td>
+                                                            <td>
+                                                                <%=estacionamientos[estacionamiento].horaApertura%> -
+                                                                    <%=estacionamientos[estacionamiento].horaCierre%>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/funcionario/reservas/<%=estacionamientos[estacionamiento].identificador%>" class="btn btn-primary" role="button">Reservar</a>
+
+                                                            </td>
+                                                        </tr>
+                                                        <%}%>
+                                                            <%}%>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('partials/_footerFuncionario')%>

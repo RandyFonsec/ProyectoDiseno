@@ -1,0 +1,203 @@
+<%- include('partials/_headerJefe')%>
+    <%- include('partials/_alertas')%>
+
+        <%if(typeof data != 'undefined'){%>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <!-- Modal -->
+            <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Espacios</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <%=data.identificador%>
+                                <form action="/jefe/reservas/<%=data.identificador%>/espacios" method="get" class="">
+
+                                    <div class="col my-3">
+                                        <label for="">Tipo reserva:</label>
+                                        <select class="form-select" name="tipoReserva">
+                                        <option value="1">Propia</option>
+                                        <option value="2">Visita</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col my-3">
+                                        <label for="fecha">Fecha:</label>
+                                        <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                    </div>
+                                    <div class="col my-3">
+                                        <button type="submit" class="btn btn-primary">Buscar espacios</button>
+                                    </div>
+                                </form>
+
+                                <%if(typeof mensaje != 'undefined'){            %>
+                                    <div class="alert alert-danger" role="alert">
+                                        <%=mensaje%>
+                                    </div>
+                                    <%}%>
+
+                                        <%if(typeof espacios != 'undefined'){            %>
+                                            <div class="row my-5">
+                                                <div class="col">
+                                                    <h3> Lista de espacios: </h3>
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Espacio</th>
+                                                                <th>Acciones</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <%if(espacios){%>
+                                                                <%for(var i=0; i<espacios.length;i++){%>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <p class="fs-4 mt-2 mx-3">
+                                                                                <%=espacios[i].identificador%>
+                                                                            </p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%if (typeof infoReserva.visita == 'undefined'){%>
+                                                                                <form action="/jefe/reservar/jefe" method="post" class="">
+                                                                                    <div class="mb-3 collapse">
+                                                                                        <input type="number" name="idEspacio" value="<%=espacios[i].idEspacio%>" class="form-control" id="correo">
+                                                                                    </div>
+                                                                                    <div class="mb-3 collapse">
+                                                                                        <input type="text" name="fecha" value="<%=infoReserva.fecha%>" class="form-control" id="correo" readonly required>
+                                                                                    </div>
+                                                                                    <div class="mb-3 collapse">
+                                                                                        <input type="text" name="dia" value="<%=infoReserva.dia%>" class="form-control" id="correo" readonly required>
+                                                                                    </div>
+                                                                                    <div class="mb-3 collapse">
+                                                                                        <input type="text" name="horario" value="<%=infoReserva.horario%>" class="form-control" id="correo" readonly required>
+                                                                                    </div>
+
+                                                                                    <div class="col my-3">
+                                                                                        <button type="submit" class="btn btn-primary">Reservar</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                                <%}else{%>
+
+                                                                                    <!-- Button trigger modal -->
+                                                                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal33">Reservar</button>
+
+                                                                                    <!-- Modal -->
+                                                                                    <div class="modal fade" id="exampleModal33" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                        <div class="modal-dialog shadow-lg p-3 mb-5 bg-body rounded">
+                                                                                            <div class="modal-content">
+                                                                                                <h5 class="modal-title" id="exampleModalLabel">Información de la visita</h5>
+                                                                                                <div class="modal-body">
+                                                                                                    <form action="/jefe/reservar/visita" method="post" class="">
+                                                                                                        <div class="mb-3 collapse">
+                                                                                                            <input type="number" name="idEspacio" value="<%=espacios[i].idEspacio%>" class="form-control" id="correo">
+                                                                                                        </div>
+                                                                                                        <div class="mb-3 collapse">
+                                                                                                            <input type="text" name="fecha" value="<%=infoReserva.fecha%>" class="form-control" id="correo" readonly required>
+                                                                                                        </div>
+                                                                                                        <div class="mb-3 collapse">
+                                                                                                            <input type="text" name="dia" value="<%=infoReserva.dia%>" class="form-control" id="correo" readonly required>
+                                                                                                        </div>
+
+                                                                                                        <div class="col my-3">
+                                                                                                            <label for="">Nombre visitante:</label>
+                                                                                                            <input type="text" name="nombre" class="form-control" id="correo" required>
+                                                                                                        </div>
+                                                                                                        <div class="col my-3">
+                                                                                                            <label for="">Identificación:</label>
+                                                                                                            <input type="text" name="id" class="form-control" id="correo" required>
+                                                                                                        </div>
+                                                                                                        <div class="col my-3">
+                                                                                                            <label for="">Número vehículo:</label>
+                                                                                                            <input type="number" name="vehiculo" class="form-control" id="correo" required>
+                                                                                                        </div>
+                                                                                                        <div class="col my-3">
+                                                                                                            <label for="">Motivo de visita:</label>
+                                                                                                            <input type="text" name="motivo" class="form-control" id="correo" required>
+                                                                                                        </div>
+                                                                                                        <div class="col my-3">
+                                                                                                            <label for="">Dónde se dirige:</label>
+                                                                                                            <input type="text" name="sitio" class="form-control" id="correo" required>
+                                                                                                        </div>
+                                                                                                        <div class="col my-3">
+                                                                                                            <button type="submit" class="btn btn-primary">Reservar</button>
+                                                                                                        </div>
+                                                                                                    </form>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <%}%>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <%}%>
+                                                                        <%}%>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <script>
+                $(document).ready(function() {
+                    $("#exampleModal").modal('show');
+                });
+            </script>
+
+            <%}%>
+
+                <div class="container my-4 d-flex justify-content-center">
+                    <div class="container">
+                        <div class="row my-5">
+                            <div class="col">
+                                <h3> Lista de estacionamientos: </h3>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID Estacionamiento</th>
+                                            <th>Ubicacion</th>
+                                            <th>Horario</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <%if(estacionamientos){%>
+                                            <%for(var i=0; i<estacionamientos.length;i++){%>
+                                                <tr>
+                                                    <td>
+                                                        <%=estacionamientos[i].identificador%>
+                                                    </td>
+                                                    <td>
+                                                        <%=estacionamientos[i].ubicacion%>
+                                                    </td>
+                                                    <td>
+                                                        <%=estacionamientos[i].horaApertura%> -
+                                                            <%=estacionamientos[i].horaCierre%>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/jefe/reservas/<%=estacionamientos[i].identificador%>" class="btn btn-primary" role="button">Reservar</a>
+
+                                                    </td>
+                                                </tr>
+                                                <%}%>
+                                                    <%}%>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%- include('partials/_footerJefe')%>

@@ -44,6 +44,23 @@ class Utils {
         return lista;
     }
 
+    intToDay(number) {
+        switch (number) {
+            case 0:
+                return "l";
+            case 1:
+                return "k";
+            case 2:
+                return "m";
+            case 3:
+                return "j";
+            case 4:
+                return "v";
+            case 5:
+                return "s";
+        }
+    }
+
 }
 
 module.exports = Utils;

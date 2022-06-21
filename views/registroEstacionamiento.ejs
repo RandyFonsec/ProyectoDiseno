@@ -24,11 +24,22 @@
                     </div>
                 </div>
             </div>
+
             <label class="mb-3" for="depar">Tipo de estacionamiento:</label>
             <div id="depar" class="row mb-3">
-                <div class="col-6"><select name="tipoEstacionamiento" class="form-select" aria-label="Default select example">
+                <div class="col-6"><select id="tipos" name="tipoEstacionamiento" class="form-select" aria-label="Default select example">
                     <% tiposEstacionamiento.forEach (function (tipoEstacionamiento) { %>
                         <option value="<%=tipoEstacionamiento.idTipoEstacionamiento%>"><%= tipoEstacionamiento.tipoEstacionamiento %></option>
+                    <% }) %>
+                  </select>
+                </div>
+            </div>
+
+            <div class="mb-3 collapse" id="collapseExample" data-target="#collap">
+                <label for="idOperador"> Operadores disponibles:</label>
+                <div class="col-6"><select name="idOperador" class="form-select" aria-label="Default select example">
+                    <% operadores.forEach (function (operador) { %>
+                        <option value="<%=operador.idOperador%>"><%= operador.nombre%></option>
                     <% }) %>
                   </select>
                 </div>
@@ -40,4 +51,17 @@
             <button type="submit" class="btn btn-primary">Registrar estacionamiento</button>
         </form>
     </div>
-<%- include ('partials/_footerAdmin')  %>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tipos').on('change', function(e) {
+                if (this.value == 2) {
+                    $('.collapse').collapse('show');
+                } else {
+                    $('.collapse').collapse('hide');
+                }
+            });
+        });
+    </script>
+    <%- include ('partials/_footerAdmin')  %>

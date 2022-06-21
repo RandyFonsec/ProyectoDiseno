@@ -10,7 +10,8 @@ const db = require('../controller/dao/dbconnection');
 
 const GestorFuncionarios = require('../controller/gestorFuncionarios');
 const { type } = require('express/lib/response');
-
+const Simulador = require('../model/simulador');
+const simulador = new Simulador();
 
 const dias = ['l', 'k', 'm', 'j', 'v', 's'];
 const periodos = ['m', 't', 'n'];
@@ -30,25 +31,51 @@ routerAdmin.use(function(req, res, next) {
 
 // Home
 routerAdmin.get('/', (req, res) => {
-    res.render('gestionFuncionarios.ejs');
+    res.redirect('admin/gestionFuncionarios');
 })
 
 // Rutas de funcionario
-routerAdmin.get('/gestionFuncionarios', (req, res) => {
-    res.render('gestionFuncionarios.ejs');
+routerAdmin.get('/gestionFuncionarios', async(req, res) => {
+    let lista = await controladorAplicacion.obtenerFuncionarios();
+    res.render('gestionFuncionarios.ejs', { data: lista });
 })
 
 routerAdmin.get('/registroFuncionario', async(req, res) => {
     const listaDepartamentos = await controladorAplicacion.obtenerDepartamentos();
-    console.log(listaDepartamentos);
     res.render('registroFuncionario.ejs', { listaDepartamentos });
 });
 
 routerAdmin.post('/registroFuncionario', async(req, res) => {
-    const { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno, departamento,
-            esJefe, esDiscapacitado, alternas, rol, contrasenna } = req.body;
-    const funcionario = { identificacion, nombre, apellido1, apellido2, telefono, correo, correoAlterno,
-                            departamento, esJefe, esDiscapacitado, alternas, rol, contrasenna }
+    const {
+        identificacion,
+        nombre,
+        apellido1,
+        apellido2,
+        telefono,
+        correo,
+        correoAlterno,
+        departamento,
+        esJefe,
+        esDiscapacitado,
+        alternas,
+        rol,
+        contrasenna
+    } = req.body;
+    const funcionario = {
+        identificacion,
+        nombre,
+        apellido1,
+        apellido2,
+        telefono,
+        correo,
+        correoAlterno,
+        departamento,
+        esJefe,
+        esDiscapacitado,
+        alternas,
+        rol,
+        contrasenna
+    }
     if (!funcionario.esJefe) {
         funcionario.esJefe = 0;
     }
@@ -58,17 +85,17 @@ routerAdmin.post('/registroFuncionario', async(req, res) => {
     if (!funcionario.alternas) {
         funcionario.alternas = 0;
     }
-    const funcionariodb = await controladorAplicacion.validarRegistroFuncionario(funcionario.identificacion, funcionario.correo) ;
+
+    const funcionariodb = await controladorAplicacion.validarRegistroFuncionario(funcionario.identificacion, funcionario.correo);
+    let lista = await controladorAplicacion.obtenerFuncionarios();
     if (!funcionariodb[0]) {
         await controladorAplicacion.agregarFuncionario(funcionario);
         const alerta = "El funcionario ha sido registrado exitosamente";
-        res.render("gestionFuncionarios.ejs", { alerta : alerta });
+        res.render("gestionFuncionarios.ejs", { alerta: alerta, data: lista });
     } else {
         const error = "Ya existe un funcionario con la identificación o el correo brindado";
-        res.render("gestionFuncionarios.ejs", { error : error });
+        res.render("gestionFuncionarios.ejs", { error: error, data: lista });
     }
-    // await controladorAplicacion.agregarFuncionario(funcionario);
-    // res.redirect ('/admin/gestionFuncionarios');
 });
 
 routerAdmin.get('/edicionFuncionarios', async(req, res) => {
@@ -77,8 +104,8 @@ routerAdmin.get('/edicionFuncionarios', async(req, res) => {
 });
 
 routerAdmin.get('/edicionFuncionario/:id', async(req, res) => {
-    let { id } = req.params ; 
-    let funcionario = await controladorAplicacion.obtenerFuncionario(id); 
+    let { id } = req.params;
+    let funcionario = await controladorAplicacion.obtenerFuncionario(id);
     const departments_list = await controladorAplicacion.obtenerDepartamentos();
     res.render('edicionFuncionario.ejs', { funcionario: funcionario[0], departments_list });
 });
@@ -131,34 +158,45 @@ routerAdmin.get('/eliminarFuncionario/:id', async(req, res) => {
     res.redirect('/admin/gestionFuncionarios');
 });
 
-// Rutas de estacionamientos
 
-routerAdmin.get('/gestionEstacionamientos', (req, res) => {
-    res.render('gestionEstacionamientos.ejs');
+
+
+// ---------------------------------------------  Rutas de estacionamientos
+
+routerAdmin.get('/gestionEstacionamientos', async(req, res) => {
+    const estacionamientos = await controladorAplicacion.obtenerEstacionamientos();
+    res.render('gestionEstacionamientos.ejs', { estacionamientos });
 });
 
 routerAdmin.get('/registroEstacionamiento', async(req, res) => {
     const tiposEstacionamiento = await controladorAplicacion.obtenerTiposEstacionamiento();
-    res.render('registroEstacionamiento.ejs', { tiposEstacionamiento });
+    const operadores = await controladorAplicacion.obtenerOperadores();
+    res.render('registroEstacionamiento.ejs', { tiposEstacionamiento, operadores });
 });
 
 routerAdmin.post('/registroEstacionamiento', async(req, res) => {
-    const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento } = req.body;
+    const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento, idOperador } = req.body;
     const estacionamiento = {
         identificador,
         ubicacion,
         horarioApertura,
         horarioCierre,
         tipoEstacionamiento,
+        idOperador
     }
-    const estacionamientodb = await controladorAplicacion.validarRegistroEstacionamiento(estacionamiento.identificador) ;
+    if (tipoEstacionamiento == 1) {
+        estacionamiento.idOperador = 1;
+    }
+
+    const estacionamientodb = await controladorAplicacion.validarRegistroEstacionamiento(estacionamiento.identificador);
+    const estacionamientos = await controladorAplicacion.obtenerEstacionamientos();
     if (!estacionamientodb[0]) {
         await controladorAplicacion.agregarEstacionamiento(estacionamiento);
         const alerta = "El estacionamiento ha sido registrado exitosamente";
-        res.render("gestionEstacionamientos.ejs", { alerta : alerta });
+        res.render("gestionEstacionamientos.ejs", { alerta: alerta, estacionamientos });
     } else {
         const error = "Ya existe un estacionamiento con el identificador brindado";
-        res.render("gestionEstacionamientos.ejs", { error : error });
+        res.render("gestionEstacionamientos.ejs", { error: error, estacionamientos });
     }
 });
 
@@ -175,13 +213,17 @@ routerAdmin.get('/edicionEstacionamiento/:id', async(req, res) => {
 });
 
 routerAdmin.post('/actualizarEstacionamiento/:id', async(req, res) => {
-    const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento } = req.body;
+    const { identificador, ubicacion, horarioApertura, horarioCierre, tipoEstacionamiento, idOperador } = req.body;
     const estacionamiento = {
         identificador,
         ubicacion,
         horarioApertura,
         horarioCierre,
         tipoEstacionamiento,
+        idOperador
+    }
+    if (!estacionamiento.idOperador) {
+        estacionamiento.idOperador = 1;
     }
     await controladorAplicacion.modificarEstacionamiento(estacionamiento);
     res.redirect('/admin/gestionEstacionamientos');
@@ -253,14 +295,14 @@ routerAdmin.get('/reportes', (req, res) => {
 routerAdmin.get('/informeEstacionamientos', async(req, res) => {
     const estacionamientos = await controladorAplicacion.obtenerEstacionamientosConTipo();
     let pdfDoc = new PDFDocument;
-    pdfDoc.pipe(fs.createWriteStream('reporte.pdf')) ;
+    pdfDoc.pipe(fs.createWriteStream('reporte.pdf'));
     for (let estacionamiento of estacionamientos) {
         let ilist = []
         for (let atributo in estacionamiento) {
-            ilist.push (atributo + ": " + estacionamiento[atributo]) ;
+            ilist.push(atributo + ": " + estacionamiento[atributo]);
         }
         let olist = ["Estacionamiento", ilist];
-        pdfDoc.list (olist);
+        pdfDoc.list(olist);
         pdfDoc.moveDown(0.5);
     }
     pdfDoc.end();
@@ -323,7 +365,20 @@ routerAdmin.get('/reporteFuncionario', async(req, res) => {
 })
 
 
+// ------------ SIMULACIOM
+routerAdmin.get('/simulacion', async(req, res) => {
 
+    res.render('simulacion.ejs');
+
+})
+
+routerAdmin.post('/simular', async(req, res) => {
+    const { fecha, horario } = req.body;
+
+    simulador.simular(fecha, horario);
+    res.render('simulacion.ejs');
+
+})
 
 //export this router to use in our index.js
 module.exports = routerAdmin;

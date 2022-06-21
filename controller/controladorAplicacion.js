@@ -40,12 +40,12 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.validarFuncionario(correo, contrasenna);
     }
 
-    validarRegistroFuncionario (identificacion, correo) {
-        return this.gestorFuncionarios.validarRegistroFuncionario(identificacion, correo) ;
+    validarRegistroFuncionario(identificacion, correo) {
+        return this.gestorFuncionarios.validarRegistroFuncionario(identificacion, correo);
     }
 
-    validarRegistroEstacionamiento (identificador) {
-        return this.gestorEstacionamientos.validarRegistroEstacionamiento (identificador) ;
+    validarRegistroEstacionamiento(identificador) {
+        return this.gestorEstacionamientos.validarRegistroEstacionamiento(identificador);
     }
 
     agregarEstacionamiento(estacionamiento) {
@@ -79,10 +79,15 @@ class ControladorAplicacion {
     obtenerEspacio(identificador) {
         return this.gestorEstacionamientos.obtenerEspacio(identificador);
     }
-
-    obtenerEspacios(idEstacionamiento) {
-        return this.gestorEstacionamientos.obtenerEspacios(idEstacionamiento);
+    obtenerEspacios(id) {
+        return this.gestorEstacionamientos.obtenerEspacios(id);
     }
+
+    obtenerEspaciosPorTipo(fecha, horario, idEstacionamiento, tipoEspacio) {
+        return this.gestorEstacionamientos.obtenerEspaciosPorTipo(fecha, horario, idEstacionamiento, tipoEspacio);
+    }
+
+
 
     obtenerTiposEspacio() {
         return this.gestorEstacionamientos.obtenerTiposEspacio();
@@ -92,8 +97,8 @@ class ControladorAplicacion {
         return this.gestorFuncionarios.obtenerPlacas(identificacion);
     }
 
-    validarRegistroPlaca (placa) {
-        return this.gestorFuncionarios.validarRegistroPlaca (placa) ;
+    validarRegistroPlaca(placa) {
+        return this.gestorFuncionarios.validarRegistroPlaca(placa);
     }
 
 
@@ -130,7 +135,7 @@ class ControladorAplicacion {
     actualizarFranjas(lista) {
         return this.gestorFuncionarios.actualizarFranjas(lista);
     }
-    
+
     obtenerEstacionamientosConTipo() {
         return this.gestorEstacionamientos.obtenerEstacionamientosConTipo();
     }
@@ -155,6 +160,41 @@ class ControladorAplicacion {
 
     obtenerFuncionariosxDepartamento(idDepartamento) {
         return this.gestorFuncionarios.obtenerFuncionariosxDepartamento(idDepartamento);
+    }
+
+    obtenerOperadores() {
+        return this.gestorFuncionarios.obtenerOperadores();
+    }
+    validarHorario(id, dia, horario, tipoUsuario) {
+
+        return this.gestorFuncionarios.validarHorario(id, dia, horario, tipoUsuario);
+    }
+
+    obtenerEspacioReservado(idEspacio, fecha, dia, horario) {
+        return this.gestorEstacionamientos.obtenerEspacioReservado(idEspacio, fecha, dia, horario);
+    }
+    crearReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva) {
+        return this.gestorEstacionamientos.crearReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva);
+    }
+    actualizarReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva) {
+        return this.gestorEstacionamientos.actualizarReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva);
+    }
+
+    obtenerReservacionesEnRango(identificacion, desde, hasta) {
+        return this.gestorEstacionamientos.obtenerReservacionesEnRango(identificacion, desde, hasta);
+    }
+
+
+    obtenerEspaciosVisitas(idEstacionamiento) {
+        return this.gestorEstacionamientos.obtenerEspaciosVisitas(idEstacionamiento);
+    }
+
+    reservarEspacio(idEspacio) {
+        return this.gestorEstacionamientos.reservarEspacio(idEspacio);
+    }
+
+    registrarVisita(objeto) {
+        return this.gestorEstacionamientos.registrarVisita(objeto);
     }
 }
 

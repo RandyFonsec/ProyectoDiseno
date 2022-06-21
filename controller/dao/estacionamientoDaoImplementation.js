@@ -15,8 +15,8 @@ class EstacionamientoDaoImplementation extends DAO {
     }
 
     create(objeto) {
-        const insertEstacionamiento = 'INSERT INTO Estacionamiento (identificador, ubicacion, horaApertura, horaCierre, idTipoEstacionamiento) VALUES (?, ?, ?, ?, ?);';
-        db.query(insertEstacionamiento, [objeto.identificador, objeto.ubicacion, objeto.horarioApertura, objeto.horarioCierre, objeto.tipoEstacionamiento], function(err, result) {
+        const insertEstacionamiento = 'INSERT INTO Estacionamiento (identificador, ubicacion, horaApertura, horaCierre, idTipoEstacionamiento, idOperador) VALUES (?, ?, ?, ?, ?,?);';
+        db.query(insertEstacionamiento, [objeto.identificador, objeto.ubicacion, objeto.horarioApertura, objeto.horarioCierre, objeto.tipoEstacionamiento, objeto.idOperador], function(err, result) {
             if (err) {
                 console.log(err);
             } else {
@@ -26,8 +26,8 @@ class EstacionamientoDaoImplementation extends DAO {
     }
 
     update(objeto) {
-        const updateEstacionamiento = 'UPDATE Estacionamiento SET identificador = ?, ubicacion = ?, horaApertura = ?, horaCierre = ?, idTipoEstacionamiento = ? WHERE identificador = ?';
-        return db.query(updateEstacionamiento, [objeto.identificador, objeto.ubicacion, objeto.horarioApertura, objeto.horarioCierre, objeto.tipoEstacionamiento, objeto.identificador]);
+        const updateEstacionamiento = 'UPDATE Estacionamiento SET identificador = ?, ubicacion = ?, horaApertura = ?, horaCierre = ?, idTipoEstacionamiento = ?, idOperador = ? WHERE identificador = ?';
+        return db.query(updateEstacionamiento, [objeto.identificador, objeto.ubicacion, objeto.horarioApertura, objeto.horarioCierre, objeto.tipoEstacionamiento, objeto.idOperador, objeto.identificador]);
     }
 
     getAll() {
@@ -55,10 +55,14 @@ class EstacionamientoDaoImplementation extends DAO {
         return db.query(query);
     }
 
-    validarRegistroEstacionamiento (identificador) {
-        const selectEstacionamiento = 'SELECT * FROM Estacionamiento WHERE identificador = ?;' ;
-        return db.query(selectEstacionamiento, [identificador]) ;
+    validarRegistroEstacionamiento(identificador) {
+        const selectEstacionamiento = 'SELECT * FROM Estacionamiento WHERE identificador = ?;';
+        return db.query(selectEstacionamiento, [identificador]);
     }
+
+
+
+
 }
 
 module.exports = EstacionamientoDaoImplementation;

@@ -41,11 +41,14 @@ class GestorEstacionamientos {
         return resultado;
     }
 
-    obtenerEspacios(idEstacionamiento) {
-        const resultado = utilsDaoImplementation.getEspacios(idEstacionamiento);
+    obtenerEspaciosPorTipo(fecha, horario, idEstacionamiento, tipoEspacio) {
+        const resultado = utilsDaoImplementation.getEspaciosPorTipo(fecha, horario, idEstacionamiento, tipoEspacio);
         return resultado;
     }
-
+    obtenerEspacios(id) {
+        const resultado = utilsDaoImplementation.getEspacios(id);
+        return resultado;
+    }
     obtenerTiposEspacio() {
         const resultado = utilsDaoImplementation.getTiposEspacio();
         return resultado;
@@ -71,16 +74,45 @@ class GestorEstacionamientos {
         return resultado;
     }
 
-    obtenerEstacionamientosConTipo () {
-        const resultado = estacionamientoDaoImplementation.obtenerEstacionamientosConTipo() ;
-        return resultado ;
+
+    validarRegistroEstacionamiento(identificador) {
+        const resultado = estacionamientoDaoImplementation.validarRegistroEstacionamiento(identificador);
+        return resultado;
     }
 
-    validarRegistroEstacionamiento (identificador) {
-        const resultado = estacionamientoDaoImplementation.validarRegistroEstacionamiento (identificador) ;
-        return resultado ;
+    obtenerEspacioReservado(idEspacio, fecha, dia, horario) {
+        const resultado = utilsDaoImplementation.obtenerEspacioReservado(idEspacio, fecha, dia, horario);
+        return resultado;
+    }
+    crearReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva) {
+        const resultado = utilsDaoImplementation.crearReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva);
+        return resultado;
     }
 
+    actualizarReservacion(identificacion, idEspacio, fecha, dia, horario) {
+        const resultado = utilsDaoImplementation.actualizarReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva);
+        return resultado;
+    }
+
+    obtenerReservacionesEnRango(identificacion, desde, hasta) {
+        const resultado = utilsDaoImplementation.obtenerReservacionesEnRango(identificacion, desde, hasta);
+        return resultado;
+    }
+
+    obtenerEspaciosVisitas(idEstacionamiento) {
+        const resultado = utilsDaoImplementation.obtenerEspaciosVisitas(idEstacionamiento);
+        return resultado;
+    }
+
+    reservarEspacio(idEspacio) {
+        const resultado = utilsDaoImplementation.reservarEspacio(idEspacio);
+        return resultado;
+    }
+
+    registrarVisita(objeto) {
+        const resultado = utilsDaoImplementation.registrarVisita(objeto);
+        return resultado;
+    }
 }
 
 module.exports = GestorEstacionamientos;

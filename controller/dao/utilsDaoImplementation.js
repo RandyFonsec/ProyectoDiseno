@@ -76,10 +76,22 @@ class UtilsDaoImplementation extends DAO {
         const getEspacio = 'SELECT * FROM Espacio WHERE eliminado = 0 and identificador = ?;';
         return db.query(getEspacio, [key]);
     }
+    getEspacios(id) {
+        const getEspacio = 'SELECT * FROM Espacio WHERE eliminado = 0 and idEstacionamiento = ?;';
+        return db.query(getEspacio, [id]);
+    }
+    getEspaciosPorTipo(fecha, horario, idEstacionamiento, tipoEspacio) {
+        var getEspacios = "";
+        var array = [];
+        if (horario == "") {
+            getEspacios = 'SELECT * FROM Espacio WHERE idEspacio NOT IN (SELECT idEspacio FROM Reserva WHERE fecha = ? AND horario = \'m\'  AND activa = 1 ) AND idEstacionamiento = ? AND idTipoEspacio = ? AND eliminado = 0;';
+            array = [fecha, idEstacionamiento, tipoEspacio];
+        } else {
+            getEspacios = 'SELECT * FROM Espacio WHERE idEspacio NOT IN (SELECT idEspacio FROM Reserva WHERE fecha = ? AND horario = ?  AND activa = 1 ) AND idEstacionamiento = ? AND idTipoEspacio = ? AND eliminado = 0;';
+            array = [fecha, horario, idEstacionamiento, tipoEspacio];
 
-    getEspacios(idEstacionamiento) {
-        const getEspacios = 'SELECT * FROM Espacio WHERE eliminado = 0 AND idEstacionamiento = ?;';
-        return db.query(getEspacios, [idEstacionamiento]);
+        }
+        return db.query(getEspacios, array);
     }
 
     createEspacio(objeto) {
@@ -102,7 +114,54 @@ class UtilsDaoImplementation extends DAO {
         return db.query(selectPlaca, [placa]);
     }
 
+    validarHorario(id, dia, horario, tipoUsuario) {
+        var selectFranja = "";
+        var array = [];
+        if (tipoUsuario == 1) {
+            selectFranja = 'SELECT * FROM FranjaHoraria WHERE dia = ? AND idFuncionario = ? AND activo = 1';
+            array = [dia, id];
+        } else {
+            selectFranja = 'SELECT * FROM FranjaHoraria WHERE dia = ? AND horario = ? AND idFuncionario = ? AND activo = 1';
+            array = [dia, horario, id];
+        }
 
+        return db.query(selectFranja, array);
+    }
+
+    obtenerEspacioReservado(idEspacio, fecha, dia, horario) {
+        const select = 'SELECT idEspacio FROM Reserva WHERE idEspacio =  ?  AND fecha = ? AND dia = ? AND horario = ?';
+        return db.query(select, [idEspacio, fecha, dia, horario]);
+    }
+
+    crearReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva) {
+        const insert = 'INSERT INTO Reserva(identificacion, idEspacio, fecha, dia, horario, activa, idTipoReserva) VALUES (?,?,?,?,?,1,?);'
+        return db.query(insert, [identificacion, idEspacio, fecha, dia, horario, tipoReserva]);
+
+    }
+
+    actualizarReservacion(identificacion, idEspacio, fecha, dia, horario, tipoReserva) {
+        const update = 'UPDATE Reserva SET identificacion = ?, idTipoReserva = ? activa = 1 WHERE idEspacio = ? AND  fecha = ? AND dia = ? AND horario = ?;';
+        return db.query(update, [identificacion, tipoReserva, idEspacio, fecha, dia, horario, tipoReserva])
+    }
+    obtenerReservacionesEnRango(identificacion, desde, hasta) {
+        const select = 'SELECT r.dia, r.horario, DATE_FORMAT(r.fecha,\'%d/%m/%Y\') AS fecha, e.identificador FROM Reserva AS r INNER JOIN Espacio AS e ON e.idEspacio = r.idEspacio WHERE r.identificacion = ? AND r.fecha BETWEEN ? AND ? ORDER BY r.fecha ASC';
+        return db.query(select, [identificacion, desde, hasta]);
+    }
+
+    obtenerEspaciosVisitas(idEstacionamiento) {
+        const select = 'SELECT * FROM Espacio WHERE idEstacionamiento = ? AND reservado = 0 AND idTipoEspacio = 4';
+        return db.query(select, [idEstacionamiento]);
+    }
+    reservarEspacio(idEspacio) {
+        const update = 'UPDATE Espacio SET reservado = 1 WHERE idEspacio = ?';
+        db.query(update, [idEspacio]);
+
+    }
+    registrarVisita(objeto) {
+        const insert = 'INSERT INTO Reserva(identificacion,dia, idEspacio, fecha, nombreVisitante, identificacionVisitante, numeroVehiculo, motivoVisita, sitioVisita, activa, idTipoReserva, horario) VALUES (?,?,?,?,?,?,?,?,?,1,3, \'m\');'
+        return db.query(insert, [objeto.jefe, objeto.dia, objeto.idEspacio, objeto.fecha, objeto.nombre, objeto.id, objeto.vehiculo, objeto.motivo, objeto.sitio]);
+
+    }
 }
 
 module.exports = UtilsDaoImplementation;

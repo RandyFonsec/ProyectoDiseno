@@ -40,9 +40,9 @@ class GestorFuncionarios {
         return resultado;
     }
 
-    validarRegistroFuncionario (identificacion, correo) {
+    validarRegistroFuncionario(identificacion, correo) {
         const resultado = funcionarioDaoImplementation.validarRegistroFuncionario(identificacion, correo);
-        return resultado ;
+        return resultado;
     }
 
     obtenerDepartamentos() {
@@ -65,8 +65,8 @@ class GestorFuncionarios {
         return resultado.length != 0;
     }
 
-    validarRegistroPlaca (placa) {
-        const resultado = utilsDaoImplementation.validarRegistroPlaca (placa)
+    validarRegistroPlaca(placa) {
+        const resultado = utilsDaoImplementation.validarRegistroPlaca(placa)
         return resultado;
     }
 
@@ -105,6 +105,14 @@ class GestorFuncionarios {
 
     obtenerFuncionariosxDepartamento(idDepartamento) {
         return funcionarioDaoImplementation.getByDepartamento(idDepartamento);
+    }
+
+    obtenerOperadores() {
+        return funcionarioDaoImplementation.obtenerOperadores();
+    }
+
+    validarHorario(id, dia, horario, tipoUsuario) {
+        return utilsDaoImplementation.validarHorario(id, dia, horario, tipoUsuario);
     }
 }
 

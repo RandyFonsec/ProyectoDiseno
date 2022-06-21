@@ -8,6 +8,7 @@ const session = require('express-session');
 
 const routesAdmin = require('./routes/RoutesAdmin.js');
 const routesFuncionario = require('./routes/RoutesFuncionario.js');
+const routesJefe = require('./routes/RoutesJefe.js');
 
 // ´Para actualizar el sitio web: git push heroku main
 // Para compilar en desarrollo: npm run dev
@@ -65,13 +66,19 @@ app.post('/inicio', async(req, res) => {
         } else {
             req.session.userInfo = result[0];
             req.session.loggedin = true;
-            res.redirect('/funcionario');
+            if (result[0].jefe) {
+                res.redirect('/jefe');
+            } else {
+                res.redirect('/funcionario');
+            }
+
         }
     }
 });
 
 app.use('/admin', routesAdmin);
 app.use('/funcionario', routesFuncionario);
+app.use('/jefe', routesJefe);
 
 app.get('*', (req, res) => {
     res.send("404 ERROR");
